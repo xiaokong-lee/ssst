@@ -1,0 +1,99 @@
+<div class="page-content" style="position: relative;">
+    <div class="page-title">
+        <div class="title">
+            <span><i class="fa fa-shopping-cart"></i> 产品购买流程</span>
+        </div>
+    </div>
+    <div class="buy-item">
+        <div class="product-img">
+            <div id="imgs" class="imgs">
+                <div class="img"><img src="static/image/knife/1.jpg"></div>
+                <div class="img"><img src="static/image/knife/2.jpg"></div>
+                <div class="img"><img src="static/image/knife/3.jpg"></div>
+                <div class="img"><img src="static/image/knife/4.jpg"></div>
+                <div class="img"><img src="static/image/knife/5.jpg"></div>
+                <div class="img"><img src="static/image/knife/6.jpg"></div>
+                <div class="img"><img src="static/image/knife/7.jpg"></div>
+                <div class="img"><img src="static/image/knife/8.jpg"></div>
+            </div>
+            <span class="fa fa-angle-left" style="position:absolute;display:inline-block;width:45px;height:185px;left:0px;top:25px;font-size: 48px;line-height:185px;text-align:center;background-color: #fff;"></span>
+            <span class="fa fa-angle-right" style="position:absolute;display:inline-block;width:45px;height:185px;right:0px;top:25px;font-size: 48px;line-height:185px;text-align:center;background-color: #fff;"></span>
+        </div>
+        <div class="flag">
+            <p class="text-center">網上商店</p>
+            <span><i class="fa fa-leaf"></i> </span>
+        </div>
+    </div>
+    <div class="buy-item">
+        <div class="product-img" style="width:auto">
+            <div class="imgs" style="width:auto">
+                <div class="img"><img src="static/image/knife/1.jpg"><span class="fa fa-check-circle-o"></span></div>
+                <div class="img"><img src="static/image/knife/4.jpg"><span class="fa fa-check-circle-o"></span></div>
+                <div class="img"><img src="static/image/knife/5.jpg"><span class="fa fa-check-circle-o"></span></div>
+                <div class="img"><img src="static/image/knife/8.jpg"><span class="fa fa-check-circle-o"></span></div>
+                <div class="img">
+                    共4件
+                </div>
+            </div>
+        </div>
+        <div class="flag">
+            <p class="text-center">生成订单</p>
+            <span><i class="fa fa-leaf"></i> </span>
+        </div>
+    </div>
+    <div class="buy-item">
+        <div class="product-img" style="width:auto">
+            <div><span>总金额 </span><label>￥766.00</label></div>
+            <div><span>运&nbsp;&nbsp;&nbsp;费 </span><label>+￥12.00</label></div>
+            <div><span>实付款 </span><label>￥778.00</label></div>
+        </div>
+        <div class="flag">
+            <p class="text-center">订单支付</p>
+            <span><i class="fa fa-leaf"></i> </span>
+        </div>
+    </div>
+    <div class="buy-item">
+        <div class="product-img" style="width:auto">
+            <div style="text-align: center;"><span>请选择支付配送方式</span></div>
+                <div class="pay"><label>支付方式</label><span>在线支付</span><span>货到付款</span><span>公司转账</span></div>
+                <div class="send"><label>配送方式</label><span>顺丰快递</span><span>上门自提</span></div>
+                <div class="times"><label>送货时间</label><time>4月1日[今天]</time>
+                    <select>
+                        <option>09:00 - 12:00</option>
+                        <option>13:00 - 17:00</option>
+                        <option>17:00 - 22:00</option>
+                    </select>
+                </div>
+        </div>
+        <div class="flag">
+            <p class="text-center">支付配送</p>
+            <span><i class="fa fa-leaf"></i> </span>
+        </div>
+    </div>
+    <div class="buy-item">
+        <div class="product-img" style="width:auto">
+            <div class="state"><span>已结单</span><span>生产中</span><span>已发货</span><span>运送中</span></div>
+        </div>
+        <div class="flag">
+            <p class="text-center">訂單狀態</p>
+            <span><i class="fa fa-leaf"></i> </span>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var num = $("#imgs").find(".img").length;
+        var width = $("#imgs").parent(".product-img").width()-92;
+        var _width = num*180+(num-1)*10;
+        var _num = parseInt(width/190);
+        console.log("width:"+width)
+        $("#imgs").width(_width);
+        var left = 0;
+        setInterval(function () {
+            var img = $("#imgs").find(".img").eq(0);
+            var _img = img.clone();
+            img.remove();
+            _img.appendTo($("#imgs"));
+        },2000);
+    })
+</script>

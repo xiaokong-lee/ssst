@@ -1,0 +1,291 @@
+<style>
+    #particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        /*background-color: ;*/
+        background: url("static/image/login_bg.png") no-repeat center;
+    }
+
+    .login {
+        position: absolute;
+        width: 400px;
+        height: 353px;
+        min-width: 340px;
+        top: 50%;
+        left: 50%;
+        margin-left: -200px;
+        margin-top:-176px;
+        background: rgba(255, 255, 255, 1);
+        z-index: 10;
+        -webkit-box-shadow: 0px 0px 3px #fff;
+        -moz-box-shadow: 0px 0px 3px #fff;
+        box-shadow: 0px 0px 3px #fff;
+        border-radius: 4px
+    }
+
+    .login2 {
+        position: absolute;
+        width: 25%;
+        height: 353px;
+        min-width: 340px;
+        top: 30%;
+        left: 50%;
+        margin-left: -240px;
+        background: rgba(255, 255, 255, 1);
+        z-index: 10;
+        -webkit-box-shadow: 0px 0px 3px #fff;
+        -moz-box-shadow: 0px 0px 3px #fff;
+        box-shadow: 0px 0px 3px #fff;
+        border-radius: 4px
+    }
+
+    .login h2, .login2 h2 {
+        font-size: 20px;
+        color: #48c4b2;
+        line-height: 60px;
+        text-align: center;
+    }
+
+    .login input {
+        width: 100%;
+        height: 30px;
+        border: solid 1px #d6d6d6;
+        text-indent: 10px;
+    }
+
+    .width-100 {
+        margin: 30px 0px 30px 80px;
+        padding-right: 22px;
+    }
+
+    .login .label1 {
+        line-height: 30px;
+        float: left;
+        margin: 30px 0;
+        width: 80px;
+        text-indent: 22px;
+    }
+
+    .login .label2 {
+        line-height: 30px;
+        float: left;
+        margin-bottom: 20px;
+        width: 80px;
+        text-indent: 22px;
+    }
+
+    .login input.login-checkbox {
+        width: 15px;
+        height: 15px;
+        float: left;
+        margin-left: 18px;
+        margin-top: 1px;
+    }
+
+    .login-checkbox-label {
+        float: left;
+    }
+
+    .login .login-submit {
+        width: 40%;
+        margin-top: 10px;
+        float: left;
+        margin-left: 17px;
+        margin-right: 4%;
+        height: 36px;
+        /*background:#86ce2f;*/
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #0AA38F;
+        background: -webkit-linear-gradient(rgba(47, 202, 181, 0.4), #0AA38F); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(rgba(47, 202, 181, 0.4), #0AA38F); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(rgba(47, 202, 181, 0.4), #0AA38F); /* Firefox 3.6 - 15 */
+        background: linear-gradient(rgba(47, 202, 181, 0.4), rgba(12, 175, 154, 0.89)); /* 标准的语法（必须放在最后） */
+    }
+
+    .login .login-submit:hover {
+        background: rgba(64, 191, 173, 0.9);
+    }
+
+    .login .login-set {
+        width: 40%;
+        margin-top: 10px;
+        float: right;
+        margin-right: 17px;
+        height: 36px;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #5c7089;
+        background: -webkit-linear-gradient(rgba(137, 173, 216, 0.59), #5c7089); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(rgba(137, 173, 216, 0.59), #5c7089); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(rgba(137, 173, 216, 0.59), #5c7089); /* Firefox 3.6 - 15 */
+        background: linear-gradient(rgba(137, 173, 216, 0.59), #5c7089); /* 标准的语法（必须放在最后） */
+    }
+
+    .login .login-set:hover {
+        background: #5974ab;
+    }
+
+    .cle:after {
+        content: "";
+        clear: both;
+        display: block;
+        height: 0px;
+        overflow: hidden;
+    }
+
+    .cle {
+        zoom: 0;
+    }
+
+    /*a {*/
+    /*text-decoration: none;*/
+    /*color: #666;*/
+    /*float: right;*/
+    /*margin-right: 10px;*/
+    /*margin-top: 20px;*/
+    /*margin-bottom: 30px;*/
+    /*}*/
+
+    p {
+        text-align: center;
+        line-height: 35px;
+        font-size: 17px;
+        color: #666;
+        margin-top: 20px;
+    }
+
+    p span {
+        color: #3481cf;
+    }
+
+    .login-form {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #171717;
+        background: url("static/image/login_bg.png") no-repeat center;
+    }
+
+    .info-app {
+        position: absolute;
+        bottom: -250px;
+        left: 50%;
+        color: #666;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+        background: #f1f1f1;
+        display: inline-block;
+        padding: 3px 5px;
+        border-radius: 2px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -o-border-radius: 3px;
+        -ms-border-radius: 3px;
+        margin: 20px 0 0;
+        margin-left: -101px;
+    }
+.download_title{
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    margin-left: -104px!important;]
+}
+
+</style>
+
+<script type="text/javascript" src="static/js/qrcodeLogin/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/jquery.qrcode.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/qrcode.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/stomp.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/stompPackage.js"></script>
+<div class="login-form" style="">
+
+    <div ng-hide="!myLogin" ng-show="myLogin" class="login cle pull-right">
+        <div style="position: relative;z-index: 100;">
+            <h2>PLEASE LOGIN</h2>
+            <div style="width:30%;height: 2px;background-color:#cdcdcd;box-shadow: 1px 1px 2px 0px #d9d9d9;position: absolute;top: 28px;left: 0px"></div>
+            <div style="width:30%;height: 2px;background-color:#cdcdcd;box-shadow: 1px 1px 2px 0px #d9d9d9;position: absolute;top: 28px;right: 0px"></div>
+            <h2 class="login_title " id="login_title" style="position: absolute; top: 28px;left: 50%;margin-left: -90px;">{{title}}</h2>
+            <!--手機登錄二維碼-->
+            <div ng-hide="myLoad" id="mycode" style="padding: 4px;height: 201px;width: 201px;position:
+            absolute;left: 50%;top: 40%;margin-left: -99px;margin-top: 50px;">
+
+              <!--<img src="static/image/knife/u437.png" alt=""-->
+                     <!--style="width: 100px;height: 100px;position: absolute;left: 50%;margin-left: -50px;margin-right: -100px;">-->
+            </div>
+            <!--下載app二維碼-->
+            <div ng-hide="!myLoad" ng-show="myLoad" class="downapp" id="app_code"
+                 style="height: 205px;width: 205px;position: absolute;left: 50%;top: 40%;margin-left: -98px;margin-top: 50px;">
+                <!--<h2 style="position: absolute; top: 35px;left: 50%;margin-left: -90px;">手機掃描，下載APP</h2>-->
+                <!--<img src="static/image/knife/android.png" alt=""-->
+                     <!--style="width: 210px;height: 210px;position: absolute;left: 50%;margin-left: -105px;margin-top: 24px;">-->
+            </div>
+            <!--<p>请使用账号登录！</p>-->
+            <div class="pull-right cle" style="margin-top: 250px;">
+                <a ng-click="toggle_login()" style="margin: 0;"><img src="static/image/pass2_login_icons.png" alt=""
+                                                                     style="width: 40px;height: 40px;"></a>
+            </div>
+            <div class="cle info-app" style="">
+                <span>請使用</span>
+                <a class="phlogin" ng-click="toggle_load()" style="">基準烽火雲台手機APP</a>
+                <span>掃描登錄</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="login cle" ng-hide="myLogin" ng-show="!myLogin">
+        <div style="position: relative;z-index: 100;">
+            <h2>基準烽火雲台</h2>
+            <div style="width:30%;height: 2px;background-color:#cdcdcd;box-shadow: 1px 1px 2px 0px #d9d9d9;position: absolute;top: 28px;left: 0px"></div>
+            <div style="width:30%;height: 2px;background-color:#cdcdcd;box-shadow: 1px 1px 2px 0px #d9d9d9;position: absolute;top: 28px;right: 0px"></div>
+            <!--<p>请使用账号登录！</p>-->
+            <label class="label1" for="user">用戶名：</label>
+            <div class="input-group width-100">
+                <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                <input type="text" id="user" ng-model="username" placeholder="請輸入用戶名">
+            </div>
+            <label class="label2" for="password">密　碼：</label>
+            <div class="input-group width-100">
+                <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                <input style="font-family: Verdana,Tahoma,Arial;" type="password" ng-model="password" id="password"
+                       ng-keypress="enterPress($event)" placeholder="請輸入密碼">
+            </div>
+            <!--<input class="login-checkbox" type="checkbox" id="checkbox">-->
+            <!--<label class="login-checkbox-label" for="checkbox">记住登录密码</label>-->
+            <br/>
+            <div class="cle" style="margin-top: 20px;margin-bottom: 20px">
+                <!--<a href="#/dashboard" class="login-submit">登錄</a>-->
+                <!--<a href="#/forms" style="float: none" ng-click="userAuth()">-->
+                <a style="float: none" ng-click="userAuth()">
+                    <input class="login-submit" type="submit" value="登錄">
+                </a>
+                <a style="float: none" href="#/home">
+                    <input class="login-set" ng-click="restFunc()" type="button" value="取消">
+                </a>
+            </div>
+            <div class="pull-right cle" style="">
+                <a ng-click="toggle_login()" style="margin: 0;"><img src="static/image/pass_login_icons.png" alt="" style="width: 40px;height: 40px;"></a>
+            </div>
+             <a href="#/changepassword" style="position: absolute;top: 65%;right: 100px;">修改密碼</a>
+            <a href="#/findpassword" style="position: absolute;top: 65%;right: 18px;text-decoration: underline;">忘记密码?</a>
+        </div>
+    </div>
+    <!--<div id="particles-js"></div>-->
+</div>
+<!-- scripts -->
+<!--<script src="static/js/particles.js"></script>-->
+<!--<script src="static/js/logo.js"></script>-->
+<!-- stats.js -->
+<script src="static/js/stats.js"></script>

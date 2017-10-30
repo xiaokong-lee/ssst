@@ -1,0 +1,100 @@
+<div class="page-content">
+    <div id="page_box" class="page-box" ng-class="{page_aw:booking[3]}">
+        <div class="page-title">
+            <span class="title">
+                <i class="fa fa-dashboard"></i> {{userData.dashboard[3].name}}
+            </span>
+            <a class="btn btn-default btn-info pull-right" ng-click="bookingToggle(3)">
+                <i class="icon-book"> 訂閱</i>
+            </a>
+            <div class="btn-group pull-right" style="margin-right:15px;">
+	            <button type="button" class="btn btn-info">廠區</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">切换下拉菜单</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a >龙华</a></li>
+                    <li><a >观澜</a></li>
+                    <li><a >郑州</a></li>
+                    <li><a >晋城</a></li>
+                    <li><a >成都</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <ul id="#index_cart" class="row">
+            <li class="price-label col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center">
+                <div class="border-radius col-lg-5 col-md-5 col-sm-5 col-lxs-5" style="background:#9FA8D9;height: 100px; ">
+                    <i class="fa fa-money"></i></div>
+                <div class=" border-radius col-lg-7 col-md-7 col-sm-7 col-lxs-7" style="border-color:#9FA8D9">
+                    <h3 style="padding-top: 30px;">$155,490</h3>
+                    <p style="">Last month sales</p>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center">
+                <div class=" border-radius col-lg-5 col-md-5 col-sm-5 col-lxs-5"
+                     style="background:#48c4d1;height: 100px; "><i
+                        class="fa fa-hacker-news"></i></div>
+                <div class=" border-radius col-lg-7 col-md-7 col-sm-7 col-lxs-7" style="border-color:#48c4d1">
+                    <h3 style="padding-top: 30px;">10000</h3>
+                    <p>Order quantities</p>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center">
+                <div class=" border-radius col-lg-5 col-md-5 col-sm-5 col-lxs-5" style="background:#a8c48b;height: 100px; ">
+                    <i class="fa fa-shopping-cart"></i></div>
+                <div class=" border-radius col-lg-7 col-md-7 col-sm-7 col-lxs-7" style="border-color:#a8c48b">
+                    <h3 style="padding-top: 30px;">100,490</h3>
+                    <p>Total products</p>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-3 col-sm-6 col-xs-6 text-center">
+                <div class=" border-radius col-lg-5 col-md-5 col-sm-5 col-lxs-5" style="background:#1ebba5;height: 100px; ">
+                    <i class="fa fa-eye"></i></div>
+                <div class=" border-radius col-lg-7 col-md-7 col-sm-7 col-lxs-7" style="border-color:#1ebba5">
+                    <h3 style="padding-top: 30px;">255,400</h3>
+                    <p>Total visitors</p>
+                </div>
+            </li>
+        </ul>
+        <ul id="secondary_index" class="row" ng-drop="true" ng-drop-success="onDropComplete(3,$event)">
+            <li ng-repeat="y in droppedObj[3]" data-name="{{y.name}}" data-id="{{y.id}}" data-type="" ng-drag-data="obj" ng-drag-success="onDragSuccess($data,$event)" class="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+                <div e-chart e-data="{{y.id}}" class="chart" ng-if="y.type"></div>
+                <div class="chart" ng-if="!y.type" ng-include="'tmpl/dashboard/'+y.id+'.html'"></div>
+                <button type="button" class="btn btn-default btn-xs delete" ng-show="booking[3]" ng-click="deleteChart(3,y.id)"><b class="glyphicon glyphicon-remove"></b> </button>
+            </li>
+        </ul>
+        <div id="chart_box" class="chart-box" ng-show="booking[3]">
+            <div class="box-container">
+                <ul id="chart_cart">
+                    <li ng-repeat="x in darggableObj[3]" ng-drag="true" data-name="{{x.name}}" data-id="{{x.id}}" data-type="{{x.type}}">
+                        <p class="font-ellipsis">{{x.name}}</p>
+                        <div class="chart-img">
+                            <img src="static/image/dashboard/chart4.png">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer" ng-class="{enlarge:!sidebar_show,normal:sidebar_show}" ng-show="dataChanged[3]">
+        <div class="row">
+            <div class="col-sm-4 col-xs-12 text-center">
+                <div class="form-group">
+                    <label class="col-sm-4 col-xs-12 control-label">模板名稱</label>
+                    <div class="col-sm-8 col-xs-12" ng-init="dashboard.name=userData.dashboard[3].name">
+                        <input type="text" class="form-control" ng-model="dashboard.name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12 text-center">
+                <button class="btn btn-default btn-primary" style="margin-right:15px;" ng-click="saveTmpl(3)"><i class="fa fa-save"></i> 保存</button>
+                <button class="btn btn-default btn-danger" ng-click="cancelSave(3)"><i class="fa fa-remove"></i> 取消</button>
+            </div>
+            <div class="col-sm-4 col-xs-12 text-center">
+                <button class="btn btn-default btn-primary pull-right" ng-click="saveAnother(3)"><i class="fa fa-save"></i> 另存為模板</button>
+            </div>
+        </div>
+    </div>
+</div>

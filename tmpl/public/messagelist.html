@@ -1,0 +1,55 @@
+<div class="page-content">
+    <div class="row shrink" style="color:#f1f1f1;text-align: center;border:1px solid #414a73;background-color: #282d45">
+        <div class="note-left col-lg-2 col-md-3 col-sm-3 col-xs-4">
+            <div>
+                <span class="fa fa-envelope  no-padding" style="height: 70px;line-height: 70px;background-color: #414a73;width: 100%;">
+                    私信消息
+                </span>
+            </div>
+            <ul class="user-group">
+                <li class="person-user" ng-click="groupToggle('person')" ng-class="{active:groups.person}"><i class="fa fa-user"></i>  個人</li>
+                <li class="group-user" ng-click="groupToggle('group')" ng-class="{active:groups.group}"><i class="fa fa-users"></i>  群組</li>
+            </ul>
+            <div ng-switch="myGroup">
+                <ul class="person" ng-switch-when="person">
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>刘小华</span><span class="badge ">5</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>李元杰</span><span class="badge ">9</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>彭学成</span><span class="badge ">1</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>杨小磊</span><span class="badge ">4</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>刘小华</span><span class="badge ">5</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>李元杰</span><span class="badge ">7</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>彭学成</span><span class="badge ">5</span></li>
+                    <li><span class="fa fa-user" style="font-size: 20px;"></span><span>杨小磊</span><span class="badge ">3</span></li>
+                </ul>
+                <ul class="group" ng-switch-when="group">
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组1</span><span class="badge ">40</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组2</span><span class="badge ">55</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组3</span><span class="badge ">5</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组4</span><span class="badge ">21</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组5</span><span class="badge ">45</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组6</span><span class="badge ">13</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组7</span><span class="badge ">29</span></li>
+                    <li><span class="fa fa-user-md" style="font-size: 20px;"></span><span>群组8</span><span class="badge ">99+</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="note-right col-lg-10 col-md-9 col-sm-9 col-xs-8">
+            <div style="height: 70px;line-height: 70px;background-color: #f8f8f8"><span class="fa fa-gear pull-right" style="line-height:50px;font-size:24px;padding: 10px 15px;color: #cdcdcd"></span></div>
+            <div style="border: 1px solid #282d45;background-color: #fff;">
+                <div style="border: 1px solid #282d45;margin: 10px;">
+                    <div style="background-color: #414a73;height: 40px;line-height: 40px">正在與<label>劉小華</label>對話中</div>
+                    <div style="height: 400px;"></div>
+                    <div style="border: 1px solid #cfcfcf;overflow: hidden;clear: both">
+                        <label style="color: gold;font-size: 24px; margin: 5px 20px" class="fa fa-smile-o pull-left"></label>
+                        <div style="clear: both">
+                            <textarea style="width: 95%;height: 80px;margin-top: 10px;border: 2px solid #d5dffa;color: #333"></textarea>
+                        </div>
+                        <button class="pull-right" style="width: 100px;height: 30px;background-color: #396aa8;color: #fff;display: block;margin: 10px 20px">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

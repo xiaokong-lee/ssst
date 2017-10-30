@@ -1,0 +1,141 @@
+<div class="page-content">
+    <div class="page-title">
+        <span class="title">
+            <i class="fa fa-magic"></i> 生產流程定義
+        </span>
+        <button type="button" class="btn btn-default btn-info pull-right" onclick="createProcess()"><i class="fa fa-plus-circle"></i> 新建 </button>
+    </div>
+    <div id="process_list" class="row">
+        <div id="process" class="col-sm-8 col-xs-12">
+            <div  class="process">
+                <div class="title">
+                    <input type="text" class="form-control" value="前制">
+                </div>
+                <ul id="process_0">
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>領料</p>
+                        <button type="button" class="btn btn-default func-btn"><i class="fa fa-remove"></i> </button>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>切斷</p>
+                        <button type="button" class="btn btn-default func-btn"><i class="fa fa-remove"></i> </button>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>粗磨</p>
+                        <button type="button" class="btn btn-default func-btn"><i class="fa fa-remove"></i> </button>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>斷面</p>
+                        <button type="button" class="btn btn-default func-btn"><i class="fa fa-remove"></i> </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="process">
+                <div class="title">
+                    <span>工序</span>
+                </div>
+                <ul id="library">
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>領料</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>切斷</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>粗磨</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>斷面</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>倒角</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>逃料</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>精磨</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>打標</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>開刃</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>鈍化</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>噴砂</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>清洗</p>
+                    </li>
+                    <li>
+                        <img src="static/image/process/process.png" style="width:60px;">
+                        <p>塗層</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        endragable($("#library"),$("#process_0"))
+    });
+    function endragable($drag,$drop) {
+        var $process = $drop;
+        var $library = $drag;
+        $( "li", $library ).draggable({
+            cancel: "a.ui-icon", // 点击一个图标不会启动拖拽
+            revert: "invalid", // 当未被放置时，条目会还原回它的初始位置
+            containment: "document",
+            helper: "clone",
+            cursor: "move"
+        });
+        $process.droppable({
+            accept: "#library > li",
+            activeClass: "",
+            drop: function( event, ui ) {
+                appendProcess( ui.draggable );
+            }
+        });
+        var button = "<button type='button' class='btn btn-default func-btn'><i class='fa fa-remove'></i> </button>";
+        function appendProcess($item) {
+            $item.fadeOut(function() {
+                $item.appendTo( $process ).fadeIn(function() {
+//                    button.appendTo($item)
+                    $item.clone().appendTo($library);
+                    $item.append(button)
+                });
+
+            });
+        }
+    }
+    function createProcess() {
+        var num = $("#process_list").children("div").length;
+        var id = "process_"+num;
+        var process = "<div class='process'><div class='title'><input type='text' class='form-control'> </div><ul id="+id+"></ul> </div>"
+        $("#process").append(process);
+        endragable($("#library"),$("#"+id))
+    }
+</script>

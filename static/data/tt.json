@@ -1,0 +1,14 @@
+{
+    "table_width": 10240,
+    "keys": 22,
+    "table_name": "Sheet1",
+    "key0":{"value":"申  請  人","width": 4704, "fixed": true},"key1":{"value":"","width": 5984, "fixed": false},"key2":{"value":"申請人聯系方式","width": 4576, "fixed": true},"key3":{"value":"","width": 4704, "fixed": false},
+      "key4":{"value":"申請部門","width": 4704, "fixed": true},"key5":{"value":"","width": 5984, "fixed": false},"key6":{"value":"費用代碼","width": 4576, "fixed": true},"key7":{"value":"","width": 4704, "fixed": false},
+      "key8":{"value":"用車日期及時間","width": 4704, "fixed": true},"key9":{"value":"","width": 5984, "fixed": false},"key10":{"value":"乘車人","width": 4576, "fixed": true},"key11":{"value":"","width": 4704, "fixed": false},
+      "key12":{"value":"乘車人\n聯繫方式","width": 4704, "fixed": true}, "key13":{"value":"","width": 5984, "fixed": false}, "key14":{"value":"接洽人","width": 4576, "fixed": true},"key15":{"value":"","width": 4704, "fixed": false},
+      "key16":{"value":"用車事由","width": 4704, "fixed": true},"key17":{"value":"","width": 15264, "fixed": false,"cols":3},
+      "key18":{"value":"乘車地點及\n行駛路線","width": 4704, "fixed": true},"key19":{"value":"","width": 15264, "fixed": false,"cols":3},
+      "key20":{"value":"注：實際行駛&接洽路線請嚴格遵守申請單流程，如臨時有變更請在用車前重新填寫申請單。","width": 19968, "fixed": true,"cols":4}],
+      "key21":{"cols":4,"value":"說明：1.流程：申請人填表→主管核准→對應窗口保存；\n 2.乘車人員資料需詳細填寫；\n 3.若乘車人員超過6人，請走車調正常派車流程，另行派車；\n            4.請文明乘車，對於無乘車申請單及刻意擾亂乘車秩序者，司機有權拒絕其上車。\n","width": 19968, "fixed": true}
+}
+

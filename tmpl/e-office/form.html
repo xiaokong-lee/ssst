@@ -1,0 +1,150 @@
+<div id="page_content" class="page-content">
+    <a class="back-btn" style="" href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li ><a href="#/forms">表單簽核</a> </li>
+        <li class="current">表單詳情 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="page-title" style="margin:0;">
+        <div class="title">
+            <span><i class="fa fa-magnet" style="color:#ff9800;"></i> {{form.card_id}}</span>
+        </div>
+    </div>
+    <div class="" id="tmpl" style="border:1px solid #ddd;margin-bottom:15px;background-color: #fff">
+        <div class="table-container" id="tableContainer" style="position:relative;">
+            <table id="table1" class="forms" ng-if="form.post_type!='general'" >
+                <tbody>
+                <tr>
+                    <td style="width:15%">申請單號</td>
+                    <td style="width:20%">{{form.card_id}}</td>
+                    <td style="width:15%">申請日期</td>
+                    <td style="width:20%">{{content.ApplyDate}}</td>
+                    <td style="width:15%">申請人工號</td>
+                    <td style="width:20%">{{content.UserID}}</td>
+                </tr>
+                <tr>
+                    <td style="width:15%">申請人姓名</td>
+                    <td style="width:20%">{{content.UserName}}</td>
+                    <td style="width:15%">申請單位代碼</td>
+                    <td style="width:20%">{{content.DepartCode}}</td>
+                    <td style="width:15%">申請單位名稱</td>
+                    <td style="width:20%;line-height:1.2;" >{{content.Department}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table id="table2" class="forms printContent" ng-style="content.style" ng-if="form.post_type=='general'" style="margin:0;padding:0;line-height:16px;">
+                <caption ng-if="content.title.fixed" ng-style="content.caption.style">
+                    <img ng-if="content.logo" src="{{static_url}}/{{form.logo.src}}" ng-style="content.logo.style" style="">
+                    <p ng-if="content.title.fixed" ng-style="content.title.style" style="text-align: center;">{{content.title.value}}</p>
+                    <p ng-if="content.subtitle.fixed" ng-style="content.subtitle.style" style="text-align: center;">{{content.subtitle.value}}</p>
+                </caption>
+                <tbody>
+                <tr ng-repeat="x in content.table" data-index="{{x.index}}">
+                    <td ng-repeat="y in x.list" colspan="{{y.cols}}" rowspan="{{y.rows}}" ng-style="y.style" style="width:{{y.width}}" >
+                        <span ng-if="y.fixed && !y.readonly" ng-bind-html="y.text"></span>
+                        <span ng-if="!y.fixed">{{y.value}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="form" style="position:absolute;left:0;top:0;"></div>
+    <div class="form form-horizontal">
+        <label class="control-label text-left" style="padding-bottom:10px;"><i class="fa fa-tags" style="color:#ff9800;"></i> 附件:</label>
+        <div class="files">
+            <li style="position:relative;width:160px;" ng-repeat="x in files">
+                <img ng-if="x.type=='pdf'" src="static/image/icon/icon_pdf_128.png" style="width:100%">
+                <img ng-if="x.type=='pptx' || x.type=='ppt'" src="static/image/icon/icon_ppt_128.png" style="width:100%">
+                <img ng-if="x.type=='docx' || x.type=='doc'" src="static/image/icon/icon_doc_128.png" style="width:100%">
+                <img ng-if="x.type=='xlsx' || x.type=='xls'" src="static/image/icon/icon_xls_128.png" style="width:100%">
+                <img ng-if="x.type=='png' || x.type=='jpg'" src="static/image/icon/icon_png_128.png" style="width:100%">
+                <img ng-if="x.type=='oth'" src="static/image/icon/icon_oth_128.png" style="width:100%">
+                <p class="font-ellipsis text-center"><a target="_blank" href="{{x.href}}" title="{{x.name}}">{{x.name}}</a></p>
+            </li>
+        </div>
+    </div>
+    <div ng-if="workflow.tip || workflow.tishi" class="tip" style="padding:15px 15px;color:#fff;background-color: #FF9800;">
+        <h5><i class="fa fa-exclamation-circle"></i> 系統提示</h5>
+        <h5 class="text-center">該表單必須使用手機APP簽核！</h5>
+    </div>
+    <div class="check-form form form-horizontal" ng-if="workflow.property && !workflow.tip">
+        <div class="form-group">
+            <label class="control-label col-sm-1 col-xs-2 text-left">添加附件</label>
+            <div class="col-sm-11 col-xs-10" >
+                <input type="file" id="filename0" name="files" >
+                <button type="submit" class="btn btn-info" ng-click="addFile()"><i class="fa fa-upload"></i> 添加</button>
+            </div>
+        </div>
+        <div class="form-group" ng-show="file.name">
+            <label class="control-label col-sm-1 col-xs-2 text-left">附件名稱</label>
+            <label class="control-label col-sm-11 col-xs-10 text-left" style="text-align: left;">{{file.name}}</label>
+        </div>
+        <div class="form-group" style="height:71px;margin-top: 10px">
+            <label class="control-label col-sm-1 col-xs-2 text-left">簽核意見</label>
+            <div class="col-sm-11 col-xs-10">
+                <textarea id="comment" class="form-control" row="2" ng-model="comment"></textarea>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!confirm.status">
+            <div class="text-center">
+                <div ng-repeat="x in workflow.property" style="display: inline-block;">
+                    <button  name="{{x.action}}" type="button" ng-click="checkAction(x.action,$event)" class="btn btn-primary" style="margin-right:5px;">
+                        <i ng-if="x.action=='pass'" class="fa fa-check"></i>
+                        <i ng-if="x.action=='forward'" class="fa fa-mail-forward"></i>
+                        <i ng-if="x.action=='rejected'" class="fa fa-remove"></i>
+                         {{x.ation}}{{x.name}}</button>
+                    <span class="btn btn-info grad-color" style="margin-right:5px;">正在提交...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="check-flow">
+        <label class="control-label" style="padding-bottom:10px;"><i class="fa fa-th-list" style="color:#ff9800;"></i> 簽核記錄</label>
+        <ul >
+            <li class="flow" ng-repeat="x in workflow.record">
+                <div>
+                    <div class="pass" ng-if="x.action!='待簽核'"></div>
+                    <div class="has_next" ng-if="!$last"></div>
+                    <span>&nbsp;{{x.end_time}}</span>
+                </div>
+                <div>
+                    <span>&nbsp;{{x.name}}</span>
+                    <span>({{x.jon}})</span>
+                    <span  ng-class="{'駁回': 'text-danger','通過': 'text-primary','轉呈':'text-primary','待簽核':'text-primary'}[x.action]"> <b>{{x.action}}</b></span>
+                </div>
+                <div><span>&nbsp;簽核意見：{{x.desc}}</span><a ng-if="x.file[0]" target="_blank" href="{{static_url}}{{x.file[0]}}">(附件)</a></div>
+                <div>&nbsp;<span >簽名附件：</span>
+                    <a target="_blank" ng-if="x.pdf" href="{{static_url}}{{x.pdf}}">
+                        <i class="fa fa-file-pdf-o" style="font-size:16px;"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="modal modal-container" ng-show="confirm.status">
+    <div class="content">
+        <div class="form">
+            <div class="form-group  text-left">
+                <label class="control-label" style="text-align: left">{{confirm.title}}
+                    <!--<img ng-show="!confirm.list.length" src="static/image/loaders/10s.gif" style="width:15px;height:15px;">-->
+                </label>
+                <div class="" ng-if="confirm.list.length">
+                    <select ui-select2 class="form-control" ng-model="confirm.user" ng-change="setConfirmUser(confirm.user)" style="width:100%;">
+                        <option ng-if="confirm.action!=rejected" ng-repeat="x in confirm.list" value="{{x.UserID}}">{{x.UserID}}({{x.UserName}}/{{x.OrgName}})</option>
+                        <option ng-if="confirm.action==rejected" ng-repeat="x in confirm.list" value="{{x.UserID}}">{{x.UserName}}</option>
+                    </select>
+                </div>
+                <div class="checkbox" ng-if="action=='rejected'">
+                    <label ><input type="checkbox" style="top:-4px;" ng-model="confirm.type"> 重新發起后返回本節點</label>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-default btn-info" ng-click="confirmAction($event)"><i class="fa fa-check"></i> 確定</button>
+                <span class="btn btn-info grad-color" >正在提交...</span>
+                <button class="btn btn-default" ng-click="cancelConfirm()"><i class="fa fa-remove"></i> 取消</button>
+            </div>
+        </div>
+    </div>
+</div>

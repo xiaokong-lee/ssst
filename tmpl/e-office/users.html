@@ -1,0 +1,111 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>系統基礎管理</li>
+        <li class="current">角色授權 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="">
+        <div class="title">
+            <button class="btn btn-default btn-info btn-radius pull-right"  style="margin-bottom:15px;outline: none" ng-click="createUser()"><i class="fa fa-plus"></i> 新建</button>
+        </div>
+    </div>
+    <div class="table-container" >
+        <div ng-if="datas" ng-controller="tableCtrl">
+            <div class="table-header">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                        <div class="form-group search-group">
+                            <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                            <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">
+                <thead>
+                <tr >
+                    <th class="text-center" style="width:50px;">序號</th>
+                    <th class="text-center" style="width:150px;">工號</th>
+                    <th class="text-center" style="width:150px;">姓名</th>
+                    <th class="text-center" >角色列表</th>
+                    <th class="text-center" style="width:100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in data">
+                    <td>{{$index+1}}</td>
+                    <td >{{x.user[0][1]}}</td>
+                    <td >{{x.user[0][2]}}</td>
+                    <td ><span ng-repeat="y in x.role">{{y[1]}}<span ng-if="!$last">,</span></span></td>
+                    <td>
+                        <button class="btn btn-primary btn-xs"  ng-click="editUser(x.user[0][0])">編輯</button>
+                        <button class="btn btn-danger btn-xs"  ng-click="deleteUser(x.user[0][0])">刪除</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                <h3 class="text-center">對不起！沒有您想要的結果！
+                </h3>
+            </div>
+            <div class="table-footer" style="margin-top:15px;">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-12"></div>
+                    <div class="col-sm-6 col-xs-12 text-center">
+                        <ul class="pagination" ng-if="pageArr.length">
+                            <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                            <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                            <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>3">......</a></li>-->
+                            <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                            <!--<li><a ng-show="activePage<2 && pageArr.length>3">......</a></li>-->
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="form-group text-right">
+                            <label class="control-label">共 {{dataCount}} 條記錄</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="modal_show">
+        <div class="content">
+            <div class="form form-horizontal form text-left" style="padding:15px 15px;">
+                <div ng-if="action=='create'" class="form-group" style="padding:5px 15px;">
+                    <label class="text-left">工號
+                        <img ng-if="!data_ready" src="static/image/loaders/gif_32_loadding.gif" class="modal_loader">
+                    </label>
+                    <div class="">
+                        <select ui-select2 class="form-control" ng-model="user.user.id" theme="bootstrap">
+                            <option value="">請選擇</option>
+                            <option ng-repeat="x in unbingUsers" value="{{x.id}}">{{x.username}}({{x.last_name}})</option>
+                        </select>
+                    </div>
+                </div>
+                <div ng-if="action=='edit'" class="form-group" style="padding:0 15px;">
+                    <label class="text-left">姓名</label>
+                    <div class="">
+                        <input type="text" class="form-control" placeholder="請輸入姓名" ng-model="user.user.last_name" readonly>
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">角色</label>
+                    <div class="table-container" style="height:250px;overflow-y: auto">
+                        <ul style="width:100%">
+                            <li ng-repeat="x in roles" style="display:inline-block;width:33%;">
+                                <input type="checkbox" data-id="{{x.id}}" ng-model="x.checked"><span style="padding-left:5px;">{{x.role_name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-default btn-info" ng-click="saveUser($event)"><i class="fa fa-save"></i> 保存</button>
+                    <button type="button" class="btn btn-default " ng-click="cancelUser()"><i class="fa fa-remove"></i> 取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

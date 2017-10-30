@@ -1,0 +1,53 @@
+#form{
+    background-color: #fff;
+}
+#form_header{
+    width:100%;
+    min-height:32px;
+    border-width:1px;
+    border-style: solid;
+    border-bottom-width:0;
+}
+.forms{
+    width:100%;
+    text-align: center;
+    line-height:32px;
+    border-left-width:1px;
+    border-top-width:1px;
+    border-left-style:solid;
+    border-top-style:solid;
+    background-color: #fff;
+    /*table-layout:fixed;*/
+}
+.forms table tr{
+    height:32px;
+}
+.forms,form td,#form_header{
+    border-color:#000;
+}
+.forms caption{
+    color:#000;
+}
+/*.forms tr.select {*/
+    /*background-color:transparent;*/
+/*}*/
+.forms td{
+    height:42px;
+    padding:5px 10px;
+    overflow: visible;
+    word-wrap:break-word;
+    word-break:break-all;
+    white-space: normal;
+    background-color: transparent;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-right-style: solid;
+    border-bottom-style:solid;
+}
+.forms td .form-control{
+    border-color:transparent;
+    background-color: transparent;
+}
+.forms tr.selected{
+    border-left:4px solid #03a9f4;
+}

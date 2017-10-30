@@ -1,0 +1,171 @@
+<style>
+    .mess {
+        width: 300px;
+        background-color: #191919 !important;
+        font-size: 12px;
+    }
+
+    .mess > li {
+        position: relative;
+        /*border-bottom: 1px solid #615d5d;*/
+        padding: 0 10px;
+        /*margin: 0 10px;*/
+        overflow: hidden;
+    }
+
+    #header .mess > li:hover {
+        background-color: #000 !important;
+    }
+
+    .mess > li:hover .messhr {
+        border: 0!important;
+    }
+
+    .mess > li div a, .mess > li div span {
+        color: #cac6c6;
+        margin: 0 10px;
+        white-space: normal !important;
+    }
+
+    .mess-box {
+        /*margin: 15px 10px;*/
+        padding: 15px 10px 10px 10px;
+        /*padding-bottom: 25px;*/
+    }
+
+    .mess-box a {
+        color: #f1eded !important;
+    }
+
+    .mess-box > a:hover {
+        color: #1ebba5 !important;
+    }
+
+    .allmess a:hover {
+        color: #1ebba5 !important;
+    }
+
+    .mess > li:hover .messmark {
+        display: block;
+    }
+
+    .mess > li:hover .messtime {
+        display: none;
+    }
+
+    .allmess {
+        margin: 0px 10px;
+        border: 0 !important;
+        padding: 0;
+    }
+
+    /*.messhr {*/
+    /*border-top: 1px solid #696767;*/
+    /*!*margin: 10px;*!*/
+    /*}*/
+
+    #header ul > li:hover {
+        background-color: transparent !important;
+    }
+    .messtime {
+        position: absolute;
+        right: 10px;
+    }
+    .messmark {
+        position: absolute;
+        right: 22px;
+        top: 9px;
+        display: none;
+        /*margin: 0 10px 10px 214px;*/
+        color: #1ebba5;
+    }
+</style>
+
+<div id="header" class="header" ng-controller="indexCtrl">
+    <div style="width:210px;position:absolute;left:0;top:0;" ng-hide="userData.isUserAuth">
+        <a class="app-header" style="margin:0;">
+            <img class="logo" src="static/image/logo.png">
+        </a>
+    </div>
+    <ul class="nav navbar-nav user-nav login-nav nav-fw" ng-if="!userData.isUserAuth">
+        <li class="" style="left:210px;top:0;">
+            <img src="static/image/beacon.png" class="beacon-logo"/>
+        </li>
+        <li class="pull-right">
+            <!--<a class="dropdown-toggle text-center" data-toggle="dropdown" style="margin:0;color: #fff;">註冊</a>-->
+        </li>
+        <li class="pull-right">
+            <a href="#/signin" style="margin:0;color: #fff;"><i class="fa fa-user"
+                                                                style="padding-right: 10px;"></i>登錄</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav user-nav user-nav nav-fw" ng-if="userData.isUserAuth">
+        <li class="pull-left">
+            <a name="enlarge" class="text-center" ng-click="sidebarToggle()">
+                <i class="fa fa-dedent"></i>
+            </a>
+        </li>
+        <li class="pull-left">
+            <img src="static/image/beacon.png" class="beacon-logo"/>
+        </li>
+        <!--<li class="pull-left">-->
+        <!--<a name="enlarge" class="text-center" ng-click="userInfoToggle()">-->
+        <!--<i class="fa fa-user-circle"></i>-->
+        <!--</a>-->
+        <!--</li>-->
+        <li class="hidden-xs pull-right dropdown">
+            <a class="dropdown-toggle text-center" data-toggle="dropdown">
+                <i class="fa fa-user"></i>
+                <i class="caret" style="display:inline-block;font-size:14px;"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#/info">个人信息</a></li>
+                <!--<li><a href="#/menu">菜單管理</a></li>-->
+                <li ng-if="userData.my_auth.data['#/systemmenu']"><a href="#/systemmenu">系统菜單</a></li>
+                <li><a href="#/mymenu">我的菜單</a></li>
+                <li><a href="" ng-click="logout()">退出系統</a></li>
+            </ul>
+        </li>
+        <li class="hidden-xs pull-right">
+            <a href="#/messagelist" class="text-center">
+                <i class="fa fa-bell-o"></i>
+                <div  ng-class="{notice:notify}"><span class="heartbit"></span> <span class="point"></span></div>
+                <!--<sup class="badge">22</sup>-->
+            </a>
+        </li>
+        <li class="hidden-xs pull-right">
+            <a class="text-center" data-toggle="dropdown">
+                <i class="fa fa-envelope-o"></i>
+                <div ng-class="{notify:notify}"><span class="heartbit"></span> <span class="point"></span></div>
+                <!--<sup class="badge">20</sup>-->
+            </a>
+            <ul class="dropdown-menu mess">
+                <li style="" ng-repeat="x in userData.message">
+                    <div class="messhr" style="padding: 10px 10px 0px 10px;border-bottom: 1px solid #696767;">
+                        <div><a href="javascript:;">{{x.type}}</a> <span class="messtime">{{x.time}}</span></div>
+                        <div class="mess-box">
+                            <a href="#{{x.url}}">{{x.title}}</a>
+                        </div>
+                        <div class="messmark"><a href="javascript:;">標為已讀</a></div>
+                    </div>
+                </li>
+                 <li class="">
+                    <div class="messhr" style="padding: 10px 10px 0px 10px;">
+                        <div class="mess-box text-center">
+                            <!--<a href="#/allmessage">查看全部</a>-->
+                            <a href="javascript:alert('該功能正在開發中，敬請期待');">查看全部</a>
+                        </div>
+                        <!--<div class="messhr" style=""></div>-->
+                    </div>
+
+                </li>
+
+                <!--<li><a href="#/forms">表單簽核</a></li>-->
+                <!--<li><a href="#/tasks">工作任務管理</a></li>-->
+            </ul>
+        </li>
+        <li class="visible-xs pull-right">
+            <a class="text-center" onclick="showCollapseMenu()"><b class="glyphicon glyphicon-user"></b></a>
+        </li>
+    </ul>
+</div>

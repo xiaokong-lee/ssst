@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #form{
+            background-color: #fff;
+        }
+        #form_header{
+            width:100%;
+            min-height:32px;
+            border-width:1px;
+            border-style: solid;
+            border-bottom-width:0;
+        }
+        .forms{
+            width:100%;
+            text-align: center;
+            line-height:32px;
+            border-left-width:1px;
+            border-top-width:1px;
+            border-left-style:solid;
+            border-top-style:solid;
+            background-color: #fff;
+            table-layout:fixed;
+        }
+        .forms table tr{
+            height:32px;
+        }
+        .forms,form td,#form_header{
+            border-color:#000;
+        }
+        .forms caption{
+            color:#000;
+        }
+        /*.forms tr.select {*/
+            /*background-color:transparent;*/
+        /*}*/
+        .forms td{
+            padding:5px 10px;
+            overflow: visible;
+            word-wrap:break-word;
+            word-break:break-all;
+            white-space: normal;
+            background-color: transparent;
+            border-right-width:1px;
+            border-bottom-width:1px;
+            border-right-style: solid;
+            border-bottom-style:solid;
+        }
+        .forms td .form-control{
+            border-color:transparent;
+            background-color: transparent;
+        }
+        .forms tr.selected{
+            border-left:4px solid #03a9f4;
+        }
+    </style>
+</head>
+<body>
+    <table class="forms">
+        <!-- ngIf: form.title.fixed --><caption style="text-align:center;border:1px solid #000;border-bottom-width:0;" ng-if="form.title.fixed" class="ng-scope">
+                    <!-- ngIf: form.logo --><img ng-if="form.logo" src="static/image/jizhun.png" ng-style="form.logo.style" class="ng-scope" style="position: absolute; left: 0px; top: 0px; height: 28px; width: auto; padding-left: 5px; padding-top: 5px;"><!-- end ngIf: form.logo -->
+                    <!-- ngIf: form.title.fixed --><p ng-if="form.title.fixed" ng-style="form.title.style" class="ng-binding ng-scope" style="text-align: center;">測試1.1</p><!-- end ngIf: form.title.fixed -->
+                    <!-- ngIf: form.subtitle.fixed --><p ng-if="form.subtitle.fixed" ng-style="form.subtitle.style" class="ng-binding ng-scope" style="text-align: center;"></p><!-- end ngIf: form.subtitle.fixed -->
+                </caption><!-- end ngIf: form.title.fixed -->
+                <tbody>
+                <!-- ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="0" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="6" data-index="[0].list[0]" rowspan="1" ng-style="y.style" style="width:100.00%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">&nbsp;&nbsp;&nbsp;&nbsp;基准精密工业(惠州)有限公司<br>&nbsp;&nbsp;&nbsp;&nbsp;JIZHUN&nbsp;Precision&nbsp;Industrial&nbsp;(HuiZhou)&nbsp;Co.,&nbsp;Ltd.&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="1" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="4" data-index="[1].list[0]" rowspan="1" ng-style="y.style" style="width:64.29%" class="ng-scope">111</td><!-- end ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[1].list[1]" rowspan="1" ng-style="y.style" style="width:12.97%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">申請時間</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[1].list[2]" rowspan="1" ng-style="y.style" style="width:22.74%" class="ng-scope">111</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="2" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[2].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">申&nbsp;&nbsp;請&nbsp;&nbsp;人</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[2].list[1]" rowspan="1" ng-style="y.style" style="width:27.11%" class="ng-scope">1111</td><!-- end ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[2].list[2]" rowspan="1" ng-style="y.style" style="width:19.10%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">申請人聯系方式</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[2].list[3]" rowspan="1" ng-style="y.style" style="width:35.71%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="3" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[3].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">申請部門</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[3].list[1]" rowspan="1" ng-style="y.style" style="width:27.11%" class="ng-scope">111</td><!-- end ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[3].list[2]" rowspan="1" ng-style="y.style" style="width:19.10%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">費用代碼</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[3].list[3]" rowspan="1" ng-style="y.style" style="width:35.71%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="4" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[4].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">用車日期及時間</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[4].list[1]" rowspan="1" ng-style="y.style" style="width:12.24%" class="ng-scope">111</td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[4].list[2]" rowspan="1" ng-style="y.style" style="width:14.87%" class="ng-scope">111</td><!-- end ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[4].list[3]" rowspan="1" ng-style="y.style" style="width:19.10%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">乘車人</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[4].list[4]" rowspan="1" ng-style="y.style" style="width:35.71%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="5" onclick="selectColumn(this)" class="ng-scope selected">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[5].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">乘車人<br>聯繫方式</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[5].list[1]" rowspan="1" ng-style="y.style" style="width:12.24%" class="ng-scope"></td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[5].list[2]" rowspan="1" ng-style="y.style" style="width:14.87%" class="ng-scope"></td><!-- end ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[5].list[3]" rowspan="1" ng-style="y.style" style="width:19.10%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">接洽人</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="2" data-index="[5].list[4]" rowspan="1" ng-style="y.style" style="width:35.71%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="6" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[6].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">用車事由&nbsp;</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="5" data-index="[6].list[1]" rowspan="1" ng-style="y.style" style="width:81.92%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="7" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="1" data-index="[7].list[0]" rowspan="1" ng-style="y.style" style="width:18.08%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">乘車地點及<br>行駛路線&nbsp;</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list --><td data-fixed="false" data-type="" ng-repeat="y in x.list" colspan="5" data-index="[7].list[1]" rowspan="1" ng-style="y.style" style="width:81.92%" class="ng-scope">11</td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="8" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="6" data-index="[8].list[0]" rowspan="1" ng-style="y.style" style="width:100.00%" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">注：實際行駛&amp;接洽路線請嚴格遵守申請單流程，如臨時有變更請在用車前重新填寫申請單。</span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table --><tr ng-repeat="x in form.table" data-index="9" onclick="selectColumn(this)" class="ng-scope">
+                    <!-- ngRepeat: y in x.list --><td data-fixed="true" data-type="" ng-repeat="y in x.list" colspan="6" data-index="[9].list[0]" rowspan="1" ng-style="y.style" style="width: 100%; font-family: PMingLiU; font-weight: 100; text-align: left; text-decoration: underline;" class="ng-scope">
+                        <!-- ngIf: y.fixed --><span ng-if="y.fixed" ng-bind-html="y.text" class="ng-binding ng-scope">說明：1.流程：申請人填表→主管核准→對應窗口保存；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.乘車人員資料需詳細填寫；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.若乘車人員超過6人，請走車調正常派車流程，另行派車；<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.請文明乘車，對於無乘車申請單及刻意擾亂乘車秩序者，司機有權拒絕其上車。<br></span><!-- end ngIf: y.fixed -->
+                        <!-- ngIf: !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio' -->
+                        <!-- ngIf: y.input.date==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.datetime==true && y.input.type=='input' -->
+                        <!-- ngIf: y.input.type=='select' -->
+                        <!-- ngIf: y.input.type=='checkbox' -->
+                        <!-- ngIf: y.input.type=='radio' -->
+                        <!-- ngIf: y.input.type=='textArea' -->
+                    </td><!-- end ngRepeat: y in x.list -->
+                </tr><!-- end ngRepeat: x in form.table -->
+                </tbody>
+    </table>
+</body>
+</html>

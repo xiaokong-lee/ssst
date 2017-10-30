@@ -1,0 +1,41 @@
+<div id="page_content" class="page-content">
+    <div class="" id="tmpl" style="border:1px solid #ddd;margin-bottom:15px;background-color: #fff">
+        <div class="table-container" style="position:relative;width:100%;overflow-x: auto;">
+            <table class="forms" ng-if="form.post_type!='general'" >
+                <tbody>
+                <tr>
+                    <td style="width:15%">申請單號</td>
+                    <td style="width:20%">{{form.card_id}}</td>
+                    <td style="width:15%">申請日期</td>
+                    <td style="width:20%">{{content.ApplyDate}}</td>
+                    <td style="width:15%">申請人工號</td>
+                    <td style="width:20%">{{content.UserID}}</td>
+                </tr>
+                <tr>
+                    <td style="width:15%">申請人姓名</td>
+                    <td style="width:20%">{{content.UserName}}</td>
+                    <td style="width:15%">申請單位代碼</td>
+                    <td style="width:20%">{{content.DepartCode}}</td>
+                    <td style="width:15%">申請單位名稱</td>
+                    <td style="width:20%;line-height:1.2;" >{{content.Department}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="forms" ng-style="content.style" ng-if="form.post_type=='general'">
+                <caption ng-if="content.title.fixed" ng-style="content.caption.style">
+                    <img ng-if="content.logo" src="static/image/jizhun.png" ng-style="content.logo.style" style="">
+                    <p ng-if="content.title.fixed" ng-style="content.title.style" style="text-align: center;">{{content.title.value}}</p>
+                    <p ng-if="content.subtitle.fixed" ng-style="content.subtitle.style" style="text-align: center;">{{content.subtitle.value}}</p>
+                </caption>
+                <tbody>
+                <tr ng-repeat="x in content.table" data-index="{{x.index}}">
+                    <td ng-repeat="y in x.list" colspan="{{y.cols}}" rowspan="{{y.rows}}" ng-style="y.style" style="width:{{y.width}}" >
+                        <span ng-if="y.fixed" ng-bind-html="y.text"></span>
+                        <span ng-if="!y.fixed">{{y.value}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

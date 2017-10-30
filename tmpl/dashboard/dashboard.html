@@ -1,0 +1,144 @@
+<div class="page-content">
+    <div id="page_box" class="page-box" ng-class="{page_aw:booking[0]}" style="margin-bottom: 70px">
+        <div class="page-title">
+            <span class="title">
+                <i class="fa fa-dashboard"></i> {{userData.dashboard[0].name}}
+            </span>
+            <a class="btn btn-default btn-info pull-right" ng-click="bookingToggle(0)">
+                <i class="icon-book"> 訂閱</i>
+            </a>
+            <div class="btn-group pull-right" style="margin-right:15px;">
+                <button type="button" class="btn btn-info">廠區</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">切换下拉菜单</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a>龙华</a></li>
+                    <li><a>观澜</a></li>
+                    <li><a>郑州</a></li>
+                    <li><a>晋城</a></li>
+                    <li><a>成都</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <ul id="#index_cart" class="row">
+            <li class="price-label col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center">
+                <div style="border-radius:5px;">
+                    <div style="padding: 8px 18px;border-radius: 5px;">
+                        <p class="pull-left"
+                           style="background-color: #ff6b6b;border-radius: 10px;padding: 0 15px;color: #fff;"><i
+                                class="fa fa-bandcamp"></i> Last month sales</p>
+                    </div>
+
+                    <div style="clear: both;height:100px;color: #ff6b6b;">
+                        <i class="fa fa-eercast pull-left"
+                           style="font-size:30px;transform: rotate(-15deg);padding: 20px 0 0 30px "></i>
+                        <span style="font-size: 48px">1540</span>
+                        <span style="position: absolute;bottom: 55px;">million</span>
+                        <p style="color: #9f9f9f;margin-left: 100px;">The Last Two Months</p>
+                    </div>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center">
+                <div style="border-radius:5px;">
+                    <div style="padding: 8px 18px;border-radius: 5px;">
+                        <p class="pull-left"
+                           style="background-color: #ffa200;border-radius: 10px;padding: 0 15px;color: #fff;"><i
+                                class="fa fa-podcast"></i> Order quantities</p>
+                    </div>
+
+                    <div style="clear: both;height:100px;color:#ffa200;">
+                        <i class="fa fa-gg-circle pull-left"
+                           style="font-size:30px;transform: rotate(-15deg);padding: 20px 0 0 30px "></i>
+                        <span style="font-size: 48px">1040</span>
+                        <span style="position: absolute;bottom: 55px;">million</span>
+                        <p style="color: #9f9f9f;margin-left: 100px;">The Last Two Months</p>
+                    </div>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center">
+                <div style="border-radius:5px;">
+                    <div style="padding: 8px 18px;border-radius: 5px;">
+                        <p class="pull-left"
+                           style="background-color: #45b6b0;border-radius: 10px;padding: 0 15px;color: #fff;"><i
+                                class="fa fa-compass"></i> Total products</p>
+                    </div>
+
+                    <div style="clear: both;height:100px;color: #45b6b0;">
+                        <i class="fa fa-telegram pull-left"
+                           style="font-size:30px;transform: rotate(-15deg);padding: 20px 0 0 30px "></i>
+                        <span style="font-size: 48px">1600</span>
+                        <span style="position: absolute;bottom: 55px;">million</span>
+                        <p style="color: #9f9f9f;margin-left: 100px;">The Last Two Months</p>
+                    </div>
+                </div>
+            </li>
+            <li class="price-label col-lg-3 col-md-6 col-sm-6 col-xs-6 text-center">
+                <div style="border-radius:5px;">
+                    <div style="padding: 8px 18px;border-radius: 5px;">
+                        <p class="pull-left"
+                           style="background-color: #65c3df;border-radius: 10px;padding: 0 15px;color: #fff;"><i
+                                class="fa fa-wpexplorer"></i> Total visitors</p>
+                    </div>
+
+                    <div style="clear: both;height:100px;color: #65c3df;">
+                        <i class="fa fa-grav pull-left"
+                           style="font-size:30px;transform: rotate(-15deg);padding: 20px 0 0 30px "></i>
+                        <span style="font-size: 48px">2600</span>
+                        <span style="position: absolute;bottom: 55px;">million</span>
+                        <p style="color: #9f9f9f;margin-left: 100px;">The Last Two Months</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul id="secondary_index" class="row" ng-drop="true" ng-drop-success="onDropComplete(0,$event)">
+            <li ng-repeat="y in droppedObj[0]" data-name="{{y.name}}" data-id="{{y.id}}" data-type="" ng-drag-data="obj"
+                ng-drag-success="onDragSuccess($data,$event)" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div e-chart e-data="{{y.id}}" class="chart" ng-if="y.type"></div>
+                <div class="chart" ng-if="!y.type" ng-include="'tmpl/dashboard/'+y.id+'.html'"></div>
+                <button type="button" class="btn btn-default btn-xs delete" ng-show="booking[0]"
+                        ng-click="deleteChart(0,y.id)"><b class="glyphicon glyphicon-remove"></b></button>
+            </li>
+        </ul>
+        <div id="chart_box" class="chart-box" ng-show="booking[0]">
+            <div class="box-container">
+                <ul id="chart_cart">
+                    <li ng-repeat="x in darggableObj[0]" ng-drag="true" data-name="{{x.name}}" data-id="{{x.id}}"
+                        data-type="{{x.type}}">
+                        <p class="font-ellipsis">{{x.name}}</p>
+                        <div class="chart-img">
+                            <img src="static/image/dashboard/chart4.png">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer" ng-class="{enlarge:!sidebar_show,normal:sidebar_show}" ng-show="dataChanged[0]">
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-3 col-xs-12 text-center">
+                <div class="form-group">
+                    <label class="col-lg-4 col-sm-6 col-xs-12 control-label" style="line-height:34px;">模板名稱</label>
+                    <div class="col-lg-8 col-sm-6 col-xs-12" ng-init="dashboard.name=userData.dashboard[0].name">
+                        <input type="text" class="form-control" ng-model="dashboard.name">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-12 text-center">
+                <button class="btn btn-default btn-primary" style="margin-right:15px;" ng-click="saveTmpl(0)"><i
+                        class="fa fa-save"></i> 保存
+                </button>
+                <button class="btn btn-default btn-danger" ng-click="cancelSave(0)"><i class="fa fa-remove"></i> 取消
+                </button>
+            </div>
+            <div class="col-sm-3 col-xs-12 text-center">
+                <button class="btn btn-default btn-primary pull-right" ng-click="saveAnother(0)"><i
+                        class="fa fa-save"></i> 另存為模板
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

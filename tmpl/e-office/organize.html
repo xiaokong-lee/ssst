@@ -1,0 +1,1372 @@
+
+    <link rel="stylesheet" href='static/plugin/organize/jquery.jOrgChart.css'/>
+    <!--<link rel="stylesheet" href="static/plugin/organize/bootstrap/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="static/plugin/organize/datatable/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/plugin/organize/selectize/css/selectize.css">
+    <link rel="stylesheet" href="static/plugin/organize/layer/skin/default/layer.css">
+    <script src="static/js/urls.js" type='text/javascript'></script>
+    <script type='text/javascript' src='static/plugin/organize/jquery.min.js'></script>
+    <!--<script src="static/plugin/organize/bootstrap/js/bootstrap.min.js"></script>-->
+    <script type='text/javascript' src='static/plugin/organize/jquery.jOrgChart.js'></script>
+    <script src="static/plugin/organize/datatable/js/jquery.dataTables.js"></script>
+    <script src="static/plugin/organize/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/plugin/organize/selectize/js/standalone/selectize.min.js"></script>
+    <script src="static/plugin/organize/layer/layer.js"></script>
+
+    <style>
+        .selectize-input input{
+            height: 35px;
+        }
+        .node{
+            padding: 0px;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+        }
+        #jOrgChart .jOrgChart{
+            transition:all 1s;
+            -webkit-transition:all 1s;
+            -moz-transition:all 1s;
+            -o-transition:all 1s;
+            transform-origin:0% 0%;
+        }
+        .jOrgChart .node {
+            width: 120px;
+            height: 54px;
+            line-height: 50px;
+            border-radius: 4px;
+            margin: 0 8px;
+        }
+        .left-nav{
+            position:fixed;
+            right: 0px;
+            top:15%;
+            margin-top: -20px;
+            width:0px;
+            /*height:200px;*/
+            box-shadow: 0px 0px 8px rgba(0,0,0,.2);
+            z-index: 1000000;
+            background: #fff;
+            overflow: hidden;
+            text-align: center;
+        }
+        .left-nav a{
+            background: #567fa0;
+            color: #ffffff;
+            width: 70px;
+            line-height: 50px;
+            display: block;
+            border-bottom: solid 1px #999;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .left-nav a:last-of-type{
+            border: none;
+        }
+        #add-construction{
+            display: none;
+            padding: 10px 10px 10px;
+        }
+        #modification-construction{
+            display: none;
+            padding: 10px 10px 10px;
+        }
+        #add-construction span,#modification-construction span{
+            color: #333;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        #add-construction input,#modification-construction input{
+            height:28px;
+            text-indent:5px;
+            border-radius:3px;
+            border: 1px solid #d0d0d0;
+            width: 170px;
+        }
+        a:hover{
+            color: #1caeb5;
+            text-decoration: none;
+        }
+        /*.node{*/
+            /*cursor: n-resize*/
+        /*}*/
+        .selectize-input{
+            padding: 0 15px;
+            height: 34px;
+            line-height: 34px;
+            margin-top:15px;
+            border-radius: 3px;
+        }
+        #select-tools{
+            position:relative;
+            z-index: 100000000;
+        }
+        table tr:hover {
+             background-color:transparent;
+        }
+        table{
+            margin: 0 auto;
+        }
+        .jOrgChart .node {
+            border-radius: 4px;
+            margin: 0 8px;
+        }
+        .jOrgChart a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+            word-break:keep-all;           /* 不换行 */
+            white-space:nowrap;
+        }
+        .jOrgChart .line {
+            height: 20px;
+            width: 2px;
+        }
+        .cle:after{
+            content: "";
+            display: block;
+            clear: both;
+            overflow: hidden;
+            height: 0px;
+        }
+        .cle{
+            zoom: 0;
+        }
+        .table_chart{
+            margin:0;
+            border-bottom: solid 1px #ddd;
+        }
+        .table_chart li{
+            float: left;
+            font-size: 13px;
+            padding: 10px 10px;
+            cursor: default;
+            color: #428bca;
+            border: 1px solid transparent;
+            border-bottom: solid 1px #ddd;
+            position: relative;
+            top:1px;
+        }
+        .table_chart li.active{
+            float: left;
+            color: #555;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
+        .left-nav11 a{
+            float: left;
+            display: block;
+            background: #567fa0;
+            color: #ffffff;
+            width: 70px;
+            line-height: 50px;
+            border-bottom: solid 1px #999;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .jOrgChart .pink_red{
+            background:rgb(231,77,77);
+        }
+        ol.roler_div li{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background:#777;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            color:#fff;
+            box-shadow: 0px 0px 3px rgba(0,0,0,.2);
+            cursor: pointer;
+            margin-top:3px;
+        }
+        ol.roler_div li:hover{
+           opacity: 0.8;
+        }
+        .jOrgChart a{
+            display: block;
+            height: 32px;
+        }
+        ._blue{
+           /*color: #00a2d4!important;*/
+        }
+        .my_level{
+            width:430px;
+            display: none;
+            padding: 15px;
+        }
+        .my_level ul{
+            margin-bottom: 10px;
+        }
+        .my_level li:first-child{
+            width: 80px;
+            text-align: right;
+            margin-right: 10px;
+            float: left;
+            font-size: 14px;
+            line-height: 32px;
+        }
+        .my_level li:last-child{
+            width: 310px;
+            float: left;
+        }
+        .my_level li:last-child input{
+            width:100%;
+            float: left;
+            height: 30px;
+        }
+        .label{
+            color: #555;
+        }
+    </style>
+    <!--<input type="hidden" id="user_id" value="{{userData.info.id}}">-->
+    <div>
+        <a class="back-btn" style="top:0;"><i class="fa fa-arrow-circle-left" style="color:#303f9f;"></i> </a>
+        <ol class="breadcrumb">
+            <li>協同工作管理</li>
+            <li class="current">組織維護 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+        </ol>
+    </div>
+
+    <!--<ol class="breadcrumb" style="margin-top: 5px;margin-bottom: 20px;">-->
+        <!--<li>Home</li>-->
+        <!--<li>系統基礎管理</li>-->
+        <!--<li class="current">組織維護</li>-->
+    <!--</ol>-->
+
+    <ul class="table_chart cle">
+        <li class="active">組織架構圖</li>
+        <li> 組織級別圖</li>
+    </ul>
+
+    <!--<ul class="cle" style="width: 150px;height:45px;float: right;margin: 20px;">-->
+       <!--<select id="select-panel-point">-->
+
+       <!--</select>-->
+    <!--</ul>-->
+<!--显示组织架构图-->
+<div class="jOrgChart_table"  style="padding-top:50px;overflow: auto;">
+    <ul class="cle" style="width:250px;position: absolute;right:5px;margin-top: -50px;display: none;">
+        <li style="float: right;">
+            <select id="select-panel-point" style="width: 250px;height:45px;float: right;margin: 20px;">
+        </select>
+        </li>
+    </ul>
+    <ol class="roler_div" style="position: fixed;right:1%;bottom:5%;list-style: none;z-index: 10000000">
+        <li class="big">
+            <i class="fa fa-search-plus"></i>
+        </li>
+        <li class="restore">
+            <i class="fa fa-laptop"></i>
+        </li>
+        <li class="small" >
+            <i class="fa fa-search-minus"></i>
+        </li>
+    </ol>
+    <div id='jOrgChart'></div>
+    <!--左側nav導航-->
+    <div class="left-nav" style="top:180px;">
+        <a class="add_organization" onclick="layer.closeAll();"  href="javascript:void(0)">添加</a>
+        <a class="del_organization" onclick="layer.closeAll();" href="javascript:void(0)">刪除</a>
+        <a class="modification_organization" onclick="layer.closeAll();" href="javascript:void(0)">修改</a>
+        <a class="user_usermanage" href="#/organize_usermanage" onclick="layer.closeAll();">人員</a>
+    </div>
+</div>
+<div class="jOrgChart_table" style="padding-top:50px;display: none;overflow: auto;">
+    <!--显示组织架构图-->
+    <div id='jOrgChart1'></div>
+    <!--左側nav導航-->
+    <div class="left-nav11" style="position: fixed;right: 0px;top:170px;text-align: center;width: 70px;width:0px;">
+        <a onclick="add_level_id0()"  href="javascript:void(0)">新建節點↑</a>
+        <a onclick="add_level_id1()"   onclick="layer.closeAll();"  href="javascript:void(0)">新建節點↓</a>
+        <a onclick="manage_level()"  onclick="layer.closeAll();" href="javascript:void(0)">修改</a>
+        <a onclick="del_level()" href="javascript:void(0)">刪除</a>
+    </div>
+</div>
+<div class="my_level add_lev1">
+    <form action="" method="POST" enctype="multipart/form-data" onkeydown="if(event.keyCode==13)return false;">
+        <input name="level" class="level_level" type="text" value="" style="display: none;">
+    <ul class="cle">
+        <li>級別名稱</li>
+        <li><input name="level_code" class="level_code1" type="text"></li>
+    </ul>
+    <ul class="cle">
+        <li>級別編號</li>
+        <li><input name="level_name" class="level_name1" type="text"></li>
+    </ul>
+    <p class="cle" style="text-align: right;">
+        <button onclick="add_level_max_min1()" type="button" class="btn btn-success btn-sm">確認添加</button>
+        <button type="button" class="btn btn-info btn-sm" onclick="layer.closeAll();">放棄添加</button>
+    </p>
+        <input class="level_submit" type="submit" style="display: none;">
+    </form>
+</div>
+<div class="my_level add_lev2">
+        <form action="" method="POST" enctype="multipart/form-data" onkeydown="if(event.keyCode==13)return false;">
+            <input name="level" class="level_leve2" type="text" value="" style="display: none;">
+            <ul class="cle">
+                <li>級別名稱</li>
+                <li><input name="level_name" class="level_name2" type="text"></li>
+            </ul>
+            <ul class="cle">
+                <li>級別編號</li>
+                <li><input name="level_code" class="level_code2" type="text"></li>
+            </ul>
+            <p class="cle" style="text-align: right;">
+                <button onclick="add_level_max_min2()" type="button" class="btn btn-success btn-sm">確認添加</button>
+                <button type="button" class="btn btn-info btn-sm" onclick="layer.closeAll();">放棄添加</button>
+            </p>
+            <input class="level_submit2" type="submit" style="display: none;">
+        </form>
+    </div>
+<div class="my_level add_lev3">
+        <ul class="cle">
+            <li>級別名稱</li>
+            <li><input name="level_code" class="add_lev2_code" type="text"></li>
+        </ul>
+        <ul class="cle">
+            <li>級別編號</li>
+            <li><input name="level_name" class="add_lev2_name" type="text"></li>
+        </ul>
+        <p class="cle" style="text-align: right;">
+            <button onclick="manage_level_max_min()" type="button" class="btn btn-success btn-sm">確認修改</button>
+            <button type="button" class="btn btn-info btn-sm" onclick="layer.closeAll();">放棄修改</button>
+        </p>
+</div>
+<div id="add-construction">
+    <div class="cle">
+        <span>組織名稱</span><input class="input-name" type="text" placeholder="請輸入組織名稱">
+    </div>
+    <div class="cle">
+        <span style="float: left;margin-top: 15px;">組織級別</span><div style="width: 170px;float: left;"><select id="select-tools"></select></div>
+    </div>
+    <div class="cle" style="margin-top:10px;">
+        <span>組織代碼</span><input class="input-label" type="text" placeholder="請輸入組織代碼">
+    </div>
+    <div style="margin-top:70px;text-align: right;padding-right: 5px;">
+        <button onclick="add_id()" type="button" class="btn btn-success btn-sm">確認保存</button>
+        <button onclick="layer.closeAll();" type="button" class="btn btn-info btn-sm">放棄保存</button>
+    </div>
+</div>
+    <script>
+         var select_tools=$('#select-tools').selectize();
+        var control = select_tools[0].selectize;
+    </script>
+
+<div id="modification-construction">
+    <div>
+        <span>組織名稱</span><input class="input-name modification_name" type="text" placeholder="請輸入組織名稱">
+    </div>
+    <div class="cle">
+        <span style="float: left;margin-top: 15px;">組織級別</span><div style="width: 170px;float: left;"><select id="select-tools1"></select></div><br />
+    </div>
+    <div style="margin-top: 15px;">
+        <span>組織代碼</span><input class="input-name modification_label" type="text" placeholder="請輸入組織代碼">
+    </div>
+    <div style="margin-top: 15px;">
+        <span>轉移代碼</span><input class="input-name modification_id" type="text" placeholder="請輸入轉移至ID">
+    </div>
+    <div style="margin-top:60px;text-align: right;padding-right: 5px;">
+        <button onclick="modification_id()" type="button" class="btn btn-success btn-sm">確認修改</button>
+        <button onclick="layer.closeAll();" type="button" class="btn btn-info btn-sm">放棄修改</button>
+    </div>
+    <script>
+         var select_tools1=$('#select-tools1').selectize();
+        var control1 = select_tools1[0].selectize;
+    </script>
+</div>
+    <script type='text/javascript'>
+//        顯示的放大和縮小
+        var _scale=1;  //放大比例的變量
+        $(".roler_div .big").click(function () {
+            _scale+=0.1;
+            $("#jOrgChart .jOrgChart").css("transform","scale("+_scale+")");
+        });
+        $(".roler_div .restore").click(function () {
+            _scale =1;
+            $("#jOrgChart .jOrgChart").css("transform","scale("+_scale+")");
+        });
+        $(".roler_div .small").click(function () {
+            _scale-=0.1;
+            $("#jOrgChart .jOrgChart").css("transform","scale("+_scale+")");
+        });
+        window.onresize=function () {
+            set_jOrgChart_height()
+        };
+//        获取屏幕高度
+        function set_jOrgChart_height() {
+            var _height=$(window).height();
+            $("#jOrgChart").height(_height-180);
+        }
+        set_jOrgChart_height();
+        var all_data={
+            data: []
+        };   //所有的數據集合
+        var init={
+            data:"",
+            new_id:"",
+            level:""
+        };
+        $(".table_chart li").click(function () {
+            $(this).addClass("active").siblings("li").removeClass("active");
+            var _index=$(this).index();
+            $(".jOrgChart_table").hide();
+            $(".jOrgChart_table").eq(_index).show();
+        });
+//        權限設置
+        function set_extent() {
+            var userInfo =JSON.parse(window.localStorage.getItem("userInfo"));
+            var _user_id=userInfo.info.id;
+            $.ajax({
+                url: _urls_.user_auth+"/"+_user_id,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    console.log(result);
+//                    #organizeEdit
+//                    判斷用戶是否有權限
+                    if(result.data['#organizeEdit']){
+                    }else {
+                        $(".add_organization").remove();
+                        $(".del_organization").remove();
+                        $(".modification_organization").remove();
+                        $(".left-nav11").remove();
+                    }
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        }
+        set_extent() ;
+//        setInterval(function () {
+//          $(".node-cell a[data-id=50]").click();
+//        },2000)
+        //数据返回
+        function ajax_init(){
+            $.ajax({
+                url: _urls_.org,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    var showlist = $("<ul id='org' style='display:none'></ul>");
+                    all_data.data=[];
+                    $(".left-nav").stop().animate({"width":"0"});
+                    data_set(result);
+//                    上面的搜索頁面
+                    seach_select_panel_point(result);
+//                    $("#jOrgChart").html("");
+//                    $("#jOrgChart").append(showlist);
+//                    $("#org").jOrgChart( {
+//                        chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+//                        dragAndDrop : false //设置是否可拖动
+//                    });
+//                    $("[data-toggle='tooltip']").tooltip();
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        }
+        ajax_init();
+//        添加按鈕點擊事件
+        $("body").on("click",".left-nav a.add_organization",function () {
+            $(".input-name").val("");
+            $(".input-label").val("");
+//            獲取等級下拉列表
+            $.ajax({
+                url: _urls_.org_level,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    var _obj=[];
+                    if(init.level){
+                        for(var i=0;i<result.length;i++){
+                            if(result[i].level>init.level){
+                                _obj.push(result[i]);    //刪除第i個節點
+                            }
+                        }
+                    }else {
+                        _obj=result;
+                    }
+                    control.clearOptions();
+                    for(var i = 0; i < _obj.length; i++){
+                        control.addOption({value:_obj[i].level,text:_obj[i].level_name});
+                    }
+
+//                    $('#select-tools').selectize({
+//                        valueField: 'level',
+//                        labelField: 'level_name',
+//                        searchField: 'level_name',
+//                        options: result,
+//                        create: false
+//                    });
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+            layer.open({
+                title:"添加",
+                type: 1,
+                anim: 0,
+                id:1,
+                scrollbar: false,
+                shadeClose: true, //开启遮罩关闭
+                area: ['280px'],
+                content: $('#add-construction')
+            });
+        });
+//        修改按鈕點擊事件
+        $("body").on("click",".left-nav a.modification_organization",function () {
+            $.ajax({
+                url: _urls_.org_level,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    console.log(result);
+//                    $('#select-tools1').selectize({
+//                        valueField: 'level',
+//                        labelField: 'level_name',
+//                        searchField: 'level_name',
+//                        options: result,
+//                        create: false
+//                    });
+
+                    control1.clearOptions();
+                    for(var i = 0; i < result.length; i++){
+                        control1.addOption({value:result[i].level,text:result[i].level_name});
+                    }
+                    control1.addItem(init.level);
+
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+            $.ajax({
+                url:_urls_.org+"/"+init.new_id,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                area: ['280px'],
+                success: function(data){
+                    layer.open({
+                        title:"修改",
+                        type: 1,
+                        anim: 0,
+                        id:1,
+                        scrollbar: false,
+                        shadeClose: true, //开启遮罩关闭
+                        area: ['280px'],
+                        content: $('#modification-construction')
+                    });
+//                    $('#testSelect option:selected') .val()
+                    $(".modification_name").val(data.org_name);
+                    $(".modification_id").val(data.parent_id);
+                    $(".modification_label").val(data.org_code);
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        })
+//        刪除當前的節點
+        $("body").on("click",".left-nav a.del_organization",function () {
+            //询问框
+            layer.confirm('確定刪除當前節點？', {
+                title:'刪除節點',
+                btn: ['確定','取消'] //按钮
+            }, function(){
+              $.ajax({
+                    url: _urls_.org+"/"+init.new_id,
+                    type: 'DELETE',
+                    dataType: 'JSON',
+                    data:"",
+                    headers: {
+                      // 'Content-Type': 'application/x-www-form-urlencoded'
+                      'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                    },
+                    success: function(data){
+                        ajax_init();
+                        layer.closeAll();
+                    },
+                    error:function (xhr) {
+                        if(xhr.responseText){
+                            layer.msg(xhr.responseText);
+                        }else{
+                            layer.msg('數據異常');
+                        }
+                    }
+                });
+            }, function(){
+            });
+        });
+    function data_set($data) {
+        var data_chard=all_data.data;
+//        首次進入的事件
+        if(all_data.data.length<=0){
+            for(var i=0;i<$data.length;i++){
+                if(i=="0"){
+                    var _obj={};  //首次生成的第一個數組
+                    _obj.id=$data[i].id;
+                    _obj.name=$data[i].org_name;
+                    _obj.pid=$data[i].parent_id;
+                    _obj.childrens=[];
+                    _obj.level=$data[i].org_level;
+
+                    _obj.manager=$data[i].manager;
+                    _obj.org_people_all=$data[i].org_people_all;
+                    _obj.manager_duty=$data[i].manager_duty;
+
+                    $data.splice(i,1);    //刪除第i個節點
+                    all_data.data.push(_obj);
+                    if($data.length>0){
+                        add_nodal_points($data);
+                    }
+                    return false;
+                }
+            }
+        }else {
+            add_nodal_points($data);
+//            $data.splice(i,1);    //刪除第i個節點
+        }
+    }
+//    數據在父元素或者找不到元素執行的次數
+    var dataerror=0;
+//    添加所有數據節點
+    function add_nodal_points($data) {
+        var _boydata=[];
+        for(var i=0;i<$data.length;i++){
+//            判斷后台數據是否按要求，擔心子數據在父數據的上面
+            var tf=false;
+            find_points($data[i],all_data.data,function (_obj,my_data) {
+                my_data.childrens.push(_obj);
+                tf=true;
+//                alert("ok");
+            });
+            if(!tf){
+                _boydata.push($data[i]);
+            }
+        }
+        dataerror++;
+//        防止未加載的數據長度大於0和執行變數小於兩次在執行一此
+//        dataerror<2是為了防止死循環找不到父節點重複執行
+        if(_boydata.length>0 && dataerror<3){
+            add_nodal_points(_boydata)
+        }else {
+            if(_boydata.length>0){
+                var str="";
+                for(var i=0;i<_boydata.length;i++){
+                    str +=_boydata[i].id+"&";
+                }
+                layer.msg('請聯繫後台管理員查看組織架構的數據<br />id='+str+'！！！');
+            }
+            dataerror=0;
+            dorw_(all_data.data);
+        }
+    }
+
+    function dataerror($data) {
+        for(var i=0;i<$data.length;i++){
+//            判斷后台數據是否按要求，擔心子數據在父數據的上面
+            var tf=false;
+            find_points($data[i],all_data.data,function (_obj,my_data) {
+                my_data.childrens.push(_obj);
+                tf=true;
+//                alert("ok");
+            });
+            if(!tf){
+                _boydata.push($data[i]);
+            }
+        }
+    }
+
+    function find_points($data,my_data,callback) {
+        $.each(my_data, function(index, val){
+            if(val.childrens.length > 0){
+                if(val.id==$data.parent_id){
+                    var _obj={};  //首次生成的第一個數組
+                    _obj.id=$data.id;
+                    _obj.name=$data.org_name;
+                    _obj.pid=$data.parent_id;
+                    _obj.level=$data.org_level;
+
+                    _obj.manager=$data.manager;
+                    _obj.org_people_all=$data.org_people_all;
+                    _obj.manager_duty=$data.manager_duty;
+
+                    _obj.childrens=[];
+                    callback(_obj,my_data[index]);
+                    return false;
+                }else{
+                    find_points($data,val.childrens,callback);
+                }
+            }else{
+                if(val.id==$data.parent_id){
+
+                    var _obj={};  //首次生成的第一個數組
+                    _obj.id=$data.id;
+                    _obj.name=$data.org_name;
+                    _obj.pid=$data.parent_id;
+                    _obj.level=$data.org_level;
+                    _obj.childrens=[];
+
+                    _obj.manager=$data.manager;
+                    _obj.manager_duty=$data.manager_duty;
+                    _obj.org_people_all=$data.org_people_all;
+
+                    callback(_obj,my_data[index]);
+                    return false;
+                }
+            }
+        });
+    }
+    function dorw_(data) {
+        var showlist = $("<ul id='org' style='display:none'></ul>");
+        showall(data, showlist);
+        $("#jOrgChart").html("");
+        $("#jOrgChart").append(showlist);
+        $("#org").jOrgChart( {
+            chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+            dragAndDrop : false //设置是否可拖动
+        });
+//        $("[data-toggle='tooltip']").tooltip();
+    }
+    function showall(menu_list, parent){
+        $.each(menu_list, function(index, val) {
+            if(val.childrens.length > 0){
+                var li = $("<li></li>");
+//                data-toggle="tooltip" data-placement="bottom" title="我是提示语"
+                li.append("<a  style='font-size: 13px;' href='javascript:void(0)' data-toggle='tooltip' data-placement='bottom' title=\'"+val.name+"\' data-id=\'"+val.id+"\' data-level=\'"+val.level+"\' onclick=getOrgId("+val.id+",this,"+val.level+",\'"+val.name+"\');>"+val.name+"<p style='font-size: 12px;display: none;'><span>"+val.manager+"</span>　<span >"+val.manager_duty+"</span></p><p style='font-size: 12px;display:none;line-height: 12px;'><span>"+val.org_people_all+"</span></p>"+"</a>").append("<ul></ul>").appendTo(parent);
+                //递归显示
+                showall(val.childrens, $(li).children().eq(1));
+            }else{
+                $("<li></li>").append("<a class='_blue' href='javascript:void(0)' data-toggle='tooltip' data-placement='bottom' title=\'"+val.name+"\' data-id=\'"+val.id+"\' data-level=\'"+val.level+"\' onclick=getOrgId("+val.id+",this,"+val.level+",\'"+val.name+"\');>"+val.name+"<p style='font-size: 12px;display: none;'><span>"+val.manager+"</span>　<span >"+val.manager_duty+"</span></p><p style='font-size: 12px;display:none;line-height: 12px;'><span>"+val.org_people_all+"</span></p>"+"</a>").appendTo(parent);
+            }
+        });
+    }
+//    節點的點擊事件
+    function getOrgId(_id,ele,level,_name){
+       var _tf=$(ele).parents(".node").hasClass("pink_red");
+        if(!_tf){
+            init.new_id=_id;
+            init.level=level;
+            $("#jOrgChart .node").removeClass("pink_red").css("line-height","50px").find("p").hide();
+            $(".left-nav").stop().animate({"width":"70"});
+            $(ele).parents(".node").addClass("pink_red").css("line-height","17px").find("p").show();
+            $(".user_usermanage").attr("href","#/organize_usermanage?id="+init.new_id+"&name="+_name);
+        }else{
+            init.new_id=_id;
+            init.level=level;
+            $("#jOrgChart .node").css("line-height","50px").removeClass("pink_red").find("p").hide();
+            $(".left-nav").stop().animate({"width":"0"});
+            $(ele).parents(".node").removeClass("pink_red");
+            $(".user_usermanage").attr("href","#");
+        }
+    }
+//    確認添加
+    function add_id() {
+        var _val=$(".input-name").val().trim();
+        var _label=$(".input-label").val().trim();
+        var _select=$("#add-construction .item").attr("data-value");
+        if(!_val){
+            layer.msg('名稱不能為空');
+            return false;
+        }
+        if(!_label){
+            layer.msg('組織代碼不能為空');
+            return false;
+        }
+        if(!_select){
+            layer.msg('組織節點不能為空');
+            return false;
+        }
+        $.ajax({
+            url: _urls_.org,
+            type: 'POST',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                org_name:_val,
+                parent_id:init.new_id,
+                org_level:_select,
+                org_code:_label,
+                is_active:true
+            },
+            success: function(result){
+                find_id(all_data.data,init.new_id,function ($arr,_val) {
+                    var _obj={};
+                    _obj.id=result.id;
+                    _obj.name=result.org_name;
+                    _obj.pid=result.parent_id;
+                    _obj.level=result.org_level;
+                    _obj.childrens=[];
+                    $arr.push(_obj);
+                    var showlist = $("<ul id='org' style='display:none'></ul>");
+                    showall(all_data.data, showlist);
+                    $("#jOrgChart").html("");
+                    $("#jOrgChart").append(showlist);
+                    $("#org").jOrgChart( {
+                        chartElement : '#jOrgChart',//指定在某个dom生成jorgchart
+                        dragAndDrop : false //设置是否可拖动
+                    });
+                    $(".node a[data-id="+init.new_id+"]").parents(".node").addClass("pink_red");;
+//                    $("[data-toggle='tooltip']").tooltip();
+                })
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+        layer.closeAll();
+    }
+//    修改當前的節點
+    function modification_id() {
+        var _val=$(".modification_name").val().trim();
+        var _id=$(".modification_id").val().trim();
+        var _select=$("#select-tools1").val().trim();
+        var _modification_label=$(".modification_label").val().trim();
+        if(_id){
+            var _data={
+                org_name:_val,
+                parent_id:_id,
+                is_active:true,
+                org_level:_select,
+                org_code:_modification_label
+            }
+        }else {
+            var _data={
+                org_name:_val,
+                is_active:true,
+                org_level:_select,
+                org_code:_modification_label
+            }
+        }
+        $.ajax({
+            url: _urls_.org+"/"+init.new_id,
+            type: 'PUT',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:_data,
+            success: function(data){
+                ajax_init();
+                layer.closeAll();
+
+//                    $('#testSelect option:selected') .val()
+
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+//    查找出需要添加的項目
+    function find_id(menu_list,ele_id,callback) {
+        var _id=ele_id;
+        //輸入框的值
+        var _user_input=$(".input-name").val();
+        if(!_user_input){
+
+        }
+        $.each(menu_list, function(index, val) {
+            if(val.childrens.length > 0){
+                if(val.id==_id){
+                    callback(val.childrens,_user_input);
+                    return false;
+                }
+                //递归調用
+                find_id(val.childrens,_id,callback);
+            }else{
+                if(val.id==_id){
+                    callback(val.childrens,_user_input);
+                    return false;
+                }
+            }
+        });
+    }
+    //        判斷url是否有manage_char
+    function has_manage_char() {
+        var _url=window.location.href;
+        if(_url.indexOf("manage_char")=="-1"){
+        }else {
+            $(".table_chart li").eq(1).addClass("active").siblings("li").removeClass("active");
+            $(".jOrgChart_table").hide();
+            $(".jOrgChart_table").eq(1).show();
+        }
+    }
+    has_manage_char();
+</script>
+<script>
+        var level_init={};
+        var level_data=[];
+        function jOrgChart_add(){
+            $.ajax({
+                url: _urls_.org_level,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    for(var i=0;i<result.length;i++){
+                        level_data.push(result[i]);
+                    }
+                    var showlist = $("<ul id='org1' style='display:none'></ul>");
+                    showall123(result, showlist);
+                    $("#jOrgChart1").html("");
+                    $("#jOrgChart1").append(showlist);
+                    $("#org1").jOrgChart( {
+                        chartElement : '#jOrgChart1',//指定在某个dom生成jorgchart
+                        dragAndDrop : false //设置是否可拖动
+                    });
+//                    $("[data-toggle='tooltip']").tooltip();
+//
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        }
+        jOrgChart_add();
+
+        function showall123(menu_list, parent){
+            var parent=parent;
+            $.each(menu_list, function(index, val) {
+                var li = $("<li></li>");
+//                data-toggle="tooltip" data-placement="bottom" title="我是提示语"
+                li.append("<a href='javascript:void(0)' data-toggle='tooltip' data-placement='bottom' title=\'"+val.level_name+"\' data-id=\'"+val.level+"\' data-level=\'"+val.level+"\' onclick=clickId("+val.level+",this);>"+val.level_name+"</a>").append("<ul></ul>").appendTo(parent);
+                menu_list.splice(0,1)
+                //递归显示
+//                    showall123(menu_list, parent)
+                showall123(menu_list,$(li).children().eq(1));
+                return false;
+//                parent=$(li).children().eq(1);
+
+            });
+        }
+        //    節點的點擊事件
+        function clickId(_id,ele){
+            $("#jOrgChart1 .node").css("background","");
+            $(".left-nav11").stop().animate({"width":"70"});
+            $(ele).parents(".node").css("background","rgb(231,77,77)");
+            level_init.level=_id;
+            for(var i=0;i<level_data.length;i++){
+                if(level_data[i].level==_id){
+                    if(i==0){
+                        level_init.maxlevel=0
+                    }else {
+                        level_init.maxlevel=level_data[i-1].level;
+                    }
+                    if(i==level_data.length-1){
+                        level_init.minlevel=0;
+                    }else {
+                        level_init.minlevel=level_data[i+1].level;
+                    }
+                }
+            }
+        }
+        function add_level_id0() {
+//            //询问框
+            layer.open({
+                title:"增加",
+                type: 1,
+                area: ['430px'],
+                content: $('.add_lev1')
+            });
+            var _level=level_init.maxlevel+","+level_init.level;
+//            layer.open({
+//                type: 2,
+//                area: ['460px','230px'],
+//                content:['tmpl/e-office/organize_form.html?'+_level, 'no'] //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+//            });
+        }
+        ////         添加level
+        function add_level_max_min1() {
+            var _level_name=$(".level_name1").val();
+            var _level_code1=$(".level_code1").val();
+            var _level=level_init.maxlevel+","+level_init.level;
+            var _data={
+                level:_level,
+                level_name:_level_name,
+                level_code:_level_code1
+            };
+            _data=JSON.stringify(_data);
+//            var fd = new FormData();
+//            var file = document.querySelector(_id).files[0];
+            // up_manage
+//            fd.append(_val, file);
+//            fd.append("level", _level);
+//            fd.append("level_name", _level_name);
+//            fd.append("level_code", _level_code1);
+//            fd.append("last_name", up_manage.last_name);
+//            fd.append("email", up_manage.email);
+//            fd.append("ext", up_manage.ext);
+//            fd.append("short_number", up_manage.short_number);
+//            fd.append("mobile_phone", up_manage.mobile_phone);
+//            var _data = {level:"45\,48",level_name:"111",level_code:"555"}
+//            alert(_level);
+            var _url=window.location.href;
+            $(".level_level").val(_level);
+//            $(".level_submit").click();
+//            setTimeout(function () {
+//                layer.closeAll();
+//                if(_url.indexOf("manage_char")=="-1"){
+//                    window.location.href=_url+"?manage_char";
+//                    has_manage_char();
+//                }else {
+//                    window.location.href=_url+"#";
+//                    has_manage_char();
+//                }
+//            },50000);
+
+            $.ajax({
+                url: _urls_.org_level,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType:"application/json; charset=utf-8",
+                data:_data,
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    layer.closeAll();
+                    jOrgChart_add();
+                   alert("添加成功");
+                },
+                error:function (xhr) {
+                    alert("添加失敗");
+                }
+            });
+
+
+//            window.location.href=_url+"?2";
+//            return false;
+//            console.log(_data);
+//            $.ajax({
+////                url: "http://10.129.4.97:9002/ac/org_level",
+//                url: "http://10.129.4.97:9002/ac/org_level",
+//                type: 'POST',
+//                dataType: 'JSON',
+////                contentType:"application/x-www-form-urlencoded",
+////                contentType: "application/json; charset=utf-8",
+////                contentType:"multipart/form-data; charset=utf-8",
+//                data:_data,
+//                success: function(result){
+//                    console.log(result);
+//                    alert("123")
+//                },
+//                error:function (xhr) {
+////                    layer.msg('數據異常');
+//                    console.log(xhr.responseText);
+////                    alert(xhr.responseText)
+//                }
+//            });
+        }
+        function add_level_id1() {
+            layer.open({
+                title:"增加",
+                type: 1,
+                area: ['430px'],
+                content: $('.add_lev2')
+            });
+        }
+        function add_level_max_min2() {
+            var _level=level_init.level+","+level_init.minlevel;
+//            var _data={
+//                "level":_level,
+//                "level_name":_level_name,
+//                "level_code":_level_code1
+//            };
+//            var _data = {level:"45\,48",level_name:"111",level_code:"555"}
+//            alert(_level);
+
+            var _level_name=$(".level_name2").val();
+            var _level_code1=$(".level_code2").val();
+            var _data={
+                level:_level,
+                level_name:_level_name,
+                level_code:_level_code1
+            };
+            _data=JSON.stringify(_data);
+
+            var _url=window.location.href;
+            $(".level_level").val(_level);
+
+            $.ajax({
+                url: _urls_.org_level,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType:"application/json; charset=utf-8",
+                data:_data,
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    layer.closeAll();
+                    jOrgChart_add();
+                    alert("添加成功");
+                },
+                error:function (xhr) {
+                    alert("添加失敗");
+                }
+            });
+
+//            var _url=window.location.href;
+//            $(".level_leve2").val(_level);
+//            $(".level_submit2").click();
+//            setTimeout(function () {
+//                layer.closeAll();
+//                if(_url.indexOf("manage_char")=="-1"){
+//                    window.location.href=_url+"?manage_char";
+//                    has_manage_char();
+//                }else {
+//                    window.location.href=_url+"#";
+//                    has_manage_char();
+//                }
+//            },50);
+        }
+        function manage_level() {
+            $.ajax({
+                url: _urls_.org_level+'/'+level_init.level,
+                type: 'GET',
+                dataType: 'JSON',
+                data:"",
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                success: function(result){
+                    layer.open({
+                        title:"修改",
+                        type: 1,
+                        area: ['430px'],
+                        content: $('.add_lev3')
+                    });
+                    $(".add_lev2_name").val(result.level_code);
+                    $(".add_lev2_code").val(result.level_name);
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        }
+        function manage_level_max_min(){
+            var add_lev2_code=$(".add_lev2_name").val();
+            var _add_lev2_name=$(".add_lev2_code").val();
+            $.ajax({
+                url:  _urls_.org_level+'/'+level_init.level,
+                type: 'PUT',
+                dataType: 'JSON',
+                headers: {
+                    // 'Content-Type': 'application/x-www-form-urlencoded'
+                    'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                },
+                data:{
+                    level_name:_add_lev2_name,
+                    level_code:add_lev2_code
+                },
+                success: function(result){
+                    jOrgChart_add();
+                    layer.closeAll();
+                },
+                error:function (xhr) {
+                    if(xhr.responseText){
+                        layer.msg(xhr.responseText);
+                    }else{
+                        layer.msg('數據異常');
+                    }
+                }
+            });
+        }
+        function del_level() {
+            layer.confirm('確定刪除當前？', {
+                title:'刪除',
+                btn: ['確定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    url: _urls_.org_level+'/'+level_init.level,
+                    type: 'DELETE',
+                    dataType: 'JSON',
+                    data:"",
+                    headers: {
+                        // 'Content-Type': 'application/x-www-form-urlencoded'
+                        'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                    },
+                    success: function(data){
+                        jOrgChart_add();
+                        layer.closeAll();
+                    },
+                    error:function (xhr) {
+                        if(xhr.responseText){
+                            layer.msg(xhr.responseText);
+                        }else{
+                            layer.msg('數據異常');
+                        }
+                    }
+                });
+            }, function(){
+            });
+        }
+
+    function seach_select_panel_point(result) {
+
+                 var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+                  '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+                var formatName = function(item) {
+                    return $.trim((item.org_name || '') + ' ' + (item.manager || ''));
+                };
+                $(".jOrgChart_table>ul").show();
+                $('#select-panel-point').selectize({
+                    persist: false,
+                    maxItems: 1,
+                    valueField: 'id',
+                    labelField: 'org_name',
+                    searchField: ['manager_duty','org_name', 'manager'],
+                    sortField: [
+                        {field: 'org_name', direction: 'asc'},
+                        {field: 'manager', direction: 'asc'}
+                    ],
+                    options: result,
+//                    options: [
+//                        {email: 'nikola@tesla.com', first_name: 'Nikola', last_name: 'Tesla'},
+//                        {email: 'brian@thirdroute.com', first_name: 'Brian', last_name: 'Reavis'},
+//                        {email: 'someone@gmail.com'}
+//                    ],
+                    render: {
+                        item: function(item, escape) {
+                            var name = formatName(item);
+                            return '<div>' +
+                                (name ? '<span class="name">' + escape(name) + '</span>' : '') +
+                                (item.manager_duty ? '<span class="email">' + escape(item.manager_duty) + '</span>' : '') +
+                            '</div>';
+                        },
+                        option: function(item, escape) {
+                            var name = formatName(item);
+                            var label = name || item.manager_duty;
+                            var caption = name ? item.manager_duty : null;
+                            return '<div>' +
+                                '<span class="label">' + escape(label) + '</span>' +
+                                (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+                            '</div>';
+                        }
+                    },
+                    createFilter: function(input) {
+                        var regexpA = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+                        var regexpB = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+                        return regexpA.test(input) || regexpB.test(input);
+                    },
+                    create: function(input) {
+                        if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+                            return {email: input};
+                        }
+                        var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+                        if (match) {
+                            var name       = $.trim(match[1]);
+                            var pos_space  = name.indexOf(' ');
+                            var first_name = name.substring(0, pos_space);
+                            var last_name  = name.substring(pos_space + 1);
+
+                            return {
+                                first_name: org_name,
+                                email: match[2],
+                                last_name: manager
+                            };
+                        }
+                        alert('Invalid email address.');
+                        return false;
+                    }
+                });
+    }
+    $("#select-panel-point").change(function () {
+        var _val=$(this).find("option[selected=selected]").val();
+        if(!_val){
+            return false;
+        }
+        $('.jOrgChart_table').animate({'scrollLeft':0},0);
+        $(".node-cell a[data-id="+_val+"]").click();
+        var _left=$(".node-cell a[data-id="+_val+"]").position().left-800;
+        var _top=$(".node-cell a[data-id="+_val+"]").position().top;
+        $('.jOrgChart_table').animate({'scrollLeft':_left},100)
+//        $('.jOrgChart_table').animate({'scrollTop':_top},100)
+
+//        $("html,body").animate({scrollTop:_top},200);//1000是ms,也可以用slow代替
+//        $("html,body").animate({scrollLeft:_left},200);//1000是ms,也可以用slow代替
+//        alert(_left);
+//        alert(_top);
+    })
+    </script>

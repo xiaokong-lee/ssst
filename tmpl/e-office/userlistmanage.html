@@ -1,0 +1,1160 @@
+
+    <link rel="stylesheet" href='static/plugin/organize/jquery.jOrgChart.css'/>
+    <!--<link rel="stylesheet" href="static/plugin/organize/bootstrap/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="static/plugin/organize/datatable/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="static/plugin/organize/selectize/css/selectize.css">
+    <link rel="stylesheet" href="static/plugin/organize/layer/skin/default/layer.css">
+    <link rel="stylesheet" href="static/plugin/datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <!--<script type='text/javascript' src='static/plugin/organize/jquery.min.js'></script>-->
+    <!--<script src="static/plugin/organize/bootstrap/js/bootstrap.min.js"></script>-->
+    <script type='text/javascript' src='static/js/urls.js'></script>
+    <script type='text/javascript' src='static/plugin/organize/jquery.jOrgChart.js'></script>
+    <script src="static/plugin/organize/datatable/js/jquery.dataTables.js"></script>
+    <script src="static/plugin/organize/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/plugin/organize/selectize/js/standalone/selectize.min.js"></script>
+    <script src="static/plugin/organize/layer/layer.js"></script>
+    <script src="static/plugin/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+    .toph2{
+        height: 50px;
+        color: #666;
+        line-height: 50px;
+        margin:45px 0px;
+        font-size: 20px;
+    }
+    .toph2 i{
+        font-size: 26px;
+        background-color: #03a9f4;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        line-height: 50px;
+        text-align: center;
+        color: #FFF;
+    }
+    .set_user_manager{
+        background:#f5f5f5;
+        padding: 15px;
+    }
+    .set_user_manager ul{
+        display: block;
+        margin: 10px 0;
+    }
+    .set_user_manager li{
+        float: left;
+    }
+    .set_user_manager li:first-child{
+        text-align: right;
+        width: 20%;
+        color: #333;
+        padding-right:5%;
+        line-height:37px;
+        font-size: 14px;
+    }
+    .set_user_manager li:last-child{
+        width: 80%;
+        color: #333;
+    }
+    .set_user_manager li:last-child input{
+        width:100%;
+        padding:8px 0;
+        text-indent: 8px;
+        font-size: 14px;
+        height: 32px;
+    }
+    .cle:after{
+            content: "";
+            display: block;
+            clear: both;
+            overflow: hidden;
+            height: 0px;
+        }
+        .cle{
+            zoom: 0;
+        }
+        #sel_site{
+            width: 100%;
+            height: 32px;
+        }
+        .red{
+            color:#d81e06;
+        }
+</style>
+    <div style="padding:5px 5px 10px 0;margin: 0 auto;">
+    <a class="back-btn"  href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li><a href="#/organize">組織維護</a></li>
+        <li class="current">組織人員<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <table id="userSet" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>工號</th>
+            <th>姓名</th>
+            <th>性別</th>
+            <th>組織編號</th>
+            <th>郵箱</th>
+            <th>入職時間</th>
+            <th>廠區</th>
+            <th>角色</th>
+            <th>狀態</th>
+            <th>設置</th>
+        </tr>
+        </thead>
+    </table>
+    <button onclick="add_user_address()" type="button" class="btn btn-success extent_set">添加組織人員</button>
+    <button onclick="add_user_message()" type="button" class="btn btn-primary extent_set">新建人員信息</button>
+</div>
+<!--修改人員信息-->
+    <div class="set_user_manager set_user_manager2 cle" style="display: none;">
+        <ul class="cle">
+            <li><span class="red">*</span>廠區</li>
+            <li>
+                <select id="sel_site">
+                    <!--<option value ="volvo" selected>Volvo</option>-->
+                    <!--<option value ="saab">Saab</option>-->
+                    <!--<option value="opel">Opel</option>-->
+                    <!--<option value="audi">Audi</option>-->
+                </select>
+            </li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>級別</li>
+            <li>
+                <select id="duty3" style="width: 100%;height: 32px;">
+                    <!--<option value ="volvo" selected>Volvo</option>-->
+                    <!--<option value ="saab">Saab</option>-->
+                    <!--<option value="opel">Opel</option>-->
+                    <!--<option value="audi">Audi</option>-->
+                </select>
+            </li>
+        </ul>
+        <ul class="cle" style="display: none;">
+            <li><span class="red">*</span>用戶</li>
+            <li><input class="my_id" type="text" placeholder="請輸入工號"></li>
+        </ul>
+        <ul class="cle">
+            <li>英文名</li>
+            <li><input class="my_name" type="text" placeholder="請輸入姓名"></li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>中文名</li>
+            <li><input class="my_chinese_name" type="text" placeholder="請輸入姓名"></li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>性別</li>
+            <li>
+                <input style="width: auto;float: left;width: 16px;" type="radio" name="sex" id="man" value="0"><label style="line-height:44px;float: left;font-size: 14px;" for="man">男</label>
+                <input style="width: auto;float: left;width: 16px;margin-left: 10px;"  type="radio"  name="sex"  id="woman" value="1"><label style="line-height:44px;float: left;font-size: 14px;"  for="man">女</label>
+            </li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>Email</li>
+            <li><input class="my_email" type="text" placeholder="請輸入郵箱"></li>
+        </ul>
+        <ul class="cle">
+            <li>分機號</li>
+            <li><input class="my_other_phone" type="text" placeholder="請輸入分機號"></li>
+        </ul>
+        <ul class="cle">
+            <li>短號</li>
+            <li><input class="my_lit_phone" type="text" placeholder="請輸入短號"></li>
+        </ul>
+        <ul class="cle">
+            <li>手機號</li>
+            <li><input class="my_phone" type="text" placeholder="請輸入手機號"></li>
+        </ul>
+        <!--<ul class="cle">-->
+            <!--<li>入職日期</li>-->
+            <!--<li><input  class="my_day" type="date" placeholder="入職日期"></li>-->
+        <!--</ul>-->
+        <p style="text-align: right;">
+          <button onclick="query_set()" type="button" class="btn btn-primary">確認添加</button>
+          <button onclick="layer.closeAll();" style="margin-right: 20px;" type="button" class="btn btn-default">取消修改</button>
+        </p>
+    </div>
+<!--添加組織人員-->
+    <div class="set_user_manager" id="user_add_people" style="width: 520px;padding-right: 0px;padding-left: 0px;display:none;">
+        <ul class="cle" style="position: relative;">
+            <div style="width: 100%;padding-right: 50px;padding-left: 30px;">
+                <input type="text" class="seach_id" placeholder="請輸入工號查詢" style="width:100%;height: 32px">
+            </div>
+            <i onclick="seach()" style="position: absolute;right: 0px;top: 0px;font-size:22px;margin-right:20px;line-height:30px;cursor: pointer;" class="fa fa-search"></i>
+        </ul>
+        <div class="line" style="width: 100%;height: 3px;background: #0e9aef;display:none;"></div>
+        <div class="line_display_SH" style="padding:10px 35px;display: none;">
+            <h4> 人員信息</h4>
+            <ul class="cle">
+                <li>*Username</li>
+                <li><input style="height: 32px;" class="my_id1" type="text" placeholder="請輸入工號" readonly></li>
+            </ul>
+            <ul class="cle">
+                <li>*組織角色</li>
+                <li>
+                    <select id="sel_site1" style="width: 100%;height: 32px;">
+                        <!--<option value ="volvo" selected>Volvo</option>-->
+                        <!--<option value ="saab">Saab</option>-->
+                        <!--<option value="opel">Opel</option>-->
+                        <!--<option value="audi">Audi</option>-->
+                    </select>
+                </li>
+            </ul>
+            <p style="text-align: right;margin-right: 15px;">
+                <button onclick="add_user_add_people()" type="button" class="btn btn-primary add_button" disabled>確認添加</button>
+                <button onclick="layer.closeAll();" style="margin-right: 20px;" type="button" class="btn btn-default">取消添加</button>
+            </p>
+        </div>
+    </div>
+    <!--修改人員角色-->
+    <div class="set_user_manager" id="set_user_manager_requery" style="width: 520px;padding-right: 0px;padding-left: 0px;display: none;">
+        <div class="line_display" style="padding:10px 35px;">
+            <ul class="cle">
+                <li>組織角色</li>
+                <li>
+                    <select id="sel_site_100" style="width: 100%;height: 32px;">
+                        <!--<option value ="volvo" selected>Volvo</option>-->
+                        <!--<option value ="saab">Saab</option>-->
+                        <!--<option value="opel">Opel</option>-->
+                        <!--<option value="audi">Audi</option>-->
+                    </select>
+                </li>
+            </ul>
+            <p style="text-align: right;margin-right: 15px;">
+                <button onclick="set_user_manager_que()" type="button" class="btn btn-primary add_button">確認修改</button>
+                <button onclick="layer.closeAll();" style="margin-right: 20px;" type="button" class="btn btn-default">取消修改</button>
+            </p>
+        </div>
+    </div>
+    <!--修改人員狀態-->
+    <div class="set_user_manager" id="activate_user" style="width: 520px;padding-right: 0px;padding-left: 0px;display: none;">
+        <div class="line_display" style="padding:10px 35px;">
+            <ul class="cle">
+                <li>人員狀態</li>
+                <li>
+                    <select id="activate_user_select" style="width: 100%;height: 32px;">
+                        <!--<option value ="volvo" selected>Volvo</option>-->
+                        <!--<option value ="saab">Saab</option>-->
+                        <!--<option value="opel">Opel</option>-->
+                        <!--<option value="audi">Audi</option>-->
+                    </select>
+                </li>
+            </ul>
+            <p style="text-align: right;margin-right: 15px;">
+                <button id="set_activate_id" onclick="set_activate_user_id(this)" type="button" class="btn btn-primary add_button">確認修改</button>
+                <button onclick="layer.closeAll();" style="margin-right: 20px;" type="button" class="btn btn-default">取消修改</button>
+            </p>
+        </div>
+    </div>
+<!--新建人員信息按鈕-->
+    <div class="set_user_manager add_user_manager cle" style="display: none;">
+        <!--<ul class="cle">-->
+            <!--<li><span class="red">*</span>入職日期</li>-->
+            <!--<li><input  class="my_day" type="date" placeholder="入職日期"></li>-->
+        <!--</ul>-->
+        <ul class="cle">
+            <li><span class="red">*</span>入職日期</li>
+            <li>
+                <input type="text" id="datetimepicker" class="my_day" data-date-format="dd-mm-yyyy">
+            </li>
+        </ul>
+        <script>
+            $('#datetimepicker').datetimepicker({
+                format:"yyyy/mm/dd",
+                minView:"month",//設置只顯示到月份
+                showMeridian:false,
+                autoclose:true,
+                todayBtn:true,
+                endDate:new Date()
+            });
+        </script>
+        <ul class="cle">
+            <li><span class="red">*</span>廠區</li>
+            <li>
+                <select id="sel_site2" style="width: 100%;height: 32px;">
+                    <!--<option value ="volvo" selected>Volvo</option>-->
+                    <!--<option value ="saab">Saab</option>-->
+                    <!--<option value="opel">Opel</option>-->
+                    <!--<option value="audi">Audi</option>-->
+                </select>
+            </li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>級別</li>
+            <li>
+                <select id="duty2" style="width: 100%;height: 32px;">
+                    <!--<option value ="volvo" selected>Volvo</option>-->
+                    <!--<option value ="saab">Saab</option>-->
+                    <!--<option value="opel">Opel</option>-->
+                    <!--<option value="audi">Audi</option>-->
+                </select>
+            </li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>工號</li>
+            <li><input class="my_id2" type="text" placeholder="請輸入工號"></li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>中文名</li>
+            <li><input class="my_chinese_name2" type="text" placeholder="請輸入姓名"></li>
+        </ul>
+        <ul class="cle">
+            <li>英文名</li>
+            <li><input class="my_name2" type="text" placeholder="請輸入姓名"></li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>性別</li>
+            <li>
+                <input style="width: auto;float: left;width: 16px;" type="radio" name="sex2" id="man2" value="0"><label style="line-height:44px;float: left;font-size: 14px;" for="man">男</label>
+                <input style="width: auto;float: left;width: 16px;margin-left: 10px;"  type="radio"  name="sex2"  id="woman2" value="1"><label style="line-height:44px;float: left;font-size: 14px;"  for="man">女</label>
+            </li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>密碼</li>
+            <li><input class="my_password2" type="text" placeholder="請輸入密碼"></li>
+        </ul>
+        <ul class="cle">
+            <li><span class="red">*</span>郵箱</li>
+            <li><input class="my_email2" type="text" placeholder="請輸入郵箱"></li>
+        </ul>
+        <ul class="cle">
+            <li>分機號</li>
+            <li><input class="my_other_phone2" type="text" placeholder="請輸入分機號"></li>
+        </ul>
+        <ul class="cle">
+            <li>手機號</li>
+            <li><input class="my_phone2" type="text" placeholder="請輸入手機號"></li>
+        </ul>
+        <p style="text-align: right;">
+            <button type="button" onclick="add_user_manager_click()" class="btn btn-primary">確認添加</button>
+            <button onclick="layer.closeAll();" style="margin-right: 20px;" type="button" class="btn btn-default">取消添加</button>
+        </p>
+    </div>
+    <script>
+    var _site=[];
+    var _status={};
+    _status.tf=true;
+    var _org="";
+    var _url=window.location.href;
+    var _href=_url.split("?");
+    var my_href=_href[_href.length-1].split("&");
+    for (var i=0;i<my_href.length;i++){
+        var my_href_all=my_href[i].split("=");
+        if(my_href_all[0]=="id"){
+            _url=my_href_all[1];
+            _org=_url;
+            var _url_href= _urls_.from_users + "?org_id="+_url;
+        }
+        if(my_href_all[0]=="name"){
+//            decodeURI(my_href_all[1])
+            $(".current").html(decodeURI(my_href_all[1])+'<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a>');
+//            alert(decodeURI(my_href_all[1]))
+        }
+    }
+//    alert(my_href[0]);
+//    alert(my_href[1]);
+//    if(my_href[0]=="id"){
+//        _url=my_href[1];
+//        _org=_url;
+//        var _url_href="http://10.129.4.97:90/ac/users?org_id="+_url;
+//    }else{
+//        layer.msg('URL路徑錯誤！！！');
+//        _url="";
+//        var _url_href="http://10.129.4.97:90/ac/users";
+//    }
+
+//        權限設置
+    function set_extent() {
+        var userInfo =JSON.parse(window.localStorage.getItem("userInfo"));
+        var _user_id=userInfo.info.id;
+        $.ajax({
+            url: _urls_.user_auth+"/"+_user_id,
+            type: 'GET',
+            dataType: 'JSON',
+            data:"",
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            success: function(result){
+                console.log(result);
+//                    #organizeEdit
+//                    判斷用戶是否有權限
+                if(result.data['#organizeEdit']){
+//                   有修改權限（默認）
+                }else {
+                    $(".extent_set").remove();
+                    _status.tf=false;
+
+                }
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    set_extent() ;
+
+//    獲取廠區信息
+    $.ajax({
+        url:_urls_.info_site,
+        type: 'GET',
+        dataType: 'JSON',
+        data:"",
+        headers: {
+            // 'Content-Type': 'application/x-www-form-urlencoded'
+            'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+        },
+        success: function(result){
+            _site=result;
+            console.log(result);
+            tabale_get();
+        },
+        error:function (xhr) {
+            if(xhr.responseText){
+                layer.msg(xhr.responseText);
+            }else{
+                layer.msg('數據異常');
+            }
+        }
+    });
+////    獲取狀態信息
+//    $.ajax({
+//        url:'http://10.129.4.97:90/ac/status',
+//        type: 'GET',
+//        dataType: 'JSON',
+//        data:"",
+//        headers: {
+//            // 'Content-Type': 'application/x-www-form-urlencoded'
+//            'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+//        },
+//        success: function(result){
+//            _status=result;
+//            console.log(result);
+//        },
+//        error:function (xhr) {
+//            if(xhr.responseText){
+//                layer.msg(xhr.responseText);
+//            }else{
+//                layer.msg('數據異常');
+//            }
+//        }
+//    });
+    var userSet_table="";
+    var click_button_dianji="";
+    function tabale_get() {
+//        dataTable.fnClearTable();
+        $.ajax({
+            url: _url_href,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                console.log(result)
+                userSet_table=$('#userSet').DataTable({
+                    data: result,
+                    scrollX:true,
+                    columns: [
+                        { data: 'user.username' },
+                        { data: 'user.last_name' },
+                        { data: 'user.sex' },
+                        { data: 'user.org' },
+                        { data: 'user.email' },
+                        { data: 'user.entry_date' },
+                        { data: 'user.site' },
+                        { data: 'org_role' },
+                        { data: 'user.status' },
+                        { data: 'user.id' }
+                    ],
+                    columnDefs: [
+                        {
+                            "targets":-1,
+                            "render": function (data, type, row, meta) {
+                                if(_status.tf){
+                                    return '<div style="width: 100%;text-align: center;"><button type="button" style="margin-right: 5px;" onclick="set_user_list('+data+')" class="btn btn-primary btn-xs extent_set">修改</button><button style="margin-left: 5px;"  type="button" onclick="delete_user('+data+')" class="btn btn-danger btn-xs extent_set">刪除</button></div>';
+                                }else {
+                                    return "";
+                                }
+                            }
+                        },
+                        {
+                            "targets":6,
+                            "render": function (data, type, row, meta) {
+                                for(var i=0;i<_site.length;i++){
+                                    if(_site[i].id==data){
+                                        return _site[i].site_name;
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "targets":7,
+                            "render": function (data, type, row, meta) {
+                                if(_status.tf){
+                                    var str="";
+                                    str += data;
+                                    str +='<i class="fa fa-pencil-square-o extent_set" style="float:right;color:red;" onclick="resect_set('+row.user.id+')"></i>';
+                                    return str;
+                                }else {
+                                    var str="";
+                                    str += data;
+                                    return str;
+                                }
+                            }
+                        },
+                        {
+                            "targets":8,
+                            "render": function (data, type, row, meta) {
+                                if(_status.tf){
+                                    if(data=='用户正常'){
+                                        var str="";
+                                        str += data;
+                                        str +='<i class="fa fa-check-square extent_set" style="float:right;color:#0e9aef;font-size: 15px;" onclick="activate_user_id('+row.user.id+')"></i>';
+                                        return str;
+                                    }else {
+                                        var str="";
+                                        str += data;
+                                        str +='<i class="fa fa-check-square" style="float:right;color:#ddd;font-size: 15px;" onclick="activate_user_id('+row.user.id+')"></i>';
+                                        return str;
+                                    }
+                                }else {
+                                    if(data=='用户正常'){
+                                        var str="";
+                                        str += data;
+                                        return str;
+                                    }else {
+                                        var str="";
+                                        str += data;
+                                        return str;
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "targets":3,
+                            "render": function (data, type, row, meta) {
+                                return data[0].org_code;
+                            }
+                        }
+                    ]
+                });
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function drow_table() {
+        $.ajax({
+            url: _url_href,
+            type: 'GET',
+            dataType: 'JSON',
+            data:"",
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            success: function(result){
+                console.log(result);
+                userSet_table.clear();
+                $("#userSet tbody").html("");
+                userSet_table.clear();
+                for(var i=0;i<result.length;i++){
+                    userSet_table.row.add(result[i]).draw(true);
+                }
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function set_user_list(_id){
+        $.ajax({
+            url:_urls_.from_users+ '/'+_id,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                console.log(result);
+                var _duty=result.duty;
+                layer.open({
+                    title:"修改",
+                    type: 1,
+                    anim: 0,
+                    id:1,
+                    scrollbar: false,
+                    shadeClose: true, //开启遮罩关闭
+                    area: ['650px'],
+                    content: $('.set_user_manager2')
+                });
+                $.ajax({
+                    url: _urls_.info_duty,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    headers: {
+                        // 'Content-Type': 'application/x-www-form-urlencoded'
+                        'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                    },
+                    data:"",
+                    success: function(result){
+                        var _str="";
+                        _str+='<option>'+'無'+'</option>';
+                        for(var i=0;i<result.length;i++){
+                            if(_duty==result[i].id){
+                                _str+='<option value =\"'+result[i].id+'\"selected>'+result[i].name+'</option>';
+                            }else {
+                                _str+='<option value =\"'+result[i].id+'\">'+result[i].name+'</option>';
+                            }
+                        }
+                        $("#duty3").html(_str);
+                    },
+                    error:function (xhr) {
+                        if(xhr.responseText){
+                            layer.msg(xhr.responseText);
+                        }else{
+                            layer.msg('數據異常');
+                        }
+                    }
+                });
+//                alert(result.username);
+//                $(".my_id").val("zhangyu");
+                $(".my_id").attr("data-id",result.id);
+                $(".my_name").val(result.first_name);
+                $(".my_chinese_name").val(result.last_name);
+                if(result.sex=="男"){
+                    $("#man").attr("checked","checked");
+                }else{
+                    $("#woman").attr("checked","checked");
+                }
+                $(".my_email").val(result.email);
+                $(".my_other_phone").val(result.ext);
+                $(".my_lit_phone").val(result.short_number);
+                $(".my_phone").val(result.mobile_phone);
+//                $(".my_day").val(result.entry_date);
+                var _str="";
+                for(var i=0;i<_site.length;i++){
+                    if(_site[i].id==result.site){
+                        _str+='<option value =\"'+_site[i].id+'\" selected>'+_site[i].site_name+'</option>';
+                    }else {
+                        _str+='<option value =\"'+_site[i].id+'\">'+_site[i].site_name+'</option>';
+                    }
+                }
+                $("#sel_site").html(_str);
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function delete_user(_id) {
+        var _url=_urls_.userOrg + "/"+_id+"&"+_org;
+        layer.confirm('確定刪除當前用戶？', {
+                title:'刪除用戶',
+                btn: ['確定','取消'] //按钮
+            }, function(){
+              $.ajax({
+                    url:_url,
+                    type: 'DELETE',
+                    dataType: 'JSON',
+                    headers: {
+                      // 'Content-Type': 'application/x-www-form-urlencoded'
+                      'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+                    },
+                    data:{},
+                    success: function(data){
+                        drow_table();
+                        layer.closeAll();
+                    },
+                    error:function (xhr) {
+                        if(xhr.responseText){
+                            layer.msg(xhr.responseText);
+                        }else{
+                            layer.msg('數據異常');
+                        }
+                    }
+                });
+            }, function(){
+            });
+    }
+    function query_set() {
+        var _sel_site=$("#sel_site option:selected").val();
+//        var _my_id=$(".my_id").val();
+        var _id=$(".my_id").attr("data-id");
+        var _my_name=$(".my_name").val();
+        var _my_chinese_name=$(".my_chinese_name").val();
+        var  _sex=$("input[type=radio][name=sex]:checked").val();
+        var _my_email=$(".my_email").val();
+        var my_other_phone=$(".my_other_phone").val();
+        var _my_lit_phone=$(".my_lit_phone").val();
+        var _my_phone=$(".my_phone").val();
+        var _duty3=$("#duty3 option:selected").val();
+//        if(!_my_id){
+//            layer.msg('工號不能為空');
+//            return false;
+//        }
+        if(!_my_chinese_name){
+            layer.msg('中文名不能為空');
+            return false;
+        }
+        if(!_sex){
+            layer.msg('性別不能為空');
+            return false;
+        }
+        var reg = /^.+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var _my_email_tf=reg.test(_my_email);
+        if(!_my_email_tf||_my_email.length>40){
+            layer.msg('郵箱格式錯誤');
+            return false;
+        }
+        $.ajax({
+            url: _urls_.from_users+ "/"+_id,
+            type: 'PUT',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                site:_sel_site,
+//                username:_my_id,
+                first_name:_my_name,
+                last_name:_my_chinese_name,
+                sex:_sex,
+                email:_my_email,
+                mobile_phone:_my_phone,
+                short_number:_my_lit_phone,
+                ext:my_other_phone,
+                duty:_duty3
+            },
+            success: function(result){
+                console.log(result);
+                drow_table();
+                layer.closeAll();
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+//    添加組織信息
+    function add_user_address() {
+        $(".set_user_manager .line").hide();
+        $(".set_user_manager .line_display_SH").hide();
+        $(".seach_id").val("");
+        layer.open({
+            title:"添加組織人員",
+            type: 1,
+            anim: 0,
+            id:1,
+            scrollbar: false,
+            shadeClose: true, //开启遮罩关闭
+            area: ['520px',"305px"],
+            content: $('#user_add_people')
+        });
+        $.ajax({
+            url: _urls_.orgRole,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                var _str="";
+                for(var i=0;i<result.length;i++){
+                    _str+='<option value =\"'+result[i].id+'\">'+result[i].name+'</option>';
+                }
+                $("#sel_site1").html(_str);
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function add_user_message(){
+        $(".my_id2").val("");
+        $(".my_name2").val("");
+        $(".my_chinese_name2").val("");
+        $(".my_email2").val("");
+        $(".my_password2").val("");
+        $(".my_other_phone2").val("");
+        $(".my_phone2").val("");
+        $(".my_day").val("");
+        $("#duty2 option:selected").val("");
+        layer.open({
+            title:"新建人員信息",
+            type: 1,
+            anim: 0,
+            zIndex:10000,
+            scrollbar: false,
+            shadeClose: true, //开启遮罩关闭
+            area: ['600px',"66%"],
+            content: $('.add_user_manager')
+        });
+        var _str="";
+        for(var i=0;i<_site.length;i++){
+            _str+='<option value =\"'+_site[i].id+'\">'+_site[i].site_name+'</option>';
+        }
+        $("#sel_site2").html(_str);
+        $.ajax({
+            url: _urls_.info_duty,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                var _str="";
+                for(var i=0;i<result.length;i++){
+                    _str+='<option value =\"'+result[i].id+'\">'+result[i].name+'</option>';
+                }
+                $("#duty2").html(_str);
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function add_user_manager_click() {
+        var _sel_site2=$("#sel_site2 option:selected").val();
+        var _my_id2=$(".my_id2").val();
+        var _my_name2=$(".my_name2").val();
+        var _my_chinese_name2=$(".my_chinese_name2").val();
+        var  _sex2=$("input[type=radio][name=sex2]:checked").val();
+        var _my_email2=$(".my_email2").val();
+        var _my_password2=$(".my_password2").val();
+        var _my_other_phone2=$(".my_other_phone2").val();
+        var _my_phone2=$(".my_phone2").val();
+        var _my_day=$(".my_day").val().replace(/\//g,"-");
+        var _duty2=$("#duty2 option:selected").val();
+        var reg__my_id2= /^([a-zA-Z0-9_-]){5,10}$/;
+        var _my_id2_tf=reg__my_id2.test(_my_id2);
+        if(!_my_id2_tf){
+            layer.msg('工號格式錯誤');
+            return false;
+        }
+        if(!_my_chinese_name2){
+            layer.msg('中文名不能為空');
+            return false;
+        }
+        if(!_sex2){
+            layer.msg('性別不能為空');
+            return false;
+        }
+//        if(!_my_email2){
+//            layer.msg('郵箱不能為空');
+//            return false;
+//        }
+        var reg = /^.+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var _my_email_tf=reg.test(_my_email2);
+        if(!_my_email_tf||_my_email2.length>40){
+            layer.msg('郵箱格式錯誤');
+            return false;
+        }
+        console.log(reg);
+        console.log(_my_email_tf);
+        if(!_my_password2){
+            layer.msg('密碼不能為空');
+            return false;
+        }
+        if(!_my_day){
+            layer.msg('入職日期不能為空');
+            return false;
+        }
+        $.ajax({
+            url: _urls_.from_users,
+            type: 'POST',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                site:_sel_site2,
+                username:_my_id2,
+                first_name:_my_name2,
+                last_name:_my_chinese_name2,
+                email:_my_email2,
+                sex:_sex2,
+                password:_my_password2,
+                short_number:_my_other_phone2,
+                mobile_phone:_my_phone2,
+                entry_date:_my_day,
+                duty:_duty2,
+                status:100,
+                is_active:true
+            },
+            success: function(result){
+                drow_table();
+                layer.closeAll();
+                layer.msg('新建成功');
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function add_user_add_people(){
+        var _user_my_id1=$(".my_id1").val();
+        var _id=$(".my_id1").attr("data-id");
+        var _sel_site2=$("#sel_site1 option:selected").val();
+        $.ajax({
+            url: _urls_.userOrg,
+            type: 'POST',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                user:_id,
+                org:_org,
+                org_role:_sel_site2,
+                is_active:true
+            },
+            success: function(result){
+                console.log(result);
+                drow_table();
+                layer.closeAll();
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    $(".seach_id").keyup(function (e) {
+        if(e.keyCode==13){
+            seach();
+            $(".seach_id").blur();
+        }
+    });
+    function seach() {
+        var _user_id=$(".seach_id").val();
+        $.ajax({
+            url: _urls_.checkUser + "?username="+_user_id,
+            type: 'GET',
+            dataType: 'JSON',
+            data:"",
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            success: function(result){
+                console.log(result);
+                if(result.status=="True"){
+                    $(".set_user_manager .line").show();
+                    $(".set_user_manager .line_display_SH").show();
+                    $(".set_user_manager .my_id1").val(_user_id);
+                    $(".set_user_manager .my_id1").attr("data-id",result.data.id);
+                    $(".add_button").removeAttr('disabled');
+                }else {
+                    $(".set_user_manager .line").hide();
+                    $(".set_user_manager .line_display_SH").hide();
+
+//                    layer.msg("無此人員的信息，請添加此人員！");
+                    //询问框
+                    layer.confirm('無此人員的信息，請添加此人員！', {
+                        btn: ['新建人員信息','取消'] //按钮
+                    }, function(){
+                        layer.closeAll();
+                        add_user_message();
+                    }, function(){
+                    });
+
+                    $(".add_button").prop("disabled","true");
+                }
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function resect_set(_id) {
+        click_button_dianji=_id;
+        layer.open({
+            title:"修改組織角色",
+            type: 1,
+            anim: 0,
+            id:1,
+            scrollbar: false,
+            shadeClose: true, //开启遮罩关闭
+            area: ['520px',"180px"],
+            content: $('#set_user_manager_requery')
+        });
+        $.ajax({
+            url: _urls_.orgRole,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                var _str="";
+                for(var i=0;i<result.length;i++){
+                    _str+='<option value =\"'+result[i].id+'\">'+result[i].name+'</option>';
+                }
+                $("#sel_site_100").html(_str);
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function set_user_manager_que() {
+        var _user_my_id1=$(".my_id1").val();
+        var _id=click_button_dianji;
+        var _sel_site2=$("#sel_site_100 option:selected").val();
+        $.ajax({
+            url: _urls_.userOrg + "/"+_id+"&"+_org,
+            type: 'PUT',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                user:_id,
+                org:_org,
+                org_role:_sel_site2,
+                is_active:true
+            },
+            success: function(result){
+                console.log(result);
+                drow_table();
+                layer.closeAll();
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function activate_user_id(_id) {
+//        activate_user
+        layer.open({
+            title:"修改用戶狀態",
+            type: 1,
+            anim: 0,
+            id:1,
+            scrollbar: false,
+            shadeClose: true, //开启遮罩关闭
+            area: ['520px',"180px"],
+            content: $('#activate_user')
+        });
+        $("#set_activate_id").attr("data-id",_id);
+        $.ajax({
+            url: _urls_.status,
+            type: 'GET',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:"",
+            success: function(result){
+                var _str="";
+                for(var i=0;i<result.length;i++){
+                    _str+='<option value =\"'+result[i].status_code+'\">'+result[i].status_name+'</option>';
+                }
+                $("#activate_user_select").html(_str);
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+    function set_activate_user_id(ele) {
+        var _activate_select=$("#activate_user_select option:selected").val();
+        var _id=$(ele).attr("data-id");
+        $.ajax({
+            url: _urls_.activeUser,
+            type: 'PUT',
+            dataType: 'JSON',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            data:{
+                user_id:_id,
+                status_id:_activate_select
+            },
+            success: function(result){
+                console.log(result);
+                layer.msg('激活成功');
+                drow_table();
+                layer.closeAll();
+            },
+            error:function (xhr) {
+                if(xhr.responseText){
+                    layer.msg(xhr.responseText);
+                }else{
+                    layer.msg('數據異常');
+                }
+            }
+        });
+    }
+</script>

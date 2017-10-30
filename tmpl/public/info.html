@@ -1,0 +1,98 @@
+<div id="page_content" class="page-content" style="color:#fff;background: #636363;padding-bottom: 20px;">
+    <!--style="background: url('static/image/headimg.jpg') no-repeat"-->
+    <div class="opacity"></div>
+    <div class="cle">
+        <div class="col-xs-8 info">
+            <div style="border: 1px solid #0AA38F;margin: 40px 22px;position: relative" >
+                <label style="background-color: #0AA38F;color: #fff;font-size:18px;padding: 5px;position: absolute;top: -18px;">用戶基本信息</label>
+                <div style="margin-top: 20px">
+                    <div><label>工號：</label><span>{{usermanage.username}}</span></div>
+                    <div><label>姓名：</label><span>{{usermanage.last_name}}</span></div>
+                    <div><label>廠區：</label><span>{{info_site[usermanage.site]}}</span></div>
+                    <div><label>職務：</label><span>{{info_duty[usermanage.duty]}}</span></div>
+
+                    <div style="margin-top: -127px;width: 150px;float: right;">
+                        <div style="text-align: center;">
+                            <input type="file" id="upth_heade" class="upth_heade_class" style="display: none;" accept="image/jpg, image/jpeg, image/gif, image/bmp, image/png">
+                            <img ng-src="{{host}}/{{usermanage.head}}" onerror="javascript:this.src='static/image/headimg.jpg';"  style="width:110px;height:110px;" class="img-circle" id="header_img" ng-click="upplod_sign1()">
+                        </div>
+                        <p style="text-align: center;font-size: 12px;margin-top:6px;color:#0aa38f">點擊頭像修改</p>
+                    </div>
+                </div>
+            </div>
+            <div style="border: 1px solid #0AA38F;margin:40px 22px;position: relative">
+                <label style="background-color: #0AA38F;color: #fff;font-size:18px;padding: 5px;position: absolute;top: -18px;">個人信息修改</label>
+                <div style="margin-top: 20px">
+                    <div style="margin-top: 5px"><label>分　機：</label><input type="text" ng-model="usermanage.short_number" style="background-color:#636363;border: 1px solid #00cccc;border-radius: 2px;width: 40px">-<input type="text" ng-model="usermanage.ext" value="{{usermanage.ext}}" style="background-color:#636363;border: 1px solid #00cccc;border-radius: 2px;width: 135px"></div>
+                    <div style="margin-top: 5px"><label>手　機：</label><input  ng-model="usermanage.mobile_phone"  type="text" value="{{usermanage.mobile_phone}}" style="background-color: #636363;border: 1px solid #00cccc;border-radius: 2px;width: 180px"></div>
+                    <div style="margin-top: 5px"><label>郵　箱：</label><input ng-model="usermanage.email" type="text" value="{{usermanage.email}}" style="background-color: #636363;border: 1px solid #00cccc;border-radius: 2px;width: 180px"></div>
+                    <div style="margin-top: 5px"><label style="position: absolute;left: 10px;bottom: 26px">座右銘：</label><textarea ng-model="usermanage.motto" style="background-color:#636363;border: 1px solid #00cccc;border-radius: 2px;width: 320px;height: 50px;margin-left: 58px;resize:none"></textarea></div>
+                </div>
+            </div>
+            <div style="border: 1px solid #0AA38F;margin:40px 22px 10px;position: relative">
+                <label style="background-color: #0AA38F;color: #fff;font-size:18px;padding: 5px;position: absolute;top: -18px;">個人簽名</label>
+                <div ng-hide="usermanage.sign" style="margin-top: 20px">
+                    <input type="file" value="上傳" style="display: none;" id="file_upplod_sign"  accept="image/jpg, image/jpeg, image/gif, image/bmp, image/png">
+                    <div style="width:72px;height: 54px;line-height: 50px;text-align: center;display: inline-block;border: dotted 1px #fff;cursor: pointer;" ng-click="upplod_sign()">上傳签名</div>
+                    <label>點擊圖片開始編輯簽名<br>签名大小72px*54px</label>
+                </div>
+                <div ng-show="usermanage.sign" style="margin-top: 20px">
+                    <img ng-src="{{host}}/{{usermanage.sign}}" style="width: 72px;height: 54px;" ng-click="upplod_sign()">
+                    <label>點擊圖片開始編輯簽名<br>签名大小72px*54px</label>
+                </div>
+            </div>
+            <p style="margin-right: 20px;text-align: right;">
+                   <a ng-click="change_password_show()" style="position: absolute;bottom: 3%;left: 35px;color: #0AA38F;text-decoration: underline;">修改密碼</a>
+                <button ng-click="kipe_usermanage()" type="button" class="btn btn-success">保存</button>
+            </p>
+        </div>
+        <!--<div class="col-xs-4">-->
+            <!--<div style="margin-top: 85px;text-align: center;">-->
+                <!--<input type="file" id="upth_heade" class="upth_heade_class" style="display: none;" accept="image/jpg, image/jpeg, image/gif, image/bmp, image/png">-->
+                <!--<img ng-src="{{host}}/{{usermanage.head}}" onerror="javascript:this.src='static/image/headimg.jpg';"  style="width:230px;height: 230px;" class="img-circle" id="header_img" ng-click="upplod_sign1()">-->
+            <!--</div>-->
+            <!--<p style="text-align: center;font-size: 13px;margin-top: 10px;color:#0aa38f">點擊頭像修改</p>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<div class="modal modal-container" ng-show="module_show">
+    <div class="content">
+        <div class="form form-horizontal form text-left" style="padding:15px 28px;width: auto;">
+            <!-- ngIf: action=='create' -->
+            <!-- ngIf: action=='edit' -->
+                    <h2 style="font-size:18px;margin-bottom:24px;color:#323232;;">修改密碼</h2>
+                    <form action="">
+                        <div class="form-group">
+                            <label style="width:72px;float: left;line-height: 30px;text-align: right;">用戶名　</label>
+                            <div style="width: 340px;float: left;">
+                                <input type="text" ng-value="usermanage.username" class="form-control form-control-val" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="width:72px;float: left;line-height: 30px;text-align: right;">原密碼　</label>
+                            <div style="width: 340px;float: left;">
+                                <input type="password" ng-model="change_password_.oldpassword" style="font-family: Verdana,Tahoma,Arial;"  class="form-control form-control-val">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="width:72px;float: left;line-height: 30px;text-align: right;">新密碼　</label>
+                            <div style="width: 340px;float: left;">
+                                <input type="password" ng-model="change_password_.newpassword" style="font-family: Verdana,Tahoma,Arial;"  class="form-control form-control-val">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="width:72px;float: left;line-height: 30px;text-align: right;">確認新密碼　</label>
+                            <div style="width: 340px;float: left;">
+                                <input type="password" ng-model="change_password_.newpassword2" style="font-family: Verdana,Tahoma,Arial;"  class="form-control form-control-val">
+                            </div>
+                        </div>
+                        <div class="form-group text-center" style="position: relative;top:15px;">
+                            <a class="btn btn-danger submit_form_code" ng-click="change_password_sevel()"><i class="fa fa-check"></i> 確定</a>
+                            <button type="reset" class="btn btn-default" ng-click="change_module_hide()"><i class="fa fa-circle-o-notch"></i> 取消</button>
+                        </div>
+
+                    </form>
+        </div>
+    </div>
+</div>

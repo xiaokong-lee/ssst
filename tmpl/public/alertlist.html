@@ -1,0 +1,68 @@
+<div id="page_content" class="page-content" ng-class="">
+    <ul id="myTab" class="nav nav-tabs" style="margin-bottom:15px;">
+        <li  ><a ng-class="{active:showAlerts}" ng-click="activeBlock('alerts')"><b class="glyphicon glyphicon-bell color-alert"></b> 警告</a></li>
+        <li ><a ng-class="{active:showRecords}" ng-click="activeBlock('records')"><b class="glyphicon glyphicon-calendar color-notes"></b> 記錄</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content margin-lr10">
+        <div id="alerts" class="table-container" ng-show="showAlerts">
+            <table id="alertsTable" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>分類</th>
+                    <th>內容</th>
+                    <th>時間</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>分類</th>
+                    <th>內容</th>
+                    <th>時間</th>
+                </tr>
+                </tfoot>
+                <!--<tbody>-->
+                    <!--<tr ng-repeat="x in alerts" ng-if="x.categary=='systemAlert'">-->
+                        <!--<td style="width: 5%"><span class="glyphicon glyphicon-bell font-20 color-alert"></span></td>-->
+                        <!--<td ><span>{{x.desc}}</span></td>-->
+                        <!--<td ><p>{{x.content[0]}}</p><time>{{x.content[1]}}</time></td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+            </table>
+        </div>
+        <div id="records" class="table-container" ng-show="showRecords">
+            <table id="recordsTable" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>分類</th>
+                    <th>內容</th>
+                    <th>時間</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>分類</th>
+                    <th>內容</th>
+                    <th>時間</th>
+                </tr>
+                </tfoot>
+                <!--<tbody>-->
+                    <!--<tr ng-repeat="x in alerts" ng-if="x.categary=='systemRecord'">-->
+                        <!--<td style="width: 5%" class="text-center"><span class=" glyphicon glyphicon-calendar font-20 color-notes"></span></td>-->
+                        <!--<td class="text-center"><span>{{x.desc}}</span></td>-->
+                        <!--<td class="text-center"><p>{{x.content[0]}}</p><time>{{x.content[1]}}</time></td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#alertsTable").DataTable({
+            language: dataTableLanguage
+        });
+        $("#recordsTable").DataTable({
+            language: dataTableLanguage
+        });
+    })
+</script>

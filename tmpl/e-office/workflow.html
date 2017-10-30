@@ -1,0 +1,220 @@
+
+<script type="text/javascript" src="static/plugin/jquery/jquery-1.11.1.min.js"></script>
+<div style="position: relative;z-index: 100000;">
+    <a class="back-btn" style="top:0;" href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb" style="margin:0;">
+        <li>協同工作管理</li>
+        <li><a href="#/workflows">流程配置</a></li>
+        <li class="current">流程模板<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+</div>
+
+<div id="page_content" class="page-content" style="position:relative;padding:0;background-image: url(static/image/rec.png);background-repeat: repeat;">
+    <div class="" style="padding: 15px 0;">
+        <ul id="nodes" ng-drop="true" ng-drop-success="onDropComplete(0,$event)" ng-style="myStyle" style="z-index: -1000">
+            <li class="text-center" ng-repeat="obj in droppedObjects">
+                <div class="node" ng-dblclick="getProperty($index,$event)"><p class="font-ellipsis">{{obj.name}}</p></div>
+            </li>
+        </ul>
+        <div class="hidden-xs shrink" style="position:fixed;left:0;top:0;width:190px;height:100%;padding-top:34px;">
+            <div class="toolbar" style="height:100%;overflow-y:auto;border:1px solid #ddd;background-color: #fff;">
+                <p style="line-height:36px;background-color: #f1f1f1;padding-left:15px;">工作流名稱</p>
+                <div style="padding:15px 15px;">
+                    <input type="text" class="form-control" ng-model="workFlow.title" ng-blur="checkWorkFlowTitle(workFlow.title)" >
+                </div>
+                <p style="line-height:36px;background-color: #f1f1f1;padding-left:15px;">工作流簽核模式</p>
+                <div style="padding:15px 15px;">
+                    <select my-Select class="form-control" ng-model="workFlow.type"   ng-change="workFlowType($event,workFlow.type)">
+                        <option value="">請選擇</option>
+                        <option value="self">自定義模式</option>
+                        <option value="other">預定義模式</option>
+                    </select>
+                </div>
+                <P style="padding-left:15px;line-height:36px;margin-bottom:15px;background-color: #f1f1f1;">添加節點</P>
+                <ul class="draggable-objects">
+                    <li class="text-center" ng-repeat="obj in draggableObjects" >
+                        <div class="node" ng-drag="true" ng-drag-data="obj" data-allow-transform="true" style="color:#fff;background-color: #ff5252;border-color:transparent;" ><i class="fa fa-plus"></i> </div>
+                    </li>
+                </ul>
+                <P style="padding-left:15px;line-height:36px;margin-top:15px;background-color: #f1f1f1;">
+                    節點列表
+                    <span class="pull-right" style="padding:0 10px;" ><b>{{nodeCount}}</b></span>
+                </P>
+                <ul class="nodeList" style="">
+                    <li ng-repeat="obj in droppedObjects">
+                        <div>
+                            <button class="btn btn-xs"  ng-click="nodeDown($index)"><i class="fa fa-long-arrow-down"></i></button>
+                            <button class="btn btn-xs" ng-click="nodeUp($index)"><i class="fa fa-long-arrow-up"></i></button>
+                        </div>
+                        <div class="font-ellipsis"><span >{{obj.name}}</span></div>
+                        <div ><button class="btn btn-xs" ng-click="delNode($index,$event)"><i class="fa fa-remove"></i></button></div>
+                    </li>
+                </ul>
+                <div class="text-center" style="padding:15px 15px;border-top:1px solid #ddd;">
+                    <button class="btn btn-info" ng-click="saveWorkFlow()"><i class="fa fa-save"></i> 保存</button>
+                    <a href="#/workflows"><button class="btn btn-danger"><i class="fa fa-remove"></i> 取消</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="hidden-xs shrink" style="position:fixed;right:0;top:0;height:100%;padding-top:34px;">
+            <div class="property" ng-if="property_show" style="height:100%;width:240px;padding:15px 15px;background-color:#fff;overflow-y:auto;">
+                <div class="form-group">
+                    <label class="control-label">節點名稱</label>
+                    <input type="text" class="form-control" ng-model="node.name" ng-blur="nodeName(node.name)">
+                </div>
+                <div ng-if="workFlow.type == 'other'">
+                    <div class="form-group">
+                        <label class="control-label">簽核模式</label>
+                        <select my-Select class="form-control" ng-model="node.userMode"   ng-change="checkType($event,node.userMode)">
+                            <option value="">請選擇</option>
+                            <option value="normal">正常簽核</option>
+                            <option value="oneOnly">任何一人簽核</option>
+                            <option value="mustAll">平行簽核</option>
+                            <option value="byLastNode">由上一級指定簽核</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-if="draggableLength != 0">
+                        <label class="control-label">
+                            簽核人
+                        </label>
+                        <input type="hidden" class="form-control " ng-model="node.userRoles" >
+                        <ul class="list-group" style="overflow-y: auto;min-height:34px;max-height:132px;" ng-model="node.userRole"
+                            ng-click="setUserRoles($event)">
+                            <li class="list-group-item"  style="padding: 8px 15px;">請單擊選擇人</li>
+                            <li class="list-group-item" ng-repeat="x in node.userRole" style=" padding: 8px 15px;">{{x}}</li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">最低簽核至</label>
+                        <select my-Select class="form-control" ng-model="node.lowerToLevel"  >
+                            <option value="">請選擇</option>
+                            <option ng-repeat="x in upToLevels" value="{{x.level}}">{{x.level_name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">最高簽核至</label>
+                        <select my-Select class="form-control" ng-model="node.upToLevel"  >
+                            <option value="">請選擇</option>
+                            <option ng-repeat="x in upToLevels" value="{{x.level}}">{{x.level_name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">最高簽核級數</label>
+                        <input type="number" min="0" class="form-control" ng-model="node.upLevel" ng-change="setProperty(upLevel,upLevel)">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">轉呈模式</label>
+                        <select my-Select class="form-control" ng-model="node.forwordMode" ng-change="setProperty(forwordMode,forwordMode)">
+                            <option value="">請選擇</option>
+                            <option value="noForward">不允許轉呈</option>
+                            <option value="byUsers">轉呈指定用戶</option>
+                            <option value="anyOne">轉呈任何用戶</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-if="node.forwordMode == 'byUsers'">
+                        <label class="control-label">轉呈用戶組</label>
+                        <input type="text" class="form-control" ng-model="node.forwardUsers" readonly="readonly" ng-click="setForwardUsers($event)" ng-change="setProperty(forwardUsers,forwardUsers)">
+                    </div>
+                    <div class="form-group" ng-if="node.forwordMode != 'noForward'">
+                        <label class="control-label">轉呈返回至</label>
+                        <select my-Select class="form-control" ng-model="node.forwardBackMode" ng-change="setProperty(forwardBackMode,forwardBackMode)">
+                            <option value="">請選擇</option>
+                            <option value="backToMe">返回本節點</option>
+                            <option value="backToNext">返回下一級</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">駁回模式</label>
+                        <select my-Select class="form-control" ng-model="node.rejectMode" ng-change="setProperty(rejectMode,rejectMode)">
+                            <option value="" selected>請選擇</option>
+                            <option value="toApplicant">駁回至起點</option>
+                            <option value="allowToSelect">上一級</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal modal-container" ng-show="forwardUsers_show">
+                    <div class="content text-center">
+                        <div name="myForm" id="funcs" class="form form-horizontal">
+                            <div class="input-group input-group-xs">
+                                <input type="text"  class="form-control"  value="" ng-keyup="keyUpSearch($event)" placeholder="請輸入..."/>
+                                <span class="input-group-btn" >
+                                    <button class="btn btn-danger" ng-click="searchForwardUser($event)" style=" height: 34px;"><span class="fa fa-search"></span></button>
+                                </span>
+                            </div>
+                            <div style="max-height: 420px;overflow-y: auto;margin-top: 15px;">
+                                <table class="table table-bordered table-responsive table-hover text-center" >
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center;">選擇</th>
+                                        <th style="text-align: center;">用戶名</th>
+                                        <th style="text-align: center;">姓名</th>
+                                        <th style="text-align: center;">組織</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="obj in forwardUsers">
+                                            <td>
+                                                <input type="checkbox" value="{{obj.UserID}}" class="check_view_state" name="{{obj.UserID}}"
+                                                       id="checkbox-{{obj.UserID}}" style="display: none;" ng-checked="isSelectedUser(obj.UserID)"
+                                                       ng-click="updateSelectionFU($event,obj.UserID)">
+                                                <label for="checkbox-{{obj.UserID}}"></label>
+                                            </td>
+                                            <td>{{obj.UserID}}</td>
+                                            <td>{{obj.UserName}}</td>
+                                            <td>{{obj.OrgName}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group text-center" style="margin-top:15px;">
+                                <button type="button" class="btn btn-default btn-info" ng-click="saveUserFunc($event)"><i class="fa fa-save"></i> 保存</button>
+                                <button type="button" class="btn btn-default " ng-click="cancelFunc($event)"><i class="fa fa-remove"></i> 取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal modal-container" ng-show="userRoles_show">
+                    <div class="content text-center">
+                        <form name="myForm" class="form form-horizontal text-left">
+                            <div class="input-group input-group-xs">
+                                <input type="text"  class="form-control" value=""  placeholder="請輸入..."/>
+                                <span class="input-group-btn" >
+                                    <button class="btn btn-danger" ng-click="searchRole($event)" style=" height: 34px;"><span class="fa fa-search"></span></button>
+                                </span>
+                            </div>
+                            <div class="table-container" style="height: 380px;overflow-y: auto;margin-top: 15px;">
+                                <table class="table table-bordered table-responsive table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center">選擇</th>
+                                        <th style="text-align: center">工号</th>
+                                        <th style="text-align: center">姓名</th>
+                                        <th style="text-align: center">组织</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="obj in workFlowRole">
+                                        <td>
+                                            <input type="checkbox" value="{{obj.UserID}}({{obj.UserName}})" class="check_view_state" name="{{obj.UserID}}"
+                                                   id="checkbox-{{obj.UserID}}" style="display: none;" ng-checked="isSelected(obj.UserID)"
+                                                   ng-click="updateSelection($event,obj.UserID,obj.UserName)">
+                                            <label for="checkbox-{{obj.UserID}}"></label>
+                                        </td>
+                                        <td>{{obj.UserID}}</td>
+                                        <td>{{obj.UserName}}</td>
+                                        <td>{{obj.OrgName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center" style="margin-top:15px;">
+                                <button type="button" class="btn btn-default btn-info" ng-click="saveFunc($event)"><i class="fa fa-save"></i> 保存</button>
+                                <button type="button" class="btn btn-default " ng-click="cancelFunc($event)"><i class="fa fa-remove"></i> 取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

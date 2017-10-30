@@ -1,0 +1,137 @@
+<div id="page_content" class="page-content" ng-class="">
+    <ul class="nav nav-tabs" style="margin-bottom:15px;">
+        <li ng-class="{active:actvieNote.form}"><a ng-click="noteToggle('form')">待簽表單</a></li>
+        <li ng-class="{active:actvieNote.backlog}"><a ng-click="noteToggle('backlog')">待辦事項</a></li>
+    </ul>
+    <div ng-switch="myNote">
+        <div id="forms" ng-switch-when="form" class="table-container">
+            <table class="display" id="notes">
+                <thead>
+                <tr>
+                    <th>編號</th>
+                    <th>表單名稱</th>
+                    <th>審核節點</th>
+                    <th>需求人</th>
+                    <th>申請時間</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>編號</th>
+                    <th>表單名稱</th>
+                    <th>審核節點</th>
+                    <th>需求人</th>
+                    <th>申請時間</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div id="backlogs" ng-switch-when="backlog" class="table-container">
+            <table class="display">
+                <thead>
+                <tr>
+                    <th>序號</th>
+                    <th>事項內容</th>
+                    <th>日期</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>序號</th>
+                    <th>事項內容</th>
+                    <th>日期</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(function () {
+        var data1 = [
+            {"no":"20170501002","name":"統購需求申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501004","name":"物品放行申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501005","name":"物品放行申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501007","name":"入廠申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501011","name":"安防需求申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501012","name":"用印申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501013","name":"加班類別作業申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501014","name":"清潔工需求申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501015","name":"物品放行申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501016","name":"物品放行申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501017","name":"物品放行申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501018","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501019","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501020","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501021","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501031","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501041","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501051","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501061","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501071","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501072","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501073","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501074","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501075","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501076","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501077","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501078","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501079","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501080","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501081","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501082","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501083","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501084","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501085","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501086","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501087","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"},
+            {"no":"20170501088","name":"刷卡異常申請單","node":"王一","submitor":"張三","date":"20170501"}
+        ];
+        var data2=[
+            {"no":"1","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"},
+            {"no":"2","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"},
+            {"no":"3","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"},
+            {"no":"4","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"},
+            {"no":"5","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"},
+            {"no":"6","desc":"代辦事項內容描述","date":"2017/05/01 10:00:00"}
+        ]
+        $("#forms .display").DataTable({
+            language: dataTableLanguage,
+            data : data1,
+            //使用对象数组，一定要配置columns，告诉 DataTables 每列对应的属性
+            //data 这里是固定不变的，name，position，salary，office 为你数据里对应的属性
+            columns: [
+                { data: 'no' },
+                { data: 'name' },
+                { data: 'node' },
+                { data: 'submitor'},
+                { data: 'date' }
+            ]
+        });
+        $("#backlogs .display").DataTable({
+            language: dataTableLanguage,
+            data : data2,
+            //使用对象数组，一定要配置columns，告诉 DataTables 每列对应的属性
+            //data 这里是固定不变的，name，position，salary，office 为你数据里对应的属性
+            columns: [
+                { data: 'no' },
+                { data: 'desc' },
+                { data: 'date' }
+            ]
+        });
+        $("#notes tbody tr").each(function () {
+            var no = $(this).find("td").eq(0).text();
+            var href = "#/notedetail";
+            var text = "<a href="+href+">"+no+"</a>"
+            $(this).find("td").eq(0).html(text)
+        });
+    })
+
+</script>

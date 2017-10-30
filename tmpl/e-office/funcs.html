@@ -1,0 +1,159 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>系統基礎管理</li>
+        <li class="current">功能管理 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="">
+        <div class="title">
+            <!--<span><i class="fa fa-cogs"></i> 授權管理</span>-->
+            <button class="btn btn-default btn-info btn-radius pull-right" ng-click="createFunc()" style="margin-bottom:15px;"><i class="fa fa-plus"></i> 新建</button>
+        </div>
+    </div>
+    <div class="table-container" >
+        <div ng-if="datas" ng-controller="tableCtrl">
+            <div class="table-header">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                        <div class="form-group search-group">
+                            <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                            <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">
+                <thead>
+                <tr >
+                    <th class="text-center">序號</th>
+                    <th class="text-center">功能名稱</th>
+                    <th class="text-center">功能編碼</th>
+                    <th class="text-center">功能地址</th>
+                    <th class="text-center">功能模塊</th>
+                    <th class="text-center">功能性質</th>
+                    <th class="text-center">功能描述</th>
+                    <th class="text-center">狀態</th>
+                    <th class="text-center">創建時間</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in data">
+                    <td>{{$index+1}}</td>
+                    <td >{{x.name}}</td>
+                    <td >{{x.code}}</td>
+                    <td >{{x.full_code}}</td>
+                    <td >{{x.parent_code}}</td>
+                    <td >{{x.desc}}</td>
+                    <td >{{x.desc2}}</td>
+                    <td style="color:#ff5252;">
+                        <i class="fa fa-check" ng-show="x.is_active==true" ></i>
+                        <i class="fa fa-check" ng-show="x.is_active==false"></i>
+                    </td>
+                    <td>{{x.create_date}}</td>
+                    <td><button class="btn btn-primary btn-xs"  ng-click="editFunc(x.id)">編輯</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                <h3 class="text-center">對不起！沒有您想要的結果！
+                </h3>
+            </div>
+            <div class="table-footer" style="margin-top:15px;">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-12"></div>
+                    <div class="col-sm-6 col-xs-12 text-center">
+                        <ul class="pagination" ng-if="pageArr.length">
+                            <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                            <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                            <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>3">......</a></li>-->
+                            <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                            <!--<li><a ng-show="activePage<2 && pageArr.length>3">......</a></li>-->
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="form-group text-right">
+                            <label class="control-label">共 {{dataCount}} 條記錄</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="modal_show">
+        <div class="content">
+            <form name="myForm" id="funcs" class="form form-horizontal text-left" style="padding:15px 15px;">
+                <h5 class="text-left" style="margin-bottom:15px;">修改/添加功能</h5>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left" style="">*功能名稱</label>
+                    <div class="">
+                        <input type="text" class="form-control" placeholder="功能名稱" name="funcName" ng-model="func.name">
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">*功能編碼</label>
+                    <div class="">
+                        <input type="text" class="form-control" placeholder="功能編碼" ng-model="func.code">
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">*功能URL</label>
+                    <div class="">
+                        <input type="text" class="form-control" placeholder="功能模塊" ng-model="func.full_code">
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">*功能模塊</label>
+                    <div class="">
+                        <select class="form-control" ng-model="func.parent_code">
+                            <option value="">請選擇</option>
+                            <option value="E-Office">協同工作平台</option>
+                            <option value="ERP">企業資源計劃</option>
+                            <option value="QIS">品質資訊管理</option>
+                            <option value="MES">製造執行系統</option>
+                            <option value="SCM">供應鏈管理</option>
+                            <option value="PLM">產品生命週期管理</option>
+                            <option value="CRM">客戶關係管理</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">*功能性質</label>
+                    <div class="">
+                        <select class="form-control" ng-model="func.desc">
+                            <option value="">請選擇</option>
+                            <option value="primary">一級頁面</option>
+                            <option value="secondary">二級頁面</option>
+                            <option value="modal">模態框頁面</option>
+                            <option value="root">開發者頁面</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="padding:0 15px;">
+                    <label class="text-left">*功能描述</label>
+                    <div class="">
+                        <textarea class="form-control" placeholder="功能描述" rows="2" ng-model="func.desc2"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 ">
+                        <div class="checkbox text-left" style="left:0;">
+                            <label>*功能狀態</label>
+                            <label style="margin-left:15px;">
+                                <input type="checkbox" ng-model="func.is_active">
+                                <span ng-if="func.is_active==true">可用</span>
+                                <span ng-if="func.is_active==false">不可用</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center" style="margin-top:15px;">
+                    <button type="button" class="btn btn-default btn-info" ng-click="saveFunc($event)"><i class="fa fa-save"></i> 保存</button>
+                    <button type="button" class="btn btn-default " ng-click="cancelFunc($event)"><i class="fa fa-remove"></i> 取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

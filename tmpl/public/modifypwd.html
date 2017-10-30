@@ -1,0 +1,37 @@
+<div id="page_content" class="page-content" id="password" ng-style="myStyle" style="background-image: url(static/image/introduce_bg.png);  background-position: center;  background-repeat: no-repeat; background-size: cover;">
+    <div id="page_box" class="page-box form-horizontal" style="background-color: transparent;">
+        <ol class="breadcrumb">
+            <li style="font-size: 16px;color: red;">找回密碼</li>
+        </ol>
+        <form action="">
+            <div style="width: 500px;position: absolute;top: 30%;left: 50%;margin-left: -250px;border: 1px solid #00cccc;padding: 2%;-webkit-box-shadow:0 0 10px rgba(0, 204, 204, .5);-moz-box-shadow:0 0 10px rgba(0, 204, 204, .5);box-shadow:0 0 10px rgba(0, 204, 204, .5);">
+            <h2 style="margin-bottom: 30px;text-align: center;color: #ec5656;"> 重置密碼</h2>
+            <div class="form-group">
+                <label class="col-sm-3 col-xs-12 control-label text-center">新密碼</label>
+                <div class="col-sm-9 col-xs-12 ">
+                    <input ng-model="newpassword" type="text" class="form-control form-control-val">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 col-xs-12 control-label text-center">確認密碼</label>
+                <div class="col-sm-9 col-xs-12 ">
+                    <input ng-model="new2password" type="text" class="form-control form-control-val">
+                </div>
+            </div>
+
+         <div class="form-group text-center">
+                <button type="reset" class="btn btn-default"><i
+                        class="fa fa-circle-o-notch"></i> 重置
+                </button>
+                <a class="btn btn-danger" ng-click="sub_password()"><i class="fa fa-check"></i> 立即重置</a>
+
+            </div>
+        </div>
+        </form>
+
+
+    </div>
+
+</div>
+
+

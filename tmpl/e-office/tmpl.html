@@ -1,0 +1,191 @@
+<script type="text/javascript" src="static/plugin/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-datetimepicker.min.js"></script>
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style="" href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li><a href="#/tmpls">電子表單</a></li>
+        <li class="current">表單填寫<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="page-title">
+        <div class="title">
+            <span><i class="fa fa-magnet"></i> {{formTitle}}</span>
+            <a href="#/createtmpl:{{formId}}" ng-if="userData.my_auth.data['#/createtmpl']" class="btn btn-default btn-info btn-radius pull-right" style="margin-bottom:15px;">修改模板</a>
+            <!--<a class="btn btn-default btn-info btn-radius pull-right" style="margin-bottom:15px;">預覽效果</a>-->
+        </div>
+    </div>
+    <div class=""  style="border:1px solid #ddd;margin-bottom:15px;background-color: #fff">
+        <div class="table-container" style="position:relative;">
+            <table class="forms" ng-if="formType!='general'" >
+                <tbody>
+                <tr>
+                    <td style="width:15%">申請單號</td>
+                    <td style="width:20%"></td>
+                    <td style="width:15%">申請日期</td>
+                    <td style="width:20%">{{form.ApplyDate}}</td>
+                    <td style="width:15%">申請人工號</td>
+                    <td style="width:20%">{{form.UserID}}</td>
+                </tr>
+                <tr>
+                    <td style="width:15%">申請人姓名</td>
+                    <td style="width:20%">{{form.UserName}}</td>
+                    <td style="width:15%">申請單位代碼</td>
+                    <td style="width:20%">{{form.DepartCode}}</td>
+                    <td style="width:15%">申請單位名稱</td>
+                    <td style="width:20%;line-height:1.2;" >{{form.Department}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="forms" id="tmpl" ng-style="form.style" ng-if="formType=='general'" style="line-height:16px;">
+                <caption style="text-align:center;border:1px solid #000;border-bottom-width:0;"  ng-if="form.title.fixed">
+                    <img ng-if="form.logo.fixed" ng-src="{{form.logo.src}}" ng-style="form.logo.style">
+                    <p ng-if="form.title.fixed" ng-style="form.title.style">{{form.title.value}}</p>
+                    <p ng-if="form.subtitle.fixed" ng-style="form.subtitle.style">{{form.subtitle.value}}</p>
+                </caption>
+                <tbody>
+                <tr ng-repeat="x in form.table" data-index="{{x.index}}" onclick="selectColumn(this)">
+                    <td data-fixed="{{y.fixed}}" data-readonly="{{y.readony}}" data-type="{{y.input.type}}" ng-repeat="y in x.list" colspan="{{y.cols}}" data-index="[{{x.index}}].list[{{$index}}]" rowspan="{{y.rows}}" ng-style="y.style" style="width:{{y.width}}" data-fixed="{{y.fixed}}" >
+                        <span ng-if="y.fixed" ng-bind-html="y.text"></span>
+                        <input name="{{y.name}}" class="form-control" ng-style="y.input.style" ng-if="!y.readonly && !y.fixed && !y.input.date && !y.input.datetime && y.input.type !='select' && y.input.type !='textArea' && y.input.type !='checkbox' && y.input.type !='radio'" type="{{y.input.inputType}}" value="" class="" ng-blur="fillData($event,y.dataSource,'['+x.index+']list['+$index+']')" style="text-align: center;">
+                        <input name="{{y.name}}" class="form-control" ng-style="y.input.style" ng-if="y.readonly " type="{{y.input.inputType}}" value="{{y.value}}" class="form-control" style="text-align: center;" readonly>
+                        <div class="input-group" ng-if="y.input.date==true && y.input.type=='input'" style="width:100%;">
+                            <input class="date form-control" placeholder="請輸入日期">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        <div class="input-group" ng-if="y.input.datetime==true && y.input.type=='input'" ng-style="y.input.style" style="width:100%;">
+                            <input class="datetime form-control" placeholder="請輸入時間" style="">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+                        <select ng-if="y.input.type=='select'" ng-style="y.style" ng-style="y.input.style" class="form-control" style="text-align: center;">
+                            <option value="">請選擇</option>
+                            <option value="{{z}}" ng-repeat="z in y.input.options">{{z}}</option>
+                        </select>
+                        <div class="checkbox-group" ng-if="y.input.type=='checkbox'">
+                            <div ng-repeat="z in y.input.options" style="display: inline-block;padding-right:15px;"><input type="checkbox" style="width:15px;display: inline-block;top:5px;margin-right:5px;">{{z}}</div>
+                        </div>
+                        <div class="radio-group" ng-if="y.input.type=='radio'">
+                            <div ng-repeat="z in y.input.options" style="display: inline-block;padding-right:15px;"><input type="radio" name="{{y.name}}" style="width:15px;display: inline-block;top:5px;margin-right:5px;">{{z}}</div>
+                        </div>
+                        <textarea ng-if="y.input.type=='textArea'" rows="{{y.input.rows}}" maxlength="{{y.input.maxlength}}" type="text" class="form-control" style="max-width:100%;resize:none;"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div ng-if="formType=='general'" class="text-center" style="padding:10px 10px;">
+                <button class="btn btn-default" ng-click="insertColumn()"><i class="fa fa-plus"></i> 插入</button>
+                <button class="btn btn-default" ng-click="appendColumn()"><i class="fa fa-plus"></i> 追加</button>
+                <button class="btn btn-default" ng-click="removeColumn()"><i class="fa fa-minus"></i> 刪除</button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!preview" class="form form-horizontal">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="form-group" ng-if="formType!='general'">
+                    <label class="col-sm-1 col-xs-12 control-label" style="text-align: left;min-width:80px;">簽名附件</label>
+                    <div id="filesGroup" class="col-sm-11 col-xs-12" >
+                        <input type="file" id="filename1" name="files" >
+                        <button type="submit" class="btn btn-info pull-right" ng-click="addFile($event,1)"><i class="fa fa-upload"></i> 添加</button>
+                        <span style="color: red">注意：該文件格式只能爲.pdf</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1 col-xs-12 control-label" style="text-align: left;min-width:80px;">其他附件</label>
+                    <div id="filesGroup" class="col-sm-11 col-xs-12" >
+                        <input type="file" id="filename2" name="files" >
+                        <button type="submit" class="btn btn-info pull-right" ng-click="addFile($event,2)"><i class="fa fa-upload"></i> 添加</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="files" style="">
+            <ul class="files">
+                <li style="position:relative;width:160px;" ng-repeat="x in files_0">
+                    <img src="static/image/icon/icon_pdf_128.png" style="width:100%">
+                    <p class="text-center font-ellipsis"><a title="{{x.name}}">{{x.name}}</a></p>
+                    <button class="btn btn-danger btn-xs" ng-click="removeFile(1)" style="position:absolute;right:0;top:0;"><i class="fa fa-remove"></i></button>
+                </li>
+                <li style="position:relative;width:160px;" ng-repeat="x in files">
+                    <img ng-if="x.type=='pdf'" src="static/image/icon/icon_pdf_128.png" style="width:100%">
+                    <img ng-if="x.type=='pptx' || x.type=='ppt'" src="static/image/icon/icon_ppt_128.png" style="width:100%">
+                    <img ng-if="x.type=='docx' || x.type=='doc'" src="static/image/icon/icon_doc_128.png" style="width:100%">
+                    <img ng-if="x.type=='xlsx' || x.type=='xls'" src="static/image/icon/icon_xls_128.png" style="width:100%">
+                    <img ng-if="x.type=='png' || x.type=='jpg'" src="static/image/icon/icon_png_128.png" style="width:100%">
+                    <img ng-if="x.type=='oth'" src="static/image/icon/icon_oth_128.png" style="width:100%">
+                    <p class="font-ellipsis"><a title="{{x.name}}">{{x.name}}</a></p>
+                    <button class="btn btn-danger btn-xs" ng-click="removeFile(2,$index)" style="position:absolute;right:0;top:0;"><i class="fa fa-remove"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="my-router" ng-if="workflow_type=='self' && !preview">
+        <p style="line-height:32px;"><b>路由配置</b></p>
+        <ul ng-show="!myRouter_show">
+            <li class="inline-block" ng-repeat="x in routerUsers">
+                <div class="user" style="">
+                    <p>{{x.name}} ({{x.userList.length}})
+                    <button class="btn btn-default btn-xs pull-right" ng-click="addRouterUser(x.index)"><i class="fa fa-plus"></i> 添加</button>
+                    </p>
+                    <div class="table-container" style="width:100%;height:150px;overflow-y: auto;">
+                        <table class="table table-bordered table-responsive">
+                            <thead >
+                            <tr>
+                                <th style="width:80px;text-align: center;">工號</th>
+                                <th style="width:60px;text-align: center;">姓名</th>
+                                <th style="width:60px;text-align: center;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="text-center" ng-repeat="y in x.userList">
+                                <td>{{y.UserID}}</td>
+                                <td>{{y.UserName}}</td>
+                                <td><button class="btn btn-default btn-xs" ng-click="removeUser(x.index,$index)">刪除</button> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center" ng-show="!routerUser_show && !preview" style="margin-top:15px;">
+        <button type="type" class="btn btn-info" ng-click="saveForm($event)"><i class="fa fa-save"></i> 提交</button>
+        <span class="btn btn-info grad-color" >正在提交...</span>
+        <button class="btn btn-default" ng-click="cancelForm()"><i class="fa fa-remove"></i> 取消</button>
+    </div>
+    <div class="modal modal-container" ng-show="routerUser_show && !preview">
+        <div class="content">
+            <div class="form users">
+                <div class="form-group search-group">
+                    <input type="text" ng-model="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                    <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch(keyword)" ><i class="fa fa-search"></i></button>
+                </div>
+                <div class="table-container" style="height:350px;overflow-x:hidden;overflow-y: auto;">
+                    <table id="users_table" class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th style="width:15%;text-align: center;">選擇</th>
+                            <th style="width:20%;text-align: center;">工號</th>
+                            <th style="width:20%;text-align: center;">姓名</th>
+                            <th style="width:45%;text-align: center;">部門</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in users" >
+                            <td><input type="checkbox" ng-model="x.select" ng-change="setUsers(x.select,$index)"> </td>
+                            <td>{{x.UserID}}</td>
+                            <td class="font-ellipsis">{{x.UserName}}</td>
+                            <td>{{x.OrgName}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<button type="button" class="btn btn-default" style="position:absolute;left:0;bottom:0;">顯示更多</button>-->
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-info" ng-click="saveRouterUser()"><i class="fa fa-check"></i> 確定</button>
+                    <button class="btn btn-default" ng-click="cancelRouterUser()"><i class="fa fa-remove"></i> 取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

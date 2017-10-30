@@ -1,0 +1,8 @@
+{
+  "data":[{"location":{"top":"40%","left":"87.5%"},"type":"ipCamera","name":"B3-1F 塗層2","spec":"DS-2CD864-EI3","sn":"DS-2CD864-EI320150519AACH519364555","ip":"10.157.229.181","stream_address":"rtsp://admin:12345@10.157.229.181/h264/ch1/main","user":"admin","password":"12345","status":true},
+  {"location":{"top":"28%","left":"89%"},"type":"ipCamera","name":"B3-1F 塗層1","spec":"DS-2CD864-EI3","sn":"DS-2CD864-EI320140930AACH481245590","ip":"10.157.229.182","stream_address":"rtsp://admin:12345@10.157.229.182/h264/ch1/main","user":"admin","password":"12345","status":true},
+  {"location":{"top":"30%","left":"91.7%"},"type":"ipCamera","name":"B3-1F 卸夾","spec":"DS-2CD2512F-IWS","sn":"DS-2CD2512F-IWS20150324CCCH509129730","ip":"10.157.229.183","stream_address":"rtsp://admin:12345@10.157.229.183/h264/ch1/main","user":"admin","password":"12345","status":true},
+  {"location":{"top":"46.5%","left":"91.7%"},"type":"ipCamera","name":"B3-1F 裝夾","spec":"DS-2CD2512F-IWS","sn":"DS-2CD2512F-IWS20150324CCCH509129714","ip":"10.157.229.184","stream_address":"rtsp://admin:12345@10.157.229.184/h264/ch1/main","user":"admin","password":"12345","status":true},
+  {"location":{"top":"33.5%","left":"90.0%"},"type":"faceCamera","name":"B3-1F塗層車間出門崗","spec":"DS-2CD2T25F-I3","sn":"DS-2CD2T25F-I320161206AACH688160993","ip":"10.157.229.185","stream_address":"rtsp://admin:admin12345@10.157.229.185/h264/ch1/main","user":"admin","password":"admin12345","status":true},
+  {"location":{"top":"42.5%","left":"90.0%"},"type":"faceCamera","name":"B3-1F塗層車間進門崗","spec":"DS-2CD2T25F-I3","sn":"DS-2CD2T25F-I320161206AACH688160903","ip":"10.157.229.186","stream_address":"rtsp://admin:admin12345@10.157.229.186/h264/ch1/main","user":"admin","password":"admin12345","status":true}]
+}

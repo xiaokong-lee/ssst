@@ -1,0 +1,570 @@
+
+<script type="text/javascript" src="static/plugin/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-datetimepicker.min.js"></script>
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style="" href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li><a href="#/tmpls">電子表單</a></li>
+        <li class="current">表單模板<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <a href="#/tempconfig" ng-if="userData.my_auth.data['#/tempconfig']" class="btn btn-default btn-info btn-radius" style="position:absolute;right:5px;top:5px;"><i class="fa fa-cogs"></i> 模板管理</a>
+    <div id="page_box" class="page-box form-horizontal" style="position: relative" ng-class="{page_aw:setting}">
+        <div class="form-group">
+            <label class="col-xs-1 control-label text-left" style="text-align: right;">表单类别</label>
+            <div class="col-xs-9">
+                <select ng-show="!formId" class="form-control" ng-model="category" >
+                    <option value="">請選擇</option>
+                    <option value="{{x.id}}" ng-repeat="x in categorys">{{x.type}}</option>
+                </select>
+                <input ng-show="formId" type="text" value="{{category.type_name}}" class="form-control" readonly>
+            </div>
+            <div class="col-xs-2 text-right" style="padding: 0px;" ng-if="!formId">
+                <button class="btn btn-default pull-left" ng-click="setCategory()" style="display:inline;margin-right:10px;"><i class="fa fa-plus"></i> 設置</button>
+            </div>
+        </div>
+        <form class="form-group">
+            <label class="col-xs-1 control-label text-center" style="text-align: right;">模板名称</label>
+            <div class="col-xs-9">
+                <input type="text" ng-show="!formId" class="form-control form-control-val" name="file" ng-model="formTitle" placeholder="請輸入模板名稱">
+                <input type="text" ng-show="formId" class="form-control form-control-val" name="file" ng-model="formTitle" placeholder="請輸入模板名稱" readonly>
+            </div>
+        </form>
+        <div class="form-group">
+            <label class="col-xs-1 control-label text-center" style="text-align: right;">簽核路由</label>
+            <div class="col-xs-9" >
+                <select ui-select2 class="form-control" ng-if="router_select || !formId" ng-model="workflow" ng-change="setWorkflow(workflow)">
+                    <option value="">請選擇</option>
+                    <option value="{{x.id}}" ng-repeat="x in workflows">{{x.name}}</option>
+                </select>
+                <input ng-if="formId && !router_select" type="text" value="{{_workflow.workflow_name}}" class="form-control" readonly>
+            </div>
+             <div class="col-xs-2 text-right" style="padding: 0px;" >
+                 <button ng-if="formId && !router_select" class="btn btn-info pull-left" type="button" ng-click="editFormRouter()"><i class="fa fa-edit"></i> 編輯</button>
+                 <!--<button ng-if="formId && router_select" class="btn btn-info pull-left" type="button" ng-click="setFormRouter(select_router)"><i class="fa fa-check"></i> 確定</button>-->
+                 <button ng-if="formId && router_select" class="btn btn-danger pull-left" type="button" ng-click="cancelFormRouter()"><i class="fa fa-edit"></i> 取消</button>
+                 <a ng-if="!formId" href="#/workflow/add" style="margin-right:180px;" class="btn btn-default"><i class="fa fa-plus"></i> 配置</a>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!formId">
+            <label class="col-xs-1 control-label text-center" style="text-align: right;">移動端簽核</label>
+            <div class="col-xs-11" >
+                <label ><input type="checkbox" ng-model="client" ng-change="setClient(client)"><span style="color:#d32f2f;"> 選擇后該表單只能通過手機客戶端簽核！</span></label>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!formId">
+            <label class="col-xs-1 control-label text-center" style="text-align: right;">創建方式</label>
+            <div class="col-xs-11 " >
+                <button id="generalType" class="btn btn-default active" ng-click="formTypeToggle($event,'general')"  style="margin-right:15px;"><i class=""></i> 通用型表單</button>
+                <button  class="btn btn-default" ng-click="formTypeToggle($event,'attachment')" style="margin-right:15px;"><i class=""></i> 一次性表單</button>
+            </div>
+        </div>
+        <div ng-if="!formId">
+            <div class="form-group" ng-if="formType=='general'" >
+                <label class="col-xs-1 control-label text-center" style="text-align: right;">選擇文件</label>
+                <div class="col-xs-11 ">
+                    <input type="file" name="files" id="input_file"  style="display:inline;min-width:120px;height:32px;margin-right:35px;">
+                    <button type="submit" class="btn btn-info" ng-click="uploadFile($event)"><i class="fa fa-upload"></i> 開始上傳</button>
+                    <span class="btn btn-info grad-color" >正在載入...</span>
+                    <span style="color: red">注意：該文件格式只能爲.xls或者.xlsx</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-show="formType=='general'">
+            <label class="col-xs-1 control-label text-center" style="text-align: right;">文件內容</label>
+            <div class="col-xs-11" style="margin-bottom:32px;min-height:32px;">
+                <div id="tmpl" style="border:1px solid #ddd;min-height: 34px;">
+                    <div ng-if="form.table" class="table-container" style="position:relative;">
+                        <table class="forms" ng-style="form.style">
+                            <caption ng-if="form.title.fixed" ng-style="form.caption.style">
+                                <img ng-if="form.logo.fixed" ng-src="{{form.logo.src}}"  ng-style="form.logo.style" alt="Logo" ng-dblclick="setStyleObj('','',form.logo)">
+                                <p ng-style="form.title.style" ng-if="form.title.fixed" ng-dblclick="setStyleObj('','',form.title)">{{form.title.value}}</p>
+                                <p ng-if="form.subtitle.fixed" ng-style="form.subtitle.style" ng-dblclick="setStyleObj('','',form.subtitle)">{{form.subtitle.value}}</p>
+                            </caption>
+                            <tbody>
+                            <tr ng-repeat="x in form.table" data-index="{{x.index}}" style="height:32px">
+                                <td ng-repeat="y in x.list" colspan="{{y.cols}}" rowspan="{{y.rows}}" ng-style="y.style" style="border-right-width:1px;border-bottom-width:1px;border-right-style: solid;border-bottom-style:solid;width:{{y.width}}" data-fixed="{{y.fixed}}" ng-dblclick="setStyleObj(x.index,$index,y)">
+                                    <span ng-if="y.fixed" ng-bind-html="y.text"></span>
+                                    <span ng-if="!y.fixed && !y.input.type">{{y.name}}</span>
+                                    <input ng-if="y.input.type=='input' && !y.input.date && !y.input.datetime" type="{{y.input.inputType}}" ng-class="" class="form-control" value="{{y.name}}" placeholder="{{y.name}}">
+                                    <div class="input-group" ng-if="y.input.date==true && y.input.type=='input'" style="width:100%;">
+                                        <input   class="date form-control" placeholder="請輸入日期" style="">
+                                        <span  class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <div class="input-group" ng-if="y.input.datetime==true && y.input.type=='input'" style="width:100%;">
+                                        <input   class="datetime form-control" placeholder="請輸入時間" style="">
+                                        <span  class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                    <select ng-if="y.input.type=='select'"  class="form-control">
+                                        <option value="">請選擇</option>
+                                        <option value="{{z}}" ng-repeat="z in y.input.options">{{z}}</option>
+                                    </select>
+                                    <div class="checkbox-group" ng-if="y.input.type=='checkbox'">
+                                        <div ng-repeat="z in y.input.options" style="display: inline-block;padding-right:15px;"><input type="checkbox" style="width:15px;display: inline-block;top:5px;margin-right:5px;">{{z}}</div>
+                                    </div>
+                                    <div class="radio-group" ng-if="y.input.type=='radio'">
+                                        <div ng-repeat="z in y.input.options" style="display: inline-block;padding-right:15px;"><input type="radio" name="{{y.name}}" style="width:15px;display: inline-block;top:5px;margin-right:5px;">{{z}}</div>
+                                    </div>
+                                    <textarea ng-if="y.input.type=='textArea'" rows="{{y.input.rows}}" maxlength="{{y.input.maxlength}}" type="text" class="form-control" placeholder="{{y.name}}" style="max-width:100%;resize:none;"></textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="position:absolute;right:15px;top:0;" ng-if="formType=='general' && form.table">
+                    <button class="btn btn-default pull-right" ng-click="setStyleObj('','','form')"><i
+                            class="fa fa-gear"></i> 配置
+                    </button>
+                    <!--<button class="btn btn-default pull-right" ng-click="preview()"><i class=""></i> 預覽效果-->
+                    <!--</button>-->
+                </div>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top:15px;" ng-if="tmpl_show">
+            <button class="btn btn-danger" style="margin-right:15px;" ng-click="saveFormTmpl('generalForm')"><i
+                    class="fa fa-check"></i> 完成配置
+            </button>
+            <button class="btn btn-primary"  ng-click="cancelSave()"><i class="fa fa-remove" ng-click="cancelSave()"></i> 取消</button>
+        </div>
+    </div>
+    <div class="chart-box" ng-show="setting">
+        <div class="box-container" style="padding:15px 15px;border-top:1px solid #ddd;background-color: #fff;">
+            <div ng-show="style_show">
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label  class="control-label">logo顯示</label>
+                    <input type="checkbox" ng-model="form.logo.fixed" style="margin-left:60px;">
+                </div>
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label class="control-label">標題顯示</label>
+                    <input type="checkbox" ng-model="form.title.fixed" style="margin-left:60px;">
+                    <input type="text" class="form-control" ng-model="form.title.value">
+                </div>
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label class="control-label">副標題顯示</label>
+                    <input type="checkbox" ng-model="form.subtitle.fixed" style="margin-left:45px;">
+                    <input type="text" class="form-control" ng-model="form.subtitle.value">
+                </div>
+                <div ng-if="styleObj.fixed" class="form-group">
+                    <label class="control-label">單元格名稱</label>
+                    <textarea class="form-control" ng-model="styleObj.value" rows="1" ng-change="setValue(styleObj.value)" ></textarea>
+                </div>
+                <div ng-if="styleObj.name=='logo'" class="form-group">
+                    <label class="control-label">图片选择</label>
+                    <a class="btn btn-xs pull-right" ng-click="setLogoData()"><i class="fa fa-picture-o"></i> </a>
+                    <ul class="row" style="padding:8px 8px;">
+                        <li class="col-xs-6" ng-repeat="x in logos" style="padding:8px 8px;"><img class="img-thumbnail" ng-src="{{x.img_url}}" ng-click="setImg(x.img_url)"></li>
+                    </ul>
+                </div>
+                <div ng-if="styleObj.name!='logo'" class="form-group">
+                    <label class="control-label text-left">字體名稱</label>
+                    <div class="">
+                        <select class="form-control" data-style="font-family"
+                                ng-model="styleObj.style.fontFamily" ng-change="setStyle()">
+                            <option value="">請選擇</option>
+                            <option value="DFKai-SB">標楷體</option>
+                            <option value="KaiTi">楷體</option>
+                            <option value="PMingLiU">新細明體</option>
+                            <option value="MingLiU">細明體</option>
+                            <option value="SimSun">宋體</option>
+                            <option value="NSimSun">新宋體</option>
+                            <option value="SimHei">黑體</option>
+                            <option value="FangSong">仿宋體</option>
+                            <option value="'Microsoft JhengHei'">微軟正黑體</option>
+                            <option value="Microsoft YaHei">微軟雅黑</option>
+                            <option value="Arial">Arial</option>
+                        </select>
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='logo'" class="form-group">
+                    <label class="control-label text-left">字體尺寸</label>
+                    <div >
+                        <input type="text" class="form-control" data-style="font-size"
+                               ng-model="styleObj.style.fontSize" ng-change="setStyle()" placeholder="12px">
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='logo'" class="form-group">
+                    <div class="">
+                        <button type="button" class="btn btn-default" style="width:34px;" ng-click="setStyle('fontWeight','600')"><i class="fa fa-bold"></i> </button>
+                        <button type="button" class="btn btn-default" style="width:34px;" ng-click="setStyle('fontWeight','100')"><i class="fa fa-bold" style="color:#bbb;"></i> </button>
+                        <button type="button" class="btn btn-default" style="width:34px;" ng-click="setStyle('textDecoration','underline')"><i class="fa fa-underline"></i></button>
+                        <button type="button" class="btn btn-default" style="width:34px;" ng-click="setStyle('textDecoration','none')"><i class="fa fa-underline" style="color:#bbb;"></i></button>
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='logo'" class="form-group">
+                    <label class="control-label text-left">水平排列</label>
+                    <div class="text-left">
+                        <button type="button" class="btn btn-default " value="left"
+                                ng-click="setStyle('textAlign','left')"><i class="fa fa-align-left"></i>
+                        </button>
+                        <button type="button" class="btn btn-default " value="center"
+                                ng-click="setStyle('textAlign','center')"><i class="fa fa-align-center"></i>
+                        </button>
+                        <button type="button" class="btn btn-default " value="right"
+                                ng-click="setStyle('textAlign','right')"><i class="fa fa-align-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label class="control-label text-left">邊界</label>
+                    <div class="">
+                        <button type="button" class="btn btn-default" ng-click="setBorder()"><i class="fa fa-table"></i> </button>
+                        <button type="button" class="btn btn-default" ng-click="setBorder('none')"><i class="fa fa-list-alt"></i> </button>
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='form'" class="form-group ">
+                    <label class="">高度</label>
+                    <div>
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                           ng-model="styleObj.style.height" placeholder="px">
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='form' && styleObj.name!='logo'" class="form-group">
+                    <label class="">行高</label>
+                    <div >
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                           ng-model="styleObj.style.lineHeight" placeholder="px">
+                    </div>
+                </div>
+                <div ng-if="styleObj.name!='form'" class="form-group">
+                    <label class="">邊距</label>
+                    <div style="position:relative;width:100%;height:130px;">
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                           ng-model="styleObj.style.paddingTop" style="position:absolute;left:89px;top:0;width:60px;" placeholder="px">
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                               ng-model="styleObj.style.paddingLeft" style="position:absolute;left:0;top:50px;width:60px;" placeholder="px">
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                               ng-model="styleObj.style.paddingRight" style="position:absolute;right:0;top:50px;width:60px;" placeholder="px">
+                        <input type="text" class="form-control" ng-change="setStyle()"
+                               ng-model="styleObj.style.paddingBottom" style="position:absolute;left:89px;top:98px;width:60px;" placeholder="px">
+                    </div>
+                </div>
+                <div ng-if="styleObj.fixed == false" class="form-group">
+                    <label class="control-label text-left">元素類型</label>
+                    <div class="text-left">
+                        <button type="button" class="btn btn-default"
+                                ng-click="setInputType('input')" style="margin-bottom:5px;"><i class="fa fa-square-o"></i> 輸入框
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputType('select')" style="margin-bottom:5px;"><i class="fa fa-toggle-down"></i>
+                            選擇框
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputType('checkbox')" style="margin-bottom:5px;"><i class="fa fa-check-square-o"></i>
+                            複選框
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputType('radio')" style="margin-bottom:5px;"><i class="fa fa-dot-circle-o"></i>
+                            單選框
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputType('textArea')" style="margin-bottom:5px;"><i class="fa fa-list-ol"></i>
+                            段落框
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="input_type=='input' && styleObj.input.type">
+                    <label class="control-label text-left">輸入框類型</label>
+                    <div class="text-left">
+                        <button type="button" class="btn btn-default " ng-click="setInputProp($event,'text')" style="margin-bottom:5px;"><i
+                                class="fa fa-text-height"></i> 字符
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputProp($event,'number')" style="margin-bottom:5px;"><i
+                                class="fa fa-calculator"></i> 數值
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputProp($event,'date')" style="margin-bottom:5px;"><i
+                                class="fa fa-calendar"></i> 日期
+                        </button>
+                        <button type="button" class="btn btn-default " ng-click="setInputProp($event,'datetime')" style="margin-bottom:5px;"><i
+                                class="glyphicon glyphicon-time"></i> 時間
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="input_type=='checkbox' || input_type=='radio' || input_type=='select'">
+                    <label class="control-label text-left">數據來源</label>
+                    <div class="text-left">
+                        <textarea class="form-control" rows="2" id="options" placeholder="數據項之間以英文逗號隔開，例如： 第一項,第二項,第三項" style="margin-bottom:15px;"
+                                  ng-blur="setOptions($event)" ng-model="styleObj.input.options"></textarea>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="input_type=='textArea'">
+                    <label class="control-label text-left">限制字數</label>
+                    <div class="text-left">
+                        <input type="text" class="form-control" ng-blur="setAttr($event,'maxlength')" ng-model="styleObj.input.maxlength">
+                    </div>
+                    <label class="control-label text-left">顯示行數</label>
+                    <div class="text-left">
+                        <input type="text" class="form-control" ng-blur="setAttr($event,'rows')" ng-model="styleObj.input.rows">
+                    </div>
+                </div>
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label class="control-label text-left">填充規則</label>
+                    <div class="">
+                        <div class="form-control" ng-click="setDataSource()" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="styleObj.name=='form'" class="form-group">
+                    <label class="control-label text-left">計算規則</label>
+                    <div class="">
+                        <div class="form-control" ng-click="setCacuRules()" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-default btn-info" ng-click="saveSetting()"><i
+                            class="fa fa-save"></i> 確定
+                    </button>
+                    <button ng-if="!styleObj.table && !styleObj.src" type="button" class="btn btn-default btn-danger" ng-click="cancelSetting()"><i
+                            class="fa fa-remove"  ng-click="cancelSetting()"></i> 取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="dataFill_show" style="z-index: 1000000029">
+        <div class="content">
+            <div class="form form-horizontal" onmousedown="elementDraggable(this,event)" onmouseup="cancelDraggable(this,event)" onmouseleave="cancelDraggable(this,event)">
+                <p class="text-left" style="margin-bottom:10px;">數據填充規則
+                    <button class="btn btn-info btn-xs pull-right" ng-click="createDataSource()">新建</button>
+                </p>
+                <div class="table-container" style="height:64px;margin-bottom:10px;overflow-y: auto;">
+                    <table class="table table-bordered table-responsive text-center">
+                        <thead>
+                        <tr >
+                            <th class="text-center">序號</th>
+                            <th class="text-center">匹配項</th>
+                            <th class="text-center">填充項</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in sources">
+                            <td>{{$index+1}}</td>
+                            <td><span ng-repeat="y in x.match">{{y.key}}</span></td>
+                            <td><span ng-repeat="y in x.fill">{{y.key}};</span></td>
+                            <td><button class="btn btn-default btn-xs" ng-click="removeDataSource($index)"><i class="fa fa-remove"></i> 刪除</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="dataSource_show" style="height:308px;padding:10px 15px;border:1px solid #ddd;">
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label" style="text-align: left;">數據源</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <select class="form-control"  ng-model="dataSourceId" ng-change="getDataSource(dataSourceId)">
+                                <option value="">請選擇</option>
+                                <option ng-repeat="x in dataSources" value="{{x.Sourceid}}" >{{x.apiName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label" style="text-align: left;">匹配項</label>
+                        <div class="col-sm-9 col-xs-12 text-left">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <select class="form-control" ng-model="matchKey" ng-change="setFillScope(matchKey)">
+                                        <option value="">請選擇</option>
+                                        <option value="{{x.name}}" ng-repeat="x in matchScope">{{x.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select class="form-control"  id="matchItem" ng-model="matchValue" ng-change="setMatchData(matchKey,matchValue)">
+                                        <option value="">請選擇</option>
+                                        <option ng-repeat="x in dataItems" value="{{x.apiparamname}}">{{x.apiparamdescription}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="form-group">
+                        <label class="col-xs-12 text-left">填充項
+                            <span class="pull-right">已選 {{source['fill'].length}} 項</span>
+                        </label>
+                        <div class="col-xs-12">
+                            <div class="table-container" style="height: 120px;overflow-y: auto;">
+                                <table class="table table-bordered table-responsive">
+                                    <thead>
+                                    <tr >
+                                        <th class="text-center">序號</th>
+                                        <th class="text-center">屬性名稱</th>
+                                        <th class="text-center">輸入框名稱</th>
+                                        <!--<th class="text-center">選擇</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="x in dataItems" data-value="{{x.apiparamname}}">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{x.apiparamdescription}}</td>
+                                        <td class="fill-item" style="padding:0;">
+                                            <select class="form-control" ng-model="x.name" ng-change="setFillData(x.name,x.apiparamname)">
+                                                <option value="">請選擇</option>
+                                                <option value="{{f.name}}" ng-repeat="f in fillScope">{{f.name}}</option>
+                                            </select>
+                                        </td>
+                                        <!--<td><input type="checkbox" ng-click="setFillItems($event,x.apiparamname)"> </td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-default active"  ng-click="saveDataSource($event)"><i class="fa fa-save"></i> 保存</button>
+                        <button class="btn btn-default " ng-click="cancelDataSource()"><i class="fa fa-remove"></i> 取消</button>
+                    </div>
+                </div>
+                <button ng-if="!dataSource_show" class="btn btn-default btn-info" type="button" ng-click="closeDataSource()"><i class="fa fa-check"></i> 關閉</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="cacuRules_show" style="z-index: 1000000029">
+        <div class="content">
+            <div class="form form-horizontal" onmousedown="elementDraggable(this,event)" onmouseup="cancelDraggable(this,event)" onmouseleave="cancelDraggable(this,event)">
+                <p class="text-left" style="margin-bottom:10px;">計算規則
+                    <button class="btn btn-info btn-xs pull-right" ng-click="createCacuRule()">新建</button>
+                </p>
+                <div class="table-container" style="height:64px;margin-bottom:10px;overflow-y: auto;">
+                    <table class="table table-bordered table-responsive text-center">
+                        <thead>
+                        <tr >
+                            <th class="text-center" style="width:50px;">序號</th>
+                            <th class="text-center">計算步驟</th>
+                            <th class="text-center">目標單元格</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in cacuRules">
+                            <td>{{$index+1}}</td>
+                            <td><span ><span ng-repeat="y in x.steps">{{y.param1}}{{y.method}}{{y.param2}}</span></span></td>
+                            <td><span >{{x.target}}</span></td>
+                            <td><button class="btn btn-danger btn-xs" ng-click="removeCacuRule($index)">刪除</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-if="cacuRule_show" style="position:relative;height:308px;padding:10px 15px;border:1px solid #ddd;">
+                    <div style="padding-bottom:5px;line-height:24px;text-align: left;">
+                        <label>計算方式</label>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default btn-xs" ng-click="setCacuType($event,'defined')">自定義</button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="setCacuType($event,'sumUp')">合計</button>
+                        </div>
+                    </div>
+                    <div style="padding-bottom:5px;line-height:24px;text-align: left;">
+                        <label>計算步驟(共 {{cacuRule.steps.length}} 步)</label>
+                        <button ng-if="cacuRule.type" type="button" class="btn btn-danger btn-xs" ng-click="createCacuStep()">添加</button>
+                    </div>
+                    <div style="height:130px;background-color: #f1f1f1;overflow-y: auto;overflow-x: hidden">
+                        <div class="form-group" style="position:relative;padding-right:25px;margin-bottom:5px;" ng-repeat="x in cacuRule.steps">
+                            <div class="col-sm-5 col-xs-5">
+                                <select class="form-control" ng-if="$first || cacuRule.type=='sumUp'" ng-model="x.param1" ng-change="">
+                                    <option value="">請選擇</option>
+                                    <option ng-repeat="y in cacuKeys" value="{{y}}" >{{y}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2 col-xs-2" style="padding-left:0;padding-right:0;">
+                                <select class="form-control"  ng-if="cacuRule.type!='sumUp'" ng-model="x.method" ng-change="" style="padding-left:5px;padding-right:5px;">
+                                    <option value="">請選擇</option>
+                                    <option  value="+" >加上</option>
+                                    <option  value="-" >減去</option>
+                                    <option  value="*" >乘以</option>
+                                    <option  value="/" >除以</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5 col-xs-5">
+                                <select class="form-control" ng-if="cacuRule.type!='sumUp'" ng-model="x.param2" ng-change="">
+                                    <option value="">請選擇</option>
+                                    <option ng-repeat="y in cacuKeys" value="{{y}}" >{{y}}</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-xs" style="position:absolute;right:18px;top:8px;padding:0 3px;line-height:14px;border-radius: 20px;" ng-click="removeCacuStep($index)">&times</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align: left;padding:0;">
+                        <label class="col-xs-12" style="text-align: left;">目標單元格</label>
+                        <div class="col-xs-12">
+                            <select class="form-control"  ng-model="cacuRule.target" ng-change="">
+                                <option value="">請選擇</option>
+                                <option ng-repeat="y in cacuKeys" value="{{y}}" >{{y}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center" style="position:absolute;left:0;bottom:5px;width:100%;text-align: center">
+                        <button class="btn btn-default active" ng-show="cacuRule.steps.length" ng-click="saveCacuRule()"><i class="fa fa-save"></i> 保存</button>
+                        <button class="btn btn-default " ng-click="cancelCacuRule()"><i class="fa fa-remove"></i> 取消</button>
+                    </div>
+                </div>
+                <button ng-if="!cacuRule_show" class="btn btn-default btn-info" type="button" ng-click="saveCacuRules()"><i class="fa fa-check"></i> 關閉</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="category_show">
+        <div class="content" >
+            <div class="form form-horizontal">
+                <p class="text-left" style="margin-bottom:10px;">設置表單類別
+                <button ng-hide="category_form" class="btn btn-info btn-xs pull-right" ng-click="addCategory($event)"><i class="fa fa-plus"></i> 添加</button> </p>
+                <div class="" ng-if="category_form" style="padding:0 ;">
+                    <input type="text" class="form-control" ng-model="cate.type" placeholder="職能簡稱" style="margin-bottom:5px;">
+                    <input type="text" class="form-control" ng-model="cate.type_english" placeholder="職能全稱" style="margin-bottom:5px;">
+                    <input type="text" class="form-control" ng-model="cate.type_code" placeholder="職能代碼" style="margin-bottom:5px;">
+                    <div class="text-center" style="padding:10px 10px;">
+                        <button class="btn btn-default btn-info " type="button" ng-click="saveCategory()"><i class="fa fa-save"></i> 確定</button>
+                        <button class="btn btn-default " type="button" ng-click="cancelCategory()"><i class="fa fa-remove"></i> 取消</button>
+                    </div>
+                </div>
+                <div class="table-container" style="width:100%;max-height:250px;overflow-y: auto;">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">職能簡稱</th>
+                            <th style="text-align: center">英文全稱</th>
+                            <th style="text-align: center">職能代碼</th>
+                            <th style="text-align: center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in categorys">
+                            <td>{{x.type}}</td>
+                            <td>{{x.type_english}}</td>
+                            <td>{{x.type_code}}</td>
+                            <td><button class="btn btn-default btn-xs" ng-click="deleteCategory(x.id)"><i class="fa fa-remove"></i> 刪除</button> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center" style="padding:10px 10px;">
+                    <button class="btn btn-default" ng-click="closeCategory()"><i class="fa fa-check"></i> 關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="logos_show">
+        <div class="content">
+            <div class="form">
+                <div class="form-group" style="height:34px;">
+                    <input type="file" id="logo_file" style="position:absolute;left:15px;top:15px;width:320px;padding-right:90px;">
+                    <button type="button" class="btn btn-info pull-right" ng-click="uploadLogo()">上傳</button>
+                </div>
+                <div class="table-container" style="height:380px;overflow-y: auto;">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width:15%;text-align: center;">序號</th>
+                            <th style="text-align: center">圖片</th>
+                            <th style="width:15%;text-align: center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in logos">
+                            <td>{{$index+1}}</td>
+                            <td><img ng-src="{{x.img_url}}" height="16" style="height:16px;width:auto;"></td>
+                            <td><button type="button" class="btn btn-xs btn-danger" ng-click="delLogo(x.id)">刪除</button> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center" style="padding-top:15px;">
+                    <button class="btn btn-default btn-info" ng-click="closeSetLogo()">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

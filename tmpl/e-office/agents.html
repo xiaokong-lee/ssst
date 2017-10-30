@@ -1,0 +1,156 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">工作代理<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <!--<ul class="nav nav-tabs" style="margin-bottom:15px;">-->
+        <!--<li ng-class="{active:activeAgent.agented}"><a ng-click="agentToggle('agented')">我的代理記錄</a></li>-->
+        <!--<li ng-class="{active:activeAgent.beAgented}"><a ng-click="agentToggle('beAgented')">我代理的記錄</a></li>-->
+    <!--</ul>-->
+    <div >
+        <!--<div id="beAgented" class="table-container" ng-controller="beAgentedCtrl">-->
+            <!--<div ng-if="datas" ng-controller="tableCtrl">-->
+                <!--<div class="table-header">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-2 col-sm-3 col-xs-12 pull-left">-->
+                            <!--<div class="form-group search-group">-->
+                                <!--<input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">-->
+                                <!--<button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">-->
+                    <!--<thead>-->
+                    <!--<tr >-->
+                        <!--<th class="text-center">編號</th>-->
+                        <!--<th class="text-center">申請人工號</th>-->
+                        <!--<th class="text-center">申請人姓名</th>-->
+                        <!--<th class="text-center">申請日期</th>-->
+                        <!--<th class="text-center">代理權限</th>-->
+                        <!--<th class="text-center">開始時間</th>-->
+                        <!--<th class="text-center">结束時間</th>-->
+                        <!--<th class="text-center">狀態</th>-->
+                        <!--<th class="text-center">操作</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="x in data" >-->
+                        <!--<td >{{$index+1}}</td>-->
+                        <!--<td >{{x.jon}}</td>-->
+                        <!--<td >{{x.name}}</td>-->
+                        <!--<td >{{x.rectime}}</td>-->
+                        <!--<td >{{x.org}}</td>-->
+                        <!--<td >{{x.start}}</td>-->
+                        <!--<td >{{x.end}}</td>-->
+                        <!--<td >{{x.status}}</td>-->
+                        <!--<td >-->
+                            <!--<button ng-if="x.status == '待簽核'" class="btn btn-info btn-xs" data-id="{{x.id}}" ng-click="updateAgentUser($event,x.id,'true')">同意</button>-->
+                            <!--<button  ng-if="x.status == '待簽核'" class="btn btn-danger btn-xs" data-id="{{x.id}}" ng-click="updateAgentUser($event,x.id, 'false')">駁回</button>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+                <!--<div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">-->
+                    <!--<h3 class="text-center">對不起！沒有您想要的結果！-->
+                    <!--</h3>-->
+                <!--</div>-->
+                <!--<div class="table-footer" style="margin-top:15px;">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-sm-3 col-xs-12"></div>-->
+                        <!--<div class="col-sm-6 col-xs-12 text-center">-->
+                            <!--<ul class="pagination" ng-if="pageArr.length">-->
+                                <!--<li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>-->
+                                <!--<li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>-->
+                                <!--&lt;!&ndash;<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>3">......</a></li>&ndash;&gt;-->
+                                <!--<li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>-->
+                                <!--&lt;!&ndash;<li><a ng-show="activePage<2 && pageArr.length>3">......</a></li>&ndash;&gt;-->
+                                <!--<li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>-->
+                                <!--<li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--<div class="col-sm-3 col-xs-12">-->
+                            <!--<div class="form-group text-right">-->
+                                <!--<label class="control-label">共 {{dataCount}} 條記錄</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="agented" class="table-container" ng-controller="agentedCtrl">
+            <div ng-if="datas" ng-controller="tableCtrl">
+                <div class="table-header">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                            <div class="form-group search-group">
+                                <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                                <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">
+                    <thead>
+                    <tr >
+                        <th class="text-center">編號</th>
+                        <th class="text-center">申請日期</th>
+                        <th class="text-center">代理權限</th>
+                        <th class="text-center">代理人工號</th>
+                        <th class="text-center">代理人姓名</th>
+                        <th class="text-center">開始時間</th>
+                        <th class="text-center">结束時間</th>
+                        <!--<th class="text-center">狀態</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="x in data"> <!-- 我的代理记录 -->
+                        <td >{{$index+1}}</td>
+                        <td >{{x.rectime}}</td>
+                        <td >{{x.org}}</td>
+                        <td >{{x.jon}}</td>
+                        <td >{{x.name}}</td>
+                        <td >{{x.start}}</td>
+                        <td >{{x.end}}</td>
+                        <!--<td >{{x.status}}</td>-->
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                    <h3 class="text-center">對不起！沒有您想要的結果！
+                    </h3>
+                </div>
+                <div class="table-footer" style="margin-top:15px;">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-12"></div>
+                        <div class="col-sm-6 col-xs-12 text-center">
+                            <ul class="pagination" ng-if="pageArr.length">
+                                <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                                <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                                <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>3">......</a></li>-->
+                                <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                                <!--<li><a ng-show="activePage<2 && pageArr.length>3">......</a></li>-->
+                                <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                                <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <div class="form-group text-right">
+                                <label class="control-label">共 {{dataCount}} 條記錄</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#/agentsUsers" class="btn btn-default btn-danger" style="position:absolute;right:120px;top:60px;">
+                <i class="fa fa-plus"></i> 常用代理人
+            </a>
+            <a href="#/agentadd" class="btn btn-default btn-info" style="position:absolute;right:15px;top:60px;">
+                <i class="fa fa-plus"></i> 设定代理人
+            </a>
+
+            <div class="modal-container" my-Modal></div>
+        </div>
+    </div>
+</div>

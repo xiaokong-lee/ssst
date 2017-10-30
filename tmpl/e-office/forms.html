@@ -1,0 +1,100 @@
+
+<script type="text/javascript" src="static/js/qrcodeLogin/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/stomp.js"></script>
+<script type="text/javascript" src="static/js/qrcodeLogin/stompPackage.js"></script>
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style="" ><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">表單簽核 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="table-container" >
+        <div ng-if="datas" ng-controller="tableCtrl">
+            <div class="table-header">
+                <div class="row">
+                    <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                        <div class="form-group search-group">
+                            <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                            <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12 pull-right">
+                        <select  class="form-control" ng-model="filterKey" ng-change="changeFormType(filterKey)">
+                            <option value="0">待我簽核的單</option>
+                            <option value="1">我發起的單</option>
+                            <option value="2">我簽核的單</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;width:100%;">
+                <thead>
+                <tr >
+                    <th class="text-center" style="width:5%;" ng-if="filterKey=='0'">選擇</th>
+                    <th class="text-center" style="width:14%;">編號</th>
+                    <th class="text-center" style="width:10%;">表單名稱</th>
+                    <th class="text-center" style="width:11%;">提交人</th>
+                    <th class="text-center" style="width:43%;">簽核狀態</th>
+                    <th class="text-center" style="width:12%;">發起時間</th>
+                    <th class="text-center" style="width:10%;">滯留時間</th>
+                    <th class="text-center" style="width:10%;"  ng-if="filterKey=='1'">催單</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in data">
+                    <td class="i-check"  ng-if="filterKey=='0'">
+                        <input type="checkbox" ng-if="filterKey=='0'"
+                               id="inlineCheckbox{{x.id}}" class="red_check" ng-click="getWorkflow($event,x.wrecord_id)">
+                        <label ng-if="filterKey=='0'" for="inlineCheckbox{{x.id}}" ></label>
+                    </td>
+                    <td ><i ng-if="x.return==1" class="fa fa-user" style="position:relative;top:-1px;left:0px;color:#ff5252;"></i>  <a href="#/form:{{x.id}}">{{x.card_id}}</a></td>
+                    <td >{{x.name}}</td>
+                    <td >{{x.apply.applicant_id}}({{x.apply.applicant_name}})</td>
+                    <td ><a title="{{x.approver_name.toString()}}" style="color:#919191;">{{x.approver_name.toString()}}</a></td>
+                    <td >{{x.wrecord__create_time}}</td>
+                    <td >{{x.time}}</td>
+                    <td  ng-if="filterKey=='1'">
+                        <button ng-if="x.action == '未簽核' && filterKey==1"
+                                 ng-click="sendMsg($event,x.id)" type="button" class="btn btn-default btn-xs table_btn reminder"></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                <h3 class="text-center">對不起！沒有您想要的結果！
+                </h3>
+            </div>
+            <div class="table-footer" style="margin-top:15px;">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-12">{{}}
+                        <div class="form-group" ng-show="filterKey==0 && record_list.length">
+                            <button type="button" class="btn btn-default btn-info" ng-click="batchCheck($event,'pass')"><i class="fa fa-check"></i> 同意</button>
+                            <!--<button type="button" class="btn btn-default btn-danger" ng-click="batchCheck($event,'reject')">駁回</button>-->
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xs-12 text-center">
+                        <ul class="pagination" ng-if="pageArr.length">
+                            <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                            <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                            <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>3">......</a></li>-->
+                            <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                            <!--<li><a ng-show="activePage<2 && pageArr.length>3">......</a></li>-->
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                            <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="form-group text-right">
+                            <label class="control-label">共 {{dataCount}} 條記錄</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function frameContentBack() {
+
+    }
+</script>

@@ -1,0 +1,734 @@
+<div class="sidebar-box" ng-controller="sidebarCtrl">
+    <ul class="user-group" style="  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);">
+        <li ng-class="{active:menuGroup.sysMenu}" ng-click="menuToggle('sysMenu')" style="width:105px;">系统菜單</li>
+        <li ng-class="{active:menuGroup.myMenu}" ng-click="menuToggle('myMenu')" style="width:105px;">我的菜單</li>
+    </ul>
+    <div ng-switch="myBar" style="background-color: #212121;">
+        <div ng-switch-when="myMenu" class="sidebar"   style="background-color: #212121;">
+            <ul id="mymenu" class="page-nav" style="background-color: #212121;" >
+                <li ng-repeat="x in userData.myMenu">
+                    <a href="{{x.full_code}}" style="text-align: center" >
+                        <span>{{x.name}}</span>
+                    </a>
+                </li>
+                <!--<li ng-repeat="x in userData.specialMenu" style="background-color: #313131;">-->
+                    <!--<a href="{{x.full_code}}" style="text-align: center" >-->
+                        <!--<span>{{x.name}}</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+            </ul>
+        </div>
+        <div ng-switch-when="sysMenu" class="sidebar">
+            <div ng-repeat="x in userData.sidebar">
+                <p class="nav-title ng-binding">{{x.title}}</p>
+                <ul class="page-nav">
+                    <li ng-if="x.content[$index].list.length" ng-repeat="y in x.content">
+                        <a onclick="primaryMenuToggle(this)">
+                            <span class="{{y.icon}}"></span>
+                            <span id="OA-1">{{y.name}}</span>
+                            <span class="plus"><i class="fa fa-plus"></i></span>
+                            <span class="minus"><i class="fa fa-minus"></i></span>
+                        </a>
+                        <ul class="sidebar-collapse" >
+                            <li ng-repeat="z in y.list" >
+                                <a href="{{z.full_code}}" id="OA-1-02" >{{z.name}}
+                                </a>
+                                <span ng-if="z.isMyMenu" class="fa fa-heart favor" ng-click="setMyMenu($event,z)" ></span>
+                                <span ng-if="!z.isMyMenu" class="fa fa-heart-o favor" ng-click="setMyMenu($event,z)" ></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="bug-feedback" style="position: absolute;bottom: 0px;">
+                    <a href="{{bugFeedBack}}" target="_blank" >BUG反饋</a>
+                    <a href="{{bugSearch}}" target="_blank" >BUG追蹤</a>
+                </div>
+
+            </div>
+        </div>
+        <!--<div ng-switch-when="sysMenu" class="sidebar">-->
+                <!--<p class="nav-title">Dashboard</p>-->
+                <!--<ul id="dashboard" class="page-nav">-->
+                    <!--<li>-->
+                        <!--<a onclick="primaryMenuToggle(this)">-->
+                            <!--<span class="fa fa-dashboard"></span>-->
+                            <!--<span>Dashboard</span>-->
+                            <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                            <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                        <!--</a>-->
+                        <!--<ul class="sidebar-collapse">-->
+                            <!--<li>-->
+                                <!--<a href="#/dashboard" id="DB-1-01" onclick="activeNavMenu(this)">{{userData.dashboard[0].name}}</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#/dashboard-v2" ng-if="userData.dashboard[1].list" id="DB-1-02"-->
+                                   <!--onclick="activeNavMenu(this)">{{userData.dashboard[1].name}}</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#/dashboard-v3" ng-if="userData.dashboard[2].list" id="DB-1-03"-->
+                                   <!--onclick="activeNavMenu(this)">{{userData.dashboard[2].name}}</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#/dashboard-v4" ng-if="userData.dashboard[3].list" id="DB-1-04"-->
+                                   <!--onclick="activeNavMenu(this)">{{userData.dashboard[3].name}}</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#/dashboard-v5" ng-if="userData.dashboard[4].list" id="DB-1-05"-->
+                                   <!--onclick="activeNavMenu(this)">{{userData.dashboard[4].name}}</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--<p class="nav-title">協同工作平台</p>-->
+            <!--<ul id="EOffice" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-cube"></span>-->
+                        <!--<span id="OA-1">系統基礎管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse" >-->
+                        <!--<li>-->
+                            <!--<a href="#/dashboard" id="OA-1-02">界面配置-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/organize" id="OA-1-03" onclick="activeNavMenu(this)">組織維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<a id="OA-1-08" onclick="activeNavMenu(this)">用戶管理&ndash;&gt;-->
+                               <!--&lt;!&ndash;<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                        <!--<li>-->
+                            <!--<a href="#/funcs" id="OA-1-06" onclick="activeNavMenu(this)">功能管理-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/roles" id="OA-1-05" onclick="activeNavMenu(this)">角色定義-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/users" id="OA-1-04" onclick="activeNavMenu(this)">角色授權-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-share-alt"></span>-->
+                        <!--<span id="OA-2">協同工作管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a href="#/tmpls" id="OA-2-01" onclick="activeNavMenu(this)">電子表單-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/workflows" id="OA-2-02" onclick="activeNavMenu(this)">流程配置-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/forms" id="OA-2-03" onclick="activeNavMenu(this)">表單簽核-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/tasks" id="OA-2-04" onclick="activeNavMenu(this)">工作任務管理-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/agents" id="OA-2-06" onclick="activeNavMenu(this)">我的工作代理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#/reportform" id="OA-2-07" onclick="activeNavMenu(this)">流程報表統計-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">客戶關係管理</p>-->
+            <!--<ul id="CRM" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-tasks"></span>-->
+                        <!--<span id="CRM-2">客戶管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="CRM-2-01" onclick="activeNavMenu(this)">客戶信息維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-list"></span>-->
+                        <!--<span id="CRM-3">客戶產品管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="CRM-3-01" onclick="activeNavMenu(this)">客戶料號維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-ticket"></span>-->
+                        <!--<span id="CRM-5">客戶訂單管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="CRM-5-04" onclick="activeNavMenu(this)">內部投單作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-support"></span>-->
+                        <!--<span id="CRM-6">客戶出貨管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="CRM-6-01" onclick="activeNavMenu(this)">出貨排配作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="CRM-6-02" onclick="activeNavMenu(this)">出貨通知作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">產品生命週期管理</p>-->
+            <!--<ul id="PLM" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-table"></span>-->
+                        <!--<span id="PLM-1">基本資料管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-01" onclick="activeNavMenu(this)">產品別維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-02" onclick="activeNavMenu(this)">產品關鍵屬性-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-04" onclick="activeNavMenu(this)">料號編碼管理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-05" onclick="activeNavMenu(this)">料號維護管理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-06" onclick="activeNavMenu(this)">取替代管理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-07" onclick="activeNavMenu(this)">製程維護管理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-08" onclick="activeNavMenu(this)">產品別製程維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-09" onclick="activeNavMenu(this)">產品製程維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-10" onclick="activeNavMenu(this)">類別屬性維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-11" onclick="activeNavMenu(this)">編碼原則維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-1-12" onclick="activeNavMenu(this)">文件架構維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-sliders"></span>-->
+                        <!--<span id="PLM-5">基本資料管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="PLM-5-01" onclick="activeNavMenu(this)">產工訂單確認-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="PLM-5-02" onclick="activeNavMenu(this)">量產料號/BOM定義-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">供應鏈管理系統</p>-->
+            <!--<ul id="SCM" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-shield"></span>-->
+                        <!--<span id="SCM-2">採購管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="SCM-2-04" onclick="activeNavMenu(this)">PR轉PO管理-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-signal"></span>-->
+                        <!--<span id="SCM-3">物流管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="SCM-3-01" onclick="activeNavMenu(this)">稱重打包作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-3-02" onclick="activeNavMenu(this)">出貨標籤維護-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-3-03" onclick="activeNavMenu(this)">出貨包裝作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-road"></span>-->
+                        <!--<span id="SCM-5">倉儲管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="SCM-5-01" onclick="activeNavMenu(this)">倉儲儲位維護-->
+                              <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-5-02" onclick="activeNavMenu(this)">物料入庫作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-5-03" onclick="activeNavMenu(this)">物料出庫作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-5-04" onclick="activeNavMenu(this)">理貨備料作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="SCM-5-07" onclick="activeNavMenu(this)">物料拆合作業-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-reorder"></span>-->
+                        <!--<span id="SCM-7">供應鏈報表管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="SCM-7-01" onclick="activeNavMenu(this)">庫存信息報表-->
+                               <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">製造執行系統</p>-->
+            <!--<ul id="MES" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a href="#/sites">-->
+                        <!--<span class="fa fa-eye"></span>-->
+                        <!--<span id="MES-0">Smart Sight</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-plane"></span>-->
+                        <!--<span id="MES-1">生產資源管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="MES-1-01" onclick="activeNavMenu(this)">資源類型維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-1-02" onclick="activeNavMenu(this)">生產設備維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-1-11" onclick="activeNavMenu(this)">工段工站維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-print"></span>-->
+                        <!--<span id="MES-2">生產排配作業</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="MES-2-01" onclick="activeNavMenu(this)">工單工站排配-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-2-02" onclick="activeNavMenu(this)">工單發料作業-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-2-05" onclick="activeNavMenu(this)">生產追溯查詢-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-rocket"></span>-->
+                        <!--<span id="MES-3">生產排配作業</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="MES-3-01" onclick="activeNavMenu(this)">工單工站轉入-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-3-02" onclick="activeNavMenu(this)">工單工站轉出-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-3-03" onclick="activeNavMenu(this)">工單完工入庫-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-3-04" onclick="activeNavMenu(this)">工單拆合作業-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-3-05" onclick="activeNavMenu(this)">現場工單退料-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-send"></span>-->
+                        <!--<span id="MES-6">生產報表管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="MES-6-01" onclick="activeNavMenu(this)">工站產出報表-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-6-03" onclick="activeNavMenu(this)">生產日報表(工單)-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="MES-6-04" onclick="activeNavMenu(this)">工單工站轉出(產品)-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">品質管理系統</p>-->
+            <!--<ul id="QIS" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-spinner"></span>-->
+                        <!--<span id="QIS-P3">供應商管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-P3-03" onclick="activeNavMenu(this)">進料檢驗作業-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-tree"></span>-->
+                        <!--<span id="QIS-P4">先期品質策劃</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-P4-01" onclick="activeNavMenu(this)">品質異常信息-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-trophy"></span>-->
+                        <!--<span id="QIS-D1">品質執行與實施</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-D1-04" onclick="activeNavMenu(this)">出貨核查作業-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="QIS-D1-06" onclick="activeNavMenu(this)">物料緊急放行-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-truck"></span>-->
+                        <!--<span id="QIS-D2">包裝作業管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-D2-01" onclick="activeNavMenu(this)">標籤設計維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="QIS-D2-02" onclick="activeNavMenu(this)">成品標籤列印-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="QIS-D2-03" onclick="activeNavMenu(this)">標籤拆合作業-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-tty"></span>-->
+                        <!--<span id="QIS-C1">品質控制管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-C1-05" onclick="activeNavMenu(this)">生產不良判定-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-sheqel"></span>-->
+                        <!--<span id="QIS-C2">品質檢查與分析</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="QIS-C2-01" onclick="activeNavMenu(this)">產品履歷追溯-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="QIS-C2-08" onclick="activeNavMenu(this)">工站品質報表-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<p class="nav-title">企業資料計劃</p>-->
+            <!--<ul id="ERP" class="page-nav">-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-trash"></span>-->
+                        <!--<span id="ERP-1">基本資料維護</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="ERP-1-01" onclick="activeNavMenu(this)">單據性質維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="ERP-1-02" onclick="activeNavMenu(this)">月結關賬維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-chain"></span>-->
+                        <!--<span id="ERP-2">料件與產品結構</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="ERP-2-01" onclick="activeNavMenu(this)">料件基本資料-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a id="ERP-2-02" onclick="activeNavMenu(this)">取替代關係維護-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a onclick="primaryMenuToggle(this)">-->
+                        <!--<span class="fa fa-chain-broken"></span>-->
+                        <!--<span id="ERP-4">驗收管理</span>-->
+                        <!--<span class="plus"><i class="fa fa-plus"></i></span>-->
+                        <!--<span class="minus"><i class="fa fa-minus"></i></span>-->
+                    <!--</a>-->
+                    <!--<ul class="sidebar-collapse">-->
+                        <!--<li>-->
+                            <!--<a id="ERP-4-01" onclick="activeNavMenu(this)">ECS驗收單-->
+                                <!--<span class="heart-o fa fa-heart-o" ng-click="togglefunction($event)" ng-hide="hidefunction"></span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="user-info">
+    <div class="user-image text-center">
+        <a href="#/info">
+            <img src="{{host}}{{userData.info.head}}"  onerror="javascript:this.src='static/image/headimg.jpg';"  class="img-circle" style="width: 80px;height: 80px;border:1px solid #98a6ad; padding: 3px">
+        </a>
+        <!--<span><b class="glyphicon glyphicon-user"></b></span>-->
+    </div>
+    <b class="user-name text-center" ng-model="userData.info.username" style="color: #98a6ad;">
+        {{userData.info.username}}({{userData.info.chinese_name}})
+    </b>
+    <p class="user-time text-center">
+        <b class="glyphicon glyphicon-time"></b> {{theTime}}
+    </p>
+    <!--<p class="user-login text-center">-->
+    <!--上次登錄：2017-04-17 13:00:00-->
+    <!--</p>-->
+    <!--<span class="online-users text-center">-->
+    <!--<img src="static/image/users.png" height="14">-->
+    <!--<b style="color:#fff;">21</b>-->
+    <!--</span>-->
+</div>
+<div id="app_header" style="position:absolute;top:0;left:0;width:100%;height:55PX;">
+    <a class="app-header">
+        <img class="logo" src="static/image/logo.png">
+    </a>
+</div>

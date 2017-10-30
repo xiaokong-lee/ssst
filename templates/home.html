@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基準烽火雲台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="../staticP/image/icon/fire.png" type="image/png" />
+    <link type="text/css" rel="stylesheet" href="../staticP/css/tab-control.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../staticP/plugin/bootstrap-3.3.0-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../staticP/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../staticP/css/app.css" type="text/css">
+
+    <link rel="stylesheet" href="../static/plugin/organize/layer/skin/default/layer.css" type="text/css">
+    <!--<link rel="stylesheet" href="staticP/css/info.css" type="text/css">-->
+</head>
+<body>
+<!--头部导航栏-->
+<div class="navbar" role="navigation">
+    <div class="container-fluid header">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars"></span>
+            </button>
+            <ul class="nav navbar-nav navbar-actions pull-left">
+                <li><a href="#" id="main-menu-toggle"><i class="fa fa-dedent"></i></a></li>
+            </ul>
+            <form class="navbar-form pull-left" style="height: 55px !important;">
+                <img id="img1" src="../staticP/image/top/beacon-logo.png" width="170" style="vertical-align: inherit">
+            </form>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 55px!important;">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown visible-md visible-lg"></li>
+                <li class="news">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <!--<span class="badge">1</span>-->
+                        <div class="" id="message"><span class="heartbit"></span> <span class="point"></span></div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" id="messageUl">
+                        <!--<li>-->
+                            <!--<span class="span-danger">-->
+                                <!--<p class="pull-left">催單動態</p>-->
+                                <!--<p class="pull-right">2017-07-12 18:30:00</p>-->
+                            <!--</span>-->
+                            <!--<a class="form-danger" href="#">【表單簽核】您有一筆表單需要簽核</a>-->
+                        <!--</li>-->
+                        <li><a href="#">查看全部</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">
+                    <i class="fa fa-bell-o"></i>
+                    <!--<div class="notify" id="notice"><span class="heartbit"></span> <span class="point"></span></div>-->
+                </a></li>
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu info" role="menu">
+                        <li><a href="javascript:void(0);" onclick="open_info()"><i class="fa fa-user"></i>個人信息</a></li>
+                        <li id="myMenu-nav"><a href="javascript:TabControlAppend('mymenu','我的菜單','../AngularIndex.html#/mymenu');"><i class="fa fa-wrench"></i>我的菜單</a></li>
+                        <li ><a href="javascript:logout();"><i class="fa fa-sign-out"></i>退出系統</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- end: Header -->
+
+<!--左侧导航菜单-->
+<div class="container-fluid content">
+    <div class="row">
+        <!-- start: Main Menu -->
+        <div class="sidebar" id="menus">
+            <div class="sidebar-collapse">
+                <div class="sidebar-header t-center">
+                    <img src="../staticP/image/top/logo.png" >
+                </div>
+                <div class="sidebar-menu">
+                    <div class="user-info">
+                        <div class="user-image text-center">
+                            <a href="javascript:void(0);"  onclick="open_info()">
+                                <img src="" onerror="javascript:this.src='../static/image/headimg.jpg';" id="userHeader" class="img-circle" style="width: 80px;height: 80px;border:1px solid #98a6ad; padding: 3px">
+                            </a>
+                        </div>
+                        <p class="user-time text-center" style="margin: 0">
+                            <b class="user-name text-center" style="color: #98a6ad;" id="userInfo">
+                                <!--F1330314(周心有)-->
+                            </b>
+                        </p>
+                        <p id="now_time" class="user-time text-center" style="color:#55c2b5;padding-top: 5px;">
+                            <b class="glyphicon glyphicon-time"></b>
+                        </p>
+                    </div>
+                    <ul class="user-group" style="background: #131313;">
+                        <li class="active data_active" id="systemMenuBtn">系统菜單</li>
+                        <li class="data_my" id="myMenuBtn">我的菜單</li>
+                    </ul>
+                    <ul class="nav nav-sidebar" id="menu">
+                        <p>協同工作平台</p>
+                        <li>
+                            <a href="#" aria-expanded="true">
+                                <i class="fa fa-cube"></i>系統基礎管理
+                                <span class="fa fa-plus pull-right"></span>
+                                <span class="fa fa-minus pull-right" style="display: none"></span> </a>
+                            <!--fa fa-minus-->
+                            <ul aria-expanded="false" class="collapse" style="height: 0px;">
+                                <li>
+                                    <a href="javascript:TabControlAppend('1', 'Dashboard', 'http://10.167.1.148/ST/#/dashborad');">
+                                        Dashboard
+                                    </a>
+                                    <span class="fa fa-heart-o pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('2', '組織維護', 'http://10.167.1.148/ST/#/organize');">
+                                        組織維護
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('3', '角色授權', 'http://10.167.1.148/ST/#/users');">
+                                        角色授權
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('4', '角色定義', 'http://10.167.1.148/ST/#/roles');">
+                                        角色定義
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('5', 'Smart Sight', 'http://10.167.1.148/ST/#/buildings');">
+                                        Smart Sight
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" aria-expanded="true"><i class="fa fa-plane"></i>協同工作管理
+                                <span class="fa fa-plus pull-right"></span>
+                            <span class="fa fa-minus pull-right" style="display: none"></span></a>
+                            <ul aria-expanded="false" class="collapse" style="height: 0px;">
+                                <li>
+                                    <a href="javascript:TabControlAppend('6', '電子表單', 'http://10.167.1.148/ST/#/tmpls');">
+                                        電子表單
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('7', '流程配置', 'http://10.167.1.148/ST/#/workflows');">
+                                        流程配置
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('8', '表單簽核', 'http://10.167.1.148/ST/#/forms');">
+                                        表單簽核
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('9', '流程報表統計', 'http://10.167.1.148/ST/#/reportform');">
+                                        流程報表統計
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('10', '工作任務管理', 'http://10.167.1.148/ST/#/tasks');">
+                                        工作任務管理
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                                <li>
+                                    <a href="javascript:TabControlAppend('11', '工作代理', 'http://10.167.1.148/ST/#/agents');">
+                                        工作代理
+                                    </a>
+                                    <span class="fa fa-heart pull-right"></span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-sidebar" id="my_menu">
+                        <li>
+                            <a href="#">工作代理 </a>
+                        </li>
+                        <li>
+                            <a href="#">Smart Sight </a>
+                        </li>
+                        <li>
+                            <a href="#">組織維護 </a>
+                        </li>
+                        <li>
+                            <a href="#">角色定義 </a>
+                        </li>
+                        <li>
+                            <a href="#">角色授權 </a>
+                        </li>
+                        <li>
+                            <a href="#">流程配置 </a>
+                        </li>
+                        <li>
+                            <a href="#">表單簽核 </a>
+                        </li>
+                        <li>
+                            <a href="#">工作任務管理 </a>
+                        </li>
+                        <li>
+                            <a href="#">流程報表統計 </a>
+                        </li>
+                        <li>
+                            <a href="#">電子表單 </a>
+                        </li>
+                        <li>
+                            <a href="#">Dashboard </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--Beacon产权块-->
+            <div class="sidebar-footer">
+                <ul class="foot-group" style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);">
+                    <li><a href="" target="_blank" id="bugFeedBack">BUG反饋</a></li>
+                    <li class="active"><a  href="" target="_blank" id="bugSearch">BUG追蹤</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- end: Main Menu -->
+
+        <!-- start: Content -->
+        <div class="tab-control iframe-content" style="">
+            <!-- 标签 -->
+            <div class="tab simple">
+                <form>
+                    <input class="prev" type="button"/>
+                    <input class="next" type="button"/>
+                    <input class="find" type="button"/>
+                </form>
+                <ul>
+                    <!-- <li>标签<a href="javascript:;">关闭</a></li> -->
+                </ul>
+            </div>
+
+            <!-- 标签查找 -->
+            <div class="tab-find hidden">
+                <form>
+                    <input class="text" type="text"/>
+                </form>
+                <ul>
+                    <!-- <li>标签<a href="javascript:;">关闭</a></li> -->
+                </ul>
+            </div>
+            <!-- 主体 -->
+            <div class="main">
+                <!-- <iframe scrolling="auto" frameborder="0"></iframe> -->
+            </div>
+        </div>
+        <!-- end: Content -->
+    </div><!--/container-->
+</div>
+
+<script type="text/javascript" src="../staticP/plugin/jquery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="../staticP/js/tab-control.min.js"></script>
+<script type="text/javascript" src="../staticP/plugin/bootstrap-3.3.0-dist/js/bootstrap.min.js"></script>
+<!--主js-->
+<script type="text/javascript" src="../staticP/js/main.js"></script>
+<!--/**折疊菜單**/-->
+<script type="text/javascript" src="../staticP/plugin/metisMenu/metisMenu.min.js"></script>
+<!--/**左側菜單滑動**/-->
+<script type="text/javascript" src="../staticP/plugin/jquery.mmenu/jquery.mmenu.min.js"></script>
+<!--弹框artDialog-->
+<link rel="stylesheet" href="../public/artDialog3.x/idialog.css">
+<script type="text/javascript" src="../public/artDialog3.x/artDialog.js"></script>
+<script type="text/javascript" src="../public/artDialog3.x/iframeTools.js"></script>
+<script type="text/javascript" src="../public/artDialog3.x/dialog-common.js"></script>
+<!--消息機制MQTT-->
+<script type="text/javascript" src="../static/plugin/organize/layer/layer.js"></script>
+
+<script type="text/javascript" src="../staticP/js/qrcodeLogin/stomp.js"></script>
+<script type="text/javascript" src="../staticP/js/qrcodeLogin/stompPackage.js"></script>
+<script type="text/javascript" src="../staticP/js/urls.js"></script>
+<script type="text/javascript" src="../staticP/js/user/st.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#bugFeedBack").attr("href", urls.bugFeedBack);
+        $("#bugSearch").attr("href", urls.bugSearch);
+        var left = jQuery("div.left");
+        var a = jQuery("div.tab-control div.main");
+        jQuery(left).css("height", (jQuery(document).height() - 55) + "px");
+        jQuery(a).css("height", (jQuery(document).height() - 90) + "px");
+        /**獲取用戶信息**/
+        var userData = window.localStorage.getItem("userInfo");
+        if(userData == undefined){window.location.href = "../index.html";return;}
+        userData = eval('('+userData+')');
+        console.log("userData:",userData);
+        var userHeader = userData["info"]["head"]?userData["info"]["head"]:"";
+        var username = userData["info"]["username"];
+        var chinese_name = userData["info"]["chinese_name"]?userData["info"]["chinese_name"]:"";
+        var user_id = userData["info"]["id"];
+        $("#userHeader").attr("src", urls.host+userHeader);
+        $("#userInfo").html(username+"("+chinese_name+")");
+        /**本地时间**/
+        getNowTime();
+        var _url_system_menu = urls.mySystemMenu + "/" + user_id;  //獲取系統菜單URL
+        var _url_custom_menu = urls.myMenu + "/" + user_id;  // 獲取自定義菜單URL
+        var _url_putMy_menu = urls.myMenu + "/" + user_id; // 提交我的菜單
+        getSidebar(user_id,_url_system_menu,_url_custom_menu,_url_putMy_menu);
+        newAjax({method:"GET"}).ajax({
+            url:urls.userAuth + "/" + user_id,
+            success:function(response){
+                console.log(response, "Menu")
+                userData["my_auth"] = response;
+                window.localStorage.setItem("userInfo", JSON.stringify(userData));
+                if(response.data["#/systemmenu"] == "true"){
+                    var html = "<li><a href=\"javascript:TabControlAppend('systemmenu','系統菜單','../AngularIndex.html#/systemmenu');\">" +
+                            "<i class=\"fa fa-cog\"></i>系統菜單</a></li>"
+                    $("#myMenu-nav").before(html);
+                }
+            },
+            error:function(response){
+                alertDialog("數據請求失敗，請稍候再試","warning");
+                console.log("error found.")
+            }
+        });
+//        $('#menu').metisMenu();
+        $("#myMenuBtn").click(function () {
+            customMenu(false,_url_custom_menu);
+        });
+//        $("#systemMenuBtn").click(function () {
+//            getSidebar(user_id,_url_system_menu,_url_custom_menu,_url_putMy_menu);
+//        })
+        var stomClient = "";
+        noticeMQtt(stomClient,userData);
+
+
+    });
+
+    /**打開info頁面彈框**/
+    function open_info() {
+        layer.open({
+            type: 2,
+            title: ['個人信息', 'font-size:18px;'],
+            area: ['490px', '657px'],
+            content: '../AngularIndex.html#/info' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+        });
+    }
+
+    /**獲取系統菜單**/
+    function getSidebar(userId,_url_system_menu,_url_custom_menu,_url_putMy_menu){
+        window.localStorage.setItem("_url_putMy_menu", _url_putMy_menu);
+        var sidebar = [];
+        $.ajax({
+            url: _url_system_menu,
+            type: "get",
+            dataType: "json",
+            headers: {
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            beforeSend: function () {},
+            success: function (response) {
+                var menuTree = response.data;
+                if(menuTree.length == 0){
+                    alertDialog("System menu is empty. Please try again.","warning");
+                    getSidebar(userId);
+                    return;
+                }
+                sidebar = menuTree;
+                window.localStorage.setItem("systemMenu", JSON.stringify(menuTree));
+                /**获取我的菜单信息**/
+                customMenu(true,_url_custom_menu,sidebar);
+            },complete:function(response){
+                if(response.status == 203){
+                    window.location.href = "public/login.html"
+                }
+            },error: function (rep, e, t) {
+                alertDialog("數據請求失敗，請稍候再試","warning");
+            }
+        });
+    }
+    /**獲取我的菜單**/
+    function customMenu(flag,_url,_sidebar){
+        var myMenu = [];
+        $.ajax({
+            url: _url,
+            type: "get",
+            dataType: "json",
+            headers: {
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            beforeSend: function () {},
+            success: function (response) {
+                if(response.data.length == 0){
+                    alertDialog("System menu is empty. Please try again.","warning");
+                    customMenu(_url);
+                    return;
+                }else{
+                    eval('myMenu='+ response.data["my_menu_json"]);
+                    window.localStorage.setItem("myMenu", response.data["my_menu_json"]);
+                    if(flag){CreateSystemMenu(_sidebar,myMenu);}
+                    createMyMenu(myMenu);
+                }
+            },complete:function(response){
+                if(response.status == 203){
+                    window.location.href = "public/login.html"
+                }
+            },error: function (rep, e, t) {
+                alertDialog("數據請求失敗，請稍候再試","warning");
+            }
+        });
+    }
+    /**創建系統菜單**/
+    function CreateSystemMenu(_sidebar,_myMenu) {
+        var html = "";
+        for(var i=0 ;i < _sidebar.length;i++){
+            html += "<p>" + _sidebar[i]["title"] + "</p>";
+            for(var j=0; j < _sidebar[i]["content"].length; j++){
+                html += "<li>" +
+                        "<a href=\"#\" aria-expanded=\"true\"><i class=\""+ _sidebar[i]["content"][j]["icon"] +"\"></i>"
+                        + _sidebar[i]["content"][j]["name"] + " <span class=\"fa fa-plus pull-right\" ></span>" +
+                        "<span class=\"fa fa-minus pull-right\" style=\"display: none\"></span></a>" +
+                        "<ul aria-expanded=\"false\" class=\"collapse\" style=\"height: 0px;\">";
+                var list = _sidebar[i]["content"][j]["list"];
+                for(var k=0; k < list.length; k++){
+                    var flag = searchMenu(list[k]["id"],_myMenu);
+                    var heart = flag ? "<span class=\"fa fa-heart pull-right\" onclick=\"setMyMenu(this,false,"+ list[k]["id"] +")\"" +
+                    "></span>" : "<span class=\"fa fa-heart-o pull-right\" onclick=\"setMyMenu(this,true,"+ list[k]["id"] +")\"></span>";
+                    html += "<li>" +
+                            "<a href=\"javascript:TabControlAppend('"+ list[k]["id"] +"', '"+ list[k]["name"] +"', '../AngularIndex.html"+ list[k]["full_code"] +"');\">" +
+                            list[k]["name"] +
+                            "</a>"+ heart +"</li>";
+                }
+                html += "</ul></li>"
+            }
+        }
+        $("#menu").html("");
+        $("#menu").append(html);
+        $('#menu').metisMenu();
+    }
+    /***創建我的菜單**/
+    function createMyMenu( _myMenu){
+        $("#my_menu").html("");
+        if(_myMenu){
+            var html = "";
+            for(var i=0;i < _myMenu.length; i++){
+                html += "<li><a href=\"javascript:TabControlAppend('"+ _myMenu[i]["id"] +"', '"+ _myMenu[i]["name"] +"', '../AngularIndex.html"+ _myMenu[i]["full_code"] +"');\">"+
+                        _myMenu[i]["name"] +" </a></li>";
+            }
+            $("#my_menu").append(html);
+        }
+    }
+    /**判斷某菜單是否在我的菜單中**/
+    function searchMenu(id,menu) {
+        if(!menu) return false;
+        for(var i=0;i<menu.length; i++){
+            if(id == menu[i]["id"]){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**添加或刪除我的菜單**/
+    function setMyMenu(obj,_flag,_id) {
+        var myMenu = window.localStorage.getItem("myMenu");
+        var systemMenu = window.localStorage.getItem("systemMenu");
+        if(myMenu && systemMenu){
+            eval('myMenu='+ myMenu);
+            eval('systemMenu='+ systemMenu);
+            var clickMenu = "";
+            for(var i=0 ;i < systemMenu.length;i++){
+                var flag = false;
+                for(var j=0; j < systemMenu[i]["content"].length; j++){
+                    var list = systemMenu[i]["content"][j]["list"];
+                    for(var k=0; k < list.length; k++){
+                        if(list[k]["id"] == _id){
+                            clickMenu = list[k];
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag){break;}
+                }
+                if(flag){break;}
+            }
+            var html = "";
+            if(_flag){
+                myMenu.push(clickMenu);
+                html = "<span class=\"fa fa-heart pull-right\" onclick=\"setMyMenu(this,false,"+ _id +")\"></span>"
+            }else{
+                var index = inArrayIndex("id",_id,myMenu);
+                if(index > -1){
+                    myMenu.splice(index,1);
+                }
+                html = "<span class=\"fa fa-heart-o pull-right\" onclick=\"setMyMenu(this,true,"+ _id +")\"></span>"
+            }
+            var _url_putMy_menu = window.localStorage.getItem("_url_putMy_menu");
+            putMyMenu(obj,html,_url_putMy_menu,JSON.stringify(myMenu));
+        }else{
+            window.location.href = "public/login.html"
+        }
+    }
+    /**點擊收藏後提交我的菜單到數據庫**/
+    function putMyMenu(obj,html,_url,_myMenu) {
+        $.ajax({
+            url: _url,
+            type: "put",
+            dataType: "json",
+            data:{
+                my_menu_json:_myMenu
+            },
+            headers: {
+                'X-CSRFToken': window.localStorage.getItem("X-CSRFToken")
+            },
+            beforeSend: function () {},
+            success: function (response) {
+                $(obj).parent("li").append(html);
+                $(obj).remove();
+                window.localStorage.setItem("myMenu",_myMenu);
+            },complete:function(response){
+                if(response.status == 203){
+                    console.log("请重新登陆");
+                    window.location.href = "public/login.html"
+                }
+            },error: function (rep, e, t) {
+                alertDialog("數據請求失敗，請稍候再試","warning");
+            }
+        });
+    }
+
+    /**連接mqtt消息服務器並接受數據處理**/
+    function noticeMQtt(stomClient,userData) {
+        console.log("消息引擎开始连接...",userData);
+        var username = userData.info.username;
+        if(!userData.message){
+            window.localStorage.clear();
+            window.location.href = "../index.html";
+        }else{
+            if(userData.message.length == 0){
+                $("#message").removeClass("notify");
+            }else{
+                createMessage(userData,"messageUl");
+            }
+        }
+        var stompUrl = urls.mQtt;
+        var stompU="iot";
+        var stompP="iot123!";
+        var Topic = '/topic/st/message';
+        stomClient = stompPackage.stompConnect(stompUrl, stompU, stompP, function () {
+            var us44=stompPackage.stompSubscribe(Topic,function (data) {
+                console.log('44:',data);
+                if(typeof(data) == "string"){
+                    console.log('44:',data);
+                    var msg = eval('(' + data +')');
+                    if(msg["type"] != "mt"){
+                        if(msg["to"].indexOf(username) > -1){
+                            var index=inArrayIndex("time",msg['message']["time"],userData.message);
+                            if(index == -1){
+                                userData.message.push(msg['message']);
+                                window.localStorage.setItem("userInfo", JSON.stringify(userData));
+                                console.log(window.localStorage.getItem("userData"),"userData;;;;;");
+                                createMessage(userData,"messageUl");
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    }
+    /**創建消息列表**/
+    function createMessage(_userData,_id){
+        $("#message").addClass("notify");
+        var html = "";
+        for(var i=0; i<_userData.message.length;i++){
+            html += "<li>" +
+                    "<span class=\"span-danger\">" +
+                    "<p class=\"pull-left\">"+ _userData.message[i]["type"] +"</p>" +
+                    "<p class=\"pull-right\">"+ _userData.message[i]["time"] +"</p>" +
+                    "</span><a class=\"form-danger\" href=\"#"+ _userData.message[i]["url"] +"\">" +
+                    _userData.message[i]["title"] +"</a>" +
+                    "</li>"
+        }
+        $("#"+ _id).prepend(html);
+    }
+    //<![CDATA[
+//                TabControlAppend('index', '百度', 'https://www.baidu.com');
+                TabControlAppend('16', '表單簽核', '../AngularIndex.html#/forms');
+    //            TabControlAppend('3', 'ST', 'http://10.167.1.148/ST');
+    //            TabControlAppend('4', '百度', 'https://www.baidu.com');
+    //            TabControlAppend('5', 'hao123', 'http://www.hao123.com');
+    //            TabControlAppend('6', 'ST', 'http://10.167.1.148/ST');
+    //            TabControlAppend('7', '百度', 'https://www.baidu.com');
+    //            TabControlAppend('8', 'hao123', 'http://www.hao123.com');
+    //            TabControlAppend('9', 'ST', 'http://10.167.1.148/ST');
+    //            TabControlAppend('10', '百度', 'https://www.baidu.com');
+    //            TabControlAppend('11', 'hao123', 'http://www.hao123.com');
+    //            TabControlAppend('12', 'ST', 'http://10.167.1.148/ST');
+    //            TabControlAppend('13', '百度', 'https://www.baidu.com');
+    //            TabControlAppend('14', 'hao123', 'http://www.hao123.com');
+    //            TabControlAppend('15', 'ST', 'http://10.167.1.148/ST');
+    //            TabControlAppend('16', '百度', 'https://www.baidu.com');
+//                TabControlAppend('17', 'hao123', 'http://www.hao123.com');
+//                TabControlAppend('18', 'ST', 'http://10.167.1.148/ST');
+    //]]>
+</script>
+</body>
+</html>

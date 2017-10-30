@@ -1,0 +1,70 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">我的菜單管理<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="row">
+        <!--系統菜單-->
+        <div class="col-sm-5">
+            <div id="funcs" class="menus" ng-style="myStyle" style="background-color: #fff;">
+                <div class="text-center title" style="">功能庫</div>
+                <ul class="menu func-menu">
+                    <li ng-repeat="x in funcs" data-index="{{$index}}" data-select="{{x.is_selected}}">
+                        <div ng-click="setSelected($event,1,x,$index)">
+                            {{x.name}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div ng-style="myStyle">
+                <div style="position:absolute;top:50%;left:0;width:100%;margin-top:-32px;text-align: center;">
+                    <button class="btn btn-default btn-danger" style="margin-bottom:5px;" ng-click="funcsTransferLeft()"><i
+                            class="fa fa-arrow-left"></i> 移到左側
+                    </button>
+                    <button class="btn btn-default btn-danger" style="margin-bottom:5px;" ng-click="funcsTransferRight()"><i
+                            class="fa fa-arrow-right"></i> 移到右側
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--我的菜單-->
+        <div class="col-sm-5 text-center">
+            <div id="mymenu" class="menus" ng-style="myStyle" style="background-color: #fff;">
+                <div class="text-center title" style="">我的菜單</div>
+                <ul class="menu func-menu">
+                    <li ng-repeat="x in mymenu" data-index="{{$index}}" style="position:relative;">
+                        <div class="func" ng-click="setSelected($event,2,'',$index)">{{x.name}}
+                            <button class="btn btn-default btn-xs" style="position:relative;top:-3px;" ng-click="editFunc($event,$index)"><i class="fa fa-edit"></i> </button>
+                        </div>
+                        <div style="position:absolute;right:15px;top:4px;">
+                            <button class="btn btn-default btn-xs" ng-if="!$last" ng-click="transferArrow($event,'down',$index)"><i class="fa fa-long-arrow-down"></i> </button>
+                            <button class="btn btn-default btn-xs" ng-if="!$first" ng-click="transferArrow($event,'up',$index)"><i class="fa fa-long-arrow-up"></i> </button>
+                        </div>
+                    </li>
+                </ul>
+                <div class="text-center" style="margin-top: 10px">
+                    <button type="button" class="btn btn-info" ng-click="saveMymenu()"><i class="fa fa-save"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-container" ng-show="func_show">
+        <div class="content">
+            <div class="form form-horizontal" style="padding:15px 30px;">
+                <div class="form-group text-left">
+                    <label class="">菜單名稱</label>
+                    <div class="">
+                        <input type="text" class="form-control" ng-model="_func.name">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-info" ng-click="saveFunc()"><i class="fa fa-save"></i> 保存</button>
+                    <button class="btn btn-default" ng-click="cancelFunc()"><i class="fa fa-remove"></i> 取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

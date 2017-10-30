@@ -1,0 +1,65 @@
+@keyframes myShownSidebar {
+   from {
+       left: -210px;
+   } to {
+       left: 0;
+   }
+}
+@keyframes myHiddenSidebar {
+   from {
+       left: 0;
+   } to {
+       left: -210px;
+   }
+}
+@keyframes myGradBtn
+{
+    from {
+        width:0;
+    }
+    to {
+        width:100%;
+    }
+}
+
+@-webkit-keyframes myGradBtn /* Safari and Chrome */
+{
+	from {
+        width:0;
+    }
+    to {
+        width:100%;
+    }
+}
+@keyframes moveOne {
+    from {
+        width: 16px;
+        height:16px;
+        -webkit-transform: scale(1) rotate(10deg);
+        -moz-transform: scale(1) rotate(10deg);
+        -o-transform: scale(1) rotate(10deg);
+    }
+    to {
+        width: 16px;
+        height: 16px;
+        -webkit-transform: scale(1.8) rotate(10deg);
+        -moz-transform: scale(1.8) rotate(10deg);
+        -o-transform: scale(1.8) rotate(10deg);
+    }
+}
+@keyframes moveTwo {
+    from {
+        width:30px;
+        height:30px;
+        -webkit-transform: scale(1.5) rotate(10deg);
+        -moz-transform: scale(1) rotate(10deg);
+        -o-transform: scale(1) rotate(10deg) ;
+    }
+    to {
+        width: 30px;
+        height: 30px;
+        -webkit-transform: scale(3) rotate(10deg);
+        -moz-transform: scale(3) rotate(10deg);
+        -o-transform: scale(3) rotate(10deg);
+    }
+}

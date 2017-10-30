@@ -1,0 +1,151 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">系統菜單管理<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="row">
+        <!--功能庫-->
+         <div class="col-sm-5">
+            <div id="funcs" class="menus" ng-style="myStyle" style="background-color: #fff;">
+                <div class="text-center title" style="">功能庫</div>
+                <ul class="menu func-menu">
+                    <li ng-repeat="x in funcs" data-index="{{$index}}" data-select="{{x['selected']}}">
+                        <div ng-click="setSelected($event,1,x)">
+                            {{x.name}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div ng-style="myStyle">
+                <div style="position:absolute;top:50%;left:0;width:100%;margin-top:-32px;text-align: center;">
+                    <button class="btn btn-default btn-danger" style="margin-bottom:5px;" ng-click="funcsTransferLeft($event)"><i
+                            class="fa fa-arrow-left"></i> 移到左側
+                    </button>
+                    <button class="btn btn-default btn-danger" style="margin-bottom:5px;" ng-click="funcsTransferRight($event)"><i
+                            class="fa fa-arrow-right"></i> 移到右側
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--系統菜單-->
+        <div class="col-sm-5 text-center">
+            <div id="system" class="menus" ng-style="myStyle" style="background-color: #fff;">
+                <div class="text-center title" style="">系統菜單( Ver : {{systemMenu.version}}) <small class="label label-primary">{{systemMenu.status}}</small>
+                    <div class="" style="position: absolute;left:15px;top:8px;">
+                        <button class="btn btn-danger btn-xs" style="margin-left:15px;" ng-click="createModule()"><span class=""><i
+                                class="fa fa-plus"></i></span></button>
+                    </div>
+                </div>
+                <div class="menu">
+                    <div ng-repeat="x in system" data-parent="" data-index="{{x.index}}">
+                        <div>
+                            <p>{{x.title}}</p>
+                            <div style="position:absolute;right:15px;top:5px;">
+                                <button class="btn btn-default btn-xs" ng-click="editModule($event,x.index)"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-default btn-xs" ng-click="removeModule($event,x.index)"><i class="fa fa-remove" ></i></button>
+                                <button class="btn btn-default btn-xs"  ng-click="createList($event,x.index)"><i class="fa fa-plus" ></i> </button>
+                                <button class="btn btn-default btn-xs" ng-if="!$last" ng-click="moduleArrow($event,'down',x.index)"><i class="fa fa-long-arrow-down" ng-if="!$last" ></i> </button>
+                                <button class="btn btn-default btn-xs" ng-if="!$first" ng-click="moduleArrow($event,'up',x.index)"><i class="fa fa-long-arrow-up" ></i> </button>
+                            </div>
+                        </div>
+                        <ul >
+                            <li ng-repeat="y in x.content" data-parent="[{{x.index}}].content" data-index="{{y.index}}" style="display: block;padding-left:35px;">
+                                <div ng-click="setSelected($event,2)">
+                                    <button class="btn btn-default btn-xs" style="position:absolute;left:8px;top:5px;background-color: #fcfcfc;" ng-click="toggleList($event)">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <span class="{{y.icon}}"></span>
+                                    {{y.name}}
+                                    <div class="text-center" style="position:absolute;right:10px;top:0px;">
+                                        <button class="btn btn-default btn-xs" ng-click="editList($event,y.index,'['+x.index+'].content')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-default btn-xs" ng-click="removeList($event,y.index,'['+x.index+'].content')"><i class="fa fa-remove"></i></button>
+                                        <button class="btn btn-default btn-xs" ng-if="!$last" ng-click="listArrow($event,'down',y.index,'['+x.index+'].content')"><i class="fa fa-long-arrow-down"></i> </button>
+                                        <button class="btn btn-default btn-xs" ng-if="!$first" ng-click="listArrow($event,'up',y.index,'['+x.index+'].content')"><i class="fa fa-long-arrow-up"></i> </button>
+                                    </div>
+                                </div>
+                                <ul class="sidebar-collapse">
+                                    <li ng-repeat="z in y.list" data-parent="[{{x.index}}].content[{{y.index}}].list" data-index="{{z.index}}">
+                                        <div class="func" ng-click="setSelected($event,2)">{{z.name}}
+                                            <button class="btn btn-default btn-xs" style="position:relative;top:-3px;" ng-click="editFunc($event,z.index,'['+x.index+'].content['+y.index+'].list')"><i class="fa fa-edit"></i> </button>
+                                        </div>
+                                        <div style="position:absolute;right:15px;top:4px;">
+                                            <button class="btn btn-default btn-xs" ng-if="!$last" ng-click="transferArrow($event,'down',z.index,'['+x.index+'].content['+y.index+'].list')"><i class="fa fa-long-arrow-down"></i> </button>
+                                            <button class="btn btn-default btn-xs" ng-if="!$first" ng-click="transferArrow($event,'up',z.index,'['+x.index+'].content['+y.index+'].list')"><i class="fa fa-long-arrow-up"></i> </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center" style="bottom:0;margin-top: 10px;padding:0 15px;" >
+                    <button type="button" class="btn btn-info" ng-click="saveSystem($event)"><i class="fa fa-save"></i> 保存</button>
+                    <button type="button" class="btn btn-info" ng-click="saveAsSystem($event)"><i class="fa fa-save"></i> 另存</button>
+                    <button type="button" class="btn btn-danger" ng-click="saveSystem($event,'status')"><i class="fa fa-save"></i> 應用</button>
+                    <button type="button" class="btn btn-default pull-left" ng-if="systemMenu.last_version_id" ng-click="setSystem(systemMenu.last_version_id)"><i class="fa fa-reply"></i> 上版</button>
+                    <button type="button" class="btn btn-default pull-right" ng-if="systemMenu.next_version_id" ng-click="setSystem(systemMenu.next_version_id)"><i class="fa fa-share"></i> 下版</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-container" ng-show="module_show">
+    <div class="content">
+        <div class="form form-horizontal" style="padding:15px 30px;">
+            <div class="form-group text-left">
+                <label class="text-left">模塊名稱</label>
+                <div class="">
+                    <input type="text" class="form-control" ng-model="_module.title">
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-info" ng-click="saveModule()"><i class="fa fa-save"></i> 保存</button>
+                <button class="btn btn-default" ng-click="cancelModule()"><i class="fa fa-remove"></i> 取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-container" ng-show="list_show">
+    <div class="content">
+        <div class="form form-horizontal" style="padding:15px 30px;">
+            <div class="form-group text-left">
+                <label class="">子模塊名稱</label>
+                <div class="">
+                    <input type="text" class="form-control" ng-model="_list.name">
+                </div>
+            </div>
+            <div class="form-group text-left">
+                <label class="">子模塊圖標</label>
+                <div class="">
+                    <input type="text" class="form-control" ng-model="_list.icon" style="display: none;">
+                    <ul id="icons">
+                        <li ng-repeat="x in icons"><button class="btn btn-default" type="button" ng-click="getListIcon(x.name)"><i class="{{x.name}}"></i> </button> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-info" ng-click="saveList()"><i class="fa fa-save"></i> 保存</button>
+                <button class="btn btn-default" ng-click="cancelList()"><i class="fa fa-remove"></i> 取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-container" ng-show="func_show">
+    <div class="content">
+        <div class="form form-horizontal" style="padding:15px 30px;">
+            <div class="form-group text-left">
+                <label class="">菜單名稱</label>
+                <div class="">
+                    <input type="text" class="form-control" ng-model="_func.name">
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-info" ng-click="saveFunc()"><i class="fa fa-save"></i> 保存</button>
+                <button class="btn btn-default" ng-click="cancelFunc()"><i class="fa fa-remove"></i> 取消</button>
+            </div>
+        </div>
+    </div>
+</div>

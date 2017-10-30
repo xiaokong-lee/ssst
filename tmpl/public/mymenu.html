@@ -1,0 +1,1088 @@
+<div class="page-content">
+    <ol class="breadcrumb">
+        <li><a href="">hwme</a></li>
+        <li><a href="">菜單管理</a></li>
+    </ol>
+    <ul class="nav nav-tabs" style="margin-bottom:15px;">
+        <li ng-class="{active:menuGroup.sysMenu}"><a ng-click="menuToggle('sysMenu')">系统菜单管理</a></li>
+        <li ng-class="{active:menuGroup.myMenu}"><a ng-click="menuToggle('myMenu')">我的菜单管理</a></li>
+    </ul>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-12 pull-right">
+            <div class="form-group search-group">
+                <input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty"
+                       placeholder="Enter the key words..." ng-model="keyWord">
+                <button class="btn btn-default search-btn" ng-click="dataSearch()"><i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-info">選擇模塊</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">切换下拉菜单</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a>所有模塊</a></li>
+                    <li><a>協同工作平台</a></li>
+                    <li><a>客戶關係管理</a></li>
+                    <li><a>產品生命週期管理</a></li>
+                    <li><a>供應鏈管理系統</a></li>
+                    <li><a>製造執行系統</a></li>
+                    <li><a>品質管理系統</a></li>
+                    <li><a>企業資料計劃</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-switch="myBar">
+        <div ng-switch-when="sysMenu">
+            <div class="row">
+                <div class="col-xs-10">
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">協同工作平台</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+
+                        </div>
+                        <ul class="row memu-list collapse in" id="demo">
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">系統基礎管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul style="">
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>界面配置</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>組織維護</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>用戶管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>角色定義</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>授權管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!--<div class="menu-title">-->
+                                <!--<label class="checkbox-inline i-checks">-->
+                                <!--<input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系統基礎管理</span>-->
+                                <!--<b class="fa fa-angle-down"></b>-->
+                                <!--</label>-->
+                                <!--&lt;!&ndash;<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>&ndash;&gt;-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;<span>系統基礎管理</span>&ndash;&gt;-->
+
+
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">協同工作管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>電子表單</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>流程配置</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>表單簽核</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>工作任務管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>我的工作代理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>流程報表統計</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo1">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">客戶關係管理</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+
+                        </div>
+
+                        <ul class="row memu-list collapse in" id="demo1">
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>客戶信息維護</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶產品管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>客戶料號維護</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶訂單管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>內部投但作業</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶出貨管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>出貨排配作業</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>出貨通知作業</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo3">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">產品生命週期管理</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                        <ul class="row memu-list collapse in" id="demo3">
+
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">基本資料管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品維護</span>
+                                                </label>
+
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品關鍵屬性</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>料號維護管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>取替代管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>製程維護管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品別製程維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品製程維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>類別屬性維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>編碼原則維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>文件架構維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">基本資料管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產工訂單確認</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i>
+                                                    <span>量產料號/BOM定義</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-1 col-xs-offset-1 operater"
+                     style="position: fixed; top:40%;right:0;">
+                    <div class="op chapter btn1"><em class="fa fa-plus"></em>添加</div>
+                    <div class="op chapter btn2"><em class="fa fa-minus"></em>删除</div>
+                    <div class="op chapter btn3"><em class="fa fa-edit"></em>修改</div>
+                    <div class="op chapter"><em class="fa fa-random"></em>移动</div>
+                    <div class="op chapter btn5"><em class="fa fa-exchange"></em>排序</div>
+                </div>
+            </div>
+            <!--//添加-->
+            <div class="modal form-horizontal" id="mymodal" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title">添加菜单</h4>
+                        </div>
+                        <div class="modal-body" style="height: 155px;">
+                            <div class="text-left form-group" style="">
+                                <label class="col-sm-3 control-label">*菜单名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="firstname" placeholder="請輸入菜单名称">
+                                </div>
+                            </div>
+                            <div class="text-left  form-group" style="">
+                                <label class="col-sm-3 control-label">*菜單级别</label>
+                                <div class="btn-group col-sm-9">
+                                    <button type="button" class="btn btn-default">選擇菜单级别</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">切换下拉菜单</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a>一级菜单</a></li>
+                                        <li><a>二级菜单</a></li>
+                                        <li><a>三级菜单</a></li>
+                                        <li><a>四级菜单</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-left  form-group" style="">
+                                <label class="col-sm-3 control-label">*父级菜单名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="請輸入菜单名称">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--刪除-->
+            <div class="modal text-center" id="mymodal2" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">刪除菜单</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <p>是否刪除界面配置菜單?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">是</button>
+                            <button type="button" class="btn btn-primary">否</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--修改-->
+            <div class="modal form-horizontal" id="mymodal3" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title">修改菜单</h4>
+                        </div>
+                        <div class="modal-body" style="height: 155px;">
+                            <div class="text-left form-group" style="">
+                                <label class="col-sm-3 control-label">菜单名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="界面配置">
+                                </div>
+                            </div>
+                            <div class="text-left form-group" style="">
+                                <label class="col-sm-3 control-label">*新建菜单名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="請輸入菜单名称">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--/排序-->
+            <div class="modal form-horizontal" id="mymodal5" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title">菜单排序</h4>
+                        </div>
+                        <div class="text-left  form-group" style="margin-top: 10px;">
+                            <label class="col-sm-4 control-label">*選擇要排序的菜单级别</label>
+                            <div class="btn-group col-sm-8">
+                                <button type="button" class="btn btn-default">一级菜单</button>
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">切换下拉菜单</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a>一级菜单</a></li>
+                                    <li><a>二级菜单</a></li>
+                                    <li><a>三级菜单</a></li>
+                                    <li><a>四级菜单</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-center">
+                            <ul class="row">
+                                <li class="col-xs-3 col-xs-offset-4">協同工作平台</li>
+                                <li class="col-xs-3 col-xs-offset-4">客戶關係管理</li>
+                                <li class="col-xs-3 col-xs-offset-4">產品生命週期管理</li>
+                            </ul>
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <script>
+                $(function () {
+                    $(".btn1").click(function () {
+                        $("#mymodal").modal("toggle");
+                    });
+                    $(".btn2").click(function () {
+                        $("#mymodal2").modal("toggle");
+                    });
+                    $(".btn3").click(function () {
+                        $("#mymodal3").modal("toggle");
+                    });
+                    $(".btn5").click(function () {
+                        $("#mymodal5").modal("toggle");
+                    });
+                });
+
+            </script>
+        </div>
+        <div ng-switch-when="myMenu">
+            <div class="row">
+                <div class="col-xs-10">
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo4">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">協同工作平台</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+
+                        </div>
+                        <ul class="row memu-list collapse in" id="demo4">
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">系統基礎管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul style="">
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>界面配置</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>組織維護</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>用戶管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>角色定義</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>授權管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">協同工作管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>電子表單</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>流程配置</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>表單簽核</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>工作任務管理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>我的工作代理</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>流程報表統計</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo5">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">客戶關係管理</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+
+                        </div>
+
+                        <ul class="row memu-list collapse in" id="demo5">
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>客戶信息維護</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶產品管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>客戶料號維護</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶訂單管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>內部投但作業</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客戶出貨管理&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>出貨排配作業</span>
+                                                </label>
+                                                <input type="text">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>出貨通知作業</span>
+                                                </label>
+                                                <input type="text" class=" ">
+                                                <!--<button type="button" class="btn func-btn"><i class="fa fa-pencil"></i></button>-->
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mymemu">
+                        <div class="title" data-toggle="collapse" data-target="#demo6">
+                            <label class="checkbox-inline i-checks">
+                                <input value="option1" type="checkbox"><i></i> <span
+                                    style="margin-left: 10px;">產品生命週期管理</span>
+                            </label>
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                        <ul class="row memu-list collapse in" id="demo6">
+
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">基本資料管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品維護</span>
+                                                </label>
+
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品關鍵屬性</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>料號維護管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>取替代管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>製程維護管理</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品別製程維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產品製程維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>類別屬性維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>編碼原則維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>文件架構維護</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="col-sm-12 col-xs-12">
+                                <div class="panel-danger">
+                                    <div class="panel-heading" style="padding:0 20px;width: 200px;">
+                                        <label class="checkbox-inline i-checks">
+                                            <input value="option1" type="checkbox"><i></i> <span
+                                                style="margin-left: 10px;">基本資料管理</span>
+                                            <b class="fa fa-angle-down"></b>
+                                        </label>
+                                    </div>
+                                    <ul>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i> <span>產工訂單確認</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li class="col-sm-3 col-xs-12">
+                                            <div class="menu">
+                                                <label class="checkbox-inline i-checks">
+                                                    <input value="option1" type="checkbox"><i></i>
+                                                    <span>量產料號/BOM定義</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-1 col-xs-offset-1 operater"
+                     style="position: fixed; top:40%;right:0;">
+                    <div class="op chapter btn2"><em class="fa fa-minus"></em>删除</div>
+                    <div class="op chapter btn3"><em class="fa fa-edit"></em>修改</div>
+                    <div class="op chapter"><em class="fa fa-random"></em>移动</div>
+                    <div class="op chapter btn5"><em class="fa fa-exchange"></em>排序</div>
+                </div>
+            </div>
+            <!--刪除-->
+            <div class="modal text-center" id="mymodal7" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">刪除菜单</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <p>是否刪除界面配置菜單?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">是</button>
+                            <button type="button" class="btn btn-primary">否</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--修改-->
+            <div class="modal" id="mymodal8" style="display: none;">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title">修改菜单</h4>
+                        </div>
+                        <div class="modal-body" style="height: 155px;">
+                            <div class="text-left form-group" style="">
+                                <label class="col-sm-3 control-label">菜单名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="界面配置">
+                                </div>
+                            </div>
+                            <div class="text-left form-group" style="">
+                                <label class="col-sm-3 control-label">*新建菜单名稱</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="請輸入菜单名称">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--/排序-->
+            <div class="modal form-horizontal" id="mymodal9" style="display: none;">
+                 <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title">菜单排序</h4>
+                        </div>
+                        <div class="text-left  form-group" style="margin-top: 10px;">
+                            <label class="col-sm-4 control-label">*選擇要排序的菜单级别</label>
+                            <div class="btn-group col-sm-8">
+                                <button type="button" class="btn btn-default">一级菜单</button>
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">切换下拉菜单</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a>一级菜单</a></li>
+                                    <li><a>二级菜单</a></li>
+                                    <li><a>三级菜单</a></li>
+                                    <li><a>四级菜单</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-center">
+                            <ul class="row">
+                                <li class="col-xs-3 col-xs-offset-4">協同工作平台</li>
+                                <li class="col-xs-3 col-xs-offset-4">客戶關係管理</li>
+                                <li class="col-xs-3 col-xs-offset-4">產品生命週期管理</li>
+                            </ul>
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <script>
+                $(function () {
+                    $(".btn2").click(function () {
+                        $("#mymodal7").modal("toggle");
+                    });
+                    $(".btn3").click(function () {
+                        $("#mymodal8").modal("toggle");
+                    });
+                    $(".btn5").click(function () {
+                        $("#mymodal9").modal("toggle");
+                    });
+                });
+
+            </script>
+        </div>
+
+    </div>
+
+
+</div>

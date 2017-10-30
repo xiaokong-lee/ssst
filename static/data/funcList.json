@@ -1,0 +1,9 @@
+{
+  "dashboard": {"id":1},
+  "produce": {"id":2,"data":[{"name":"Smart Sight","href":"smartsight"},{"name":"設備管理","href":""},{"name":"人員管理","href":""},{"name":"生產數據管理","href":""},{"name":"環境管理","href":""},{"name":"現場管理","href":""}]},
+  "demand":{"id":4,"data":[{"name":"客戶信息管理","href":""},{"name":"訂單信息管理","href":""},{"name":"客戶投訴管理","href":""}]},
+  "quality":{"id":5,"data":[{"name":"檢測設備管理","href":""},{"name":"人員管理","href":""},{"name":"品質控制與執行","href":""}]},
+  "supply":{"id":6,"data":[{"name":"供應商信息管理","href":""},{"name":"採購管理","href":""},{"name":"工令管理","href":""},{"name":"APS智能排產","href":""},{"name":"庫房管理","href":""},{"name":"物流管理","href":""}]},
+  "project":{"id":7,"data":[{"name":"產品信息","href":""},{"name":"工程文件管理","href":""},{"name":"工程自動化","href":""}]},
+  "e-office":{"id":8,"data":[{"name":"系統基礎管理","href":""}]}
+}

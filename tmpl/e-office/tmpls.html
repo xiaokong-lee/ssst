@@ -1,0 +1,48 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style=""><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">電子表單 <a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="">
+        <div class="title">
+            <!--<span><i class="fa fa-cogs"></i> 配置表单</span>-->
+            <a href="#/createtmpl:"  ng-if="userData.my_auth.data['#/createtmpl']" class="btn btn-default btn-info btn-radius pull-right" style="margin-bottom:15px;"><i class="fa fa-plus"></i> 創建模板</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-12">
+            <div class="form-group search-group">
+                <input type="text" class="form-control" placeholder="請輸入搜索關鍵字" ng-keypress="enterPress($event)" ng-model="keyWord">
+                <button class="btn btn-default search-btn" ng-click="tmplSearch($event)"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <ul class="category">
+        <li style="display: inline-block"><button type="button" class="btn btn-default active" ng-click="tmplFilter($event,0)">所有類</button></li>
+        <!--<li style="display: inline-block"><button type="button" class="btn btn-default" ng-click="tmplFilter($event,'general')">通用型</button></li>-->
+        <!--<li style="display: inline-block"><button type="button" class="btn btn-default" ng-click="tmplFilter($event,'attachment')">一次性</button></li>-->
+        <li ng-repeat="x in category" style="display: inline-block"><button id="{{x.id}}" type="button" ng-click="tmplFilter($event,x.id)" class="btn btn-default">{{x.type}}</button></li>
+    </ul>
+    <div id="tmpls" class="tmpl-container" style="background-color: #f1f1f1;">
+        <ul >
+            <li ng-repeat="x in tmpls" data-cate="table_type_forms_type">
+                <a href="#/tmpl:{{x.id}}" title="{{x.table_name}}" style="display: inline-block;height:65px;width:208px;padding:10px 10px;border:1px solid #616161;border-radius:3px;">
+                    <div style="float:left;display: inline-block;width:40px;">
+                        <img ng-if="x.desc == 'general'" src="static/image/tmpls/png_128_general.png" style="width:45px;">
+                        <img ng-if="x.desc == 'attachment'" src="static/image/tmpls/png_128_one.png" style="width:45px;">
+                    </div>
+                    <div class="font-ellipsis" style="float:left;display: inline-block;width:146px;padding:5px 0;line-height:35px;color:#212121;background-color: #f1f1f1;">{{x.table_name}}</div>
+                </a>
+                <!--<a href="#/tmpl:{{x.id}}" title="{{x.table_name}}">-->
+                    <!--&lt;!&ndash;<span><i class="fa fa-medium"></i></span>&ndash;&gt;-->
+                    <!--<span>-->
+                        <!--<img ng-if="x.desc == 'general'" src="static/image/tmpls/a.png">-->
+                        <!--<img ng-if="x.desc == 'attachment'" src="static/image/tmpls/onetime.png">-->
+                    <!--</span>-->
+                    <!--<span class="font-ellipsis" style="color:#313131;">{{x.table_name}}</span>-->
+                <!--</a>-->
+            </li>
+        </ul>
+    </div>
+</div>

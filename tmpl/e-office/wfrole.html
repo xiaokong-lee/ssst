@@ -1,0 +1,19 @@
+<form name="myForm" class="form form-horizontal text-left" style="padding:15px 15px;">
+    <h5 class="text-left" style="margin-bottom:15px;">修改/添加角色</h5>
+    <div class="form-group" style="padding:0 15px;">
+        <label class="text-left" style="">*角色名稱</label>
+        <div class="">
+            <input type="text" class="form-control" placeholder="角色名稱" name="funcName" ng-model="WFRole.role">
+        </div>
+    </div>
+    <div class="form-group" style="padding:0 15px;">
+        <label class="text-left" style="">*角色描述</label>
+        <div class="">
+            <input type="text" class="form-control" placeholder="角色描述" name="funcName" ng-model="WFRole.desc">
+        </div>
+    </div>
+    <div class="text-center" style="margin-top:15px;">
+        <button type="button" class="btn btn-default btn-info" ng-click="saveWFRole($event)"><i class="fa fa-save"></i> 保存</button>
+        <button type="button" class="btn btn-default " ng-click="closeModal($event)"><i class="fa fa-remove"></i> 取消</button>
+    </div>
+</form>

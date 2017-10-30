@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基準烽火雲台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" type="text/css" href="../../static/plugin/bootstrap-3.3.0-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/app.css" />
+    <script type="text/javascript" src="../../static/plugin/jquery/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <iframe src="http://10.129.4.73/rtspPlay/?url=rtsp://admin:12345@10.157.229.185/h264/ch1/main" width='1200' height='750'></iframe>
+<script>
+    $(function () {
+//        var userAgent = window.navigator.userAgent;
+//        var broswer;
+//        if(userAgent.indexOf("Firefox")>=0){
+//            broswer = "Firefox";
+//        }
+//        if(userAgent.indexOf("Chrome")>=0){
+//            broswer = "Chrome";
+//        }
+//        if(userAgent.indexOf("isIE")>=0 || userAgent.indexOf("rv:11.0")>=0){
+//            broswer = "IE";
+//        }
+//        var ie_pluge="";
+//        if(broswer=="IE"){
+//            ie_pluge="classid='clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921' codebase='http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab'";
+//        }
+        // 獲取當前camera 碼流地址
+//        $("iframe").attr("src","rtsp://admin:admin12345@10.157.229.186/h264/ch1/main");
+
+//        $.ajax({
+//            url:"../../static/data/cameraList.json",
+//            success:function (response) {
+//                var sn=window.location.href.split("?")[1];
+//                var cameras=response.data;
+//                for(var i=0;i<cameras.length;i++){
+//                    if(cameras[i].sn==sn){
+//                        var src = "http://10.129.4.73/rtspPlay/?url="+cameras[i].stream_address;
+//                        console.log(src)
+//                        $("iframe").attr("src",src)
+//                    }
+//                }
+//            }
+//        });
+        // 設置object 屬性
+//        function setVideoObject(camera) {
+//            $("#camera_name").text(camera.name);
+//            var vlc=document.getElementById('vlc');
+//            vlc.setAttribute("width",vlc.parentNode.clientWidth)
+//            var idd = vlc.playlist.add(camera.stream_address);
+//            vlc.playlist.playItem(idd);
+//        }
+    })
+</script>
+</body>
+</html>

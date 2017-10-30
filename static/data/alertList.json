@@ -1,0 +1,13 @@
+
+
+{
+    "name":"加薪工作流",
+    "desc":"這個工作流用於加薪",
+    "flowchart":"chart",
+    "pattern":"1",
+    "data":[{"type":"1","name":"初級","org":"true","list":["1"]},
+        {"type":"1","name":"初級","org":"false","list":["1"]},
+        {"type":"1","name":"初級","org":"false","list":["1"]},
+        {"type":"1","name":"初級","org":"false","list":["1"]},
+        ]
+}

@@ -1,0 +1,59 @@
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style="" href="javascript:frameGoBack(this);"><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>Smart Sight</li>
+        <li class="current">Camera分佈<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <div class="row">
+        <div class="col-sm-8 col-xs-12">
+            <h5 style="padding:0 10px;line-height:34px;"><i class="fa fa-building" style="color:#d32f2f;"></i> B3棟</h5>
+        </div>
+        <div class="col-sm-4 col-xs-12 text-right">
+            <div class="btn-group" style="margin-bottom:15px;">
+                <button type="button" class="btn btn-default " ng-class="{btn_active:sight_status['sight_map']}" ng-click="showSightBlock('sight_map')"><i class="glyphicon glyphicon-th-large"></i> </button>
+                <button type="button" class="btn btn-default" ng-class="{btn_active:sight_status['sight_list']}" ng-click="showSightBlock('sight_list')"><i class="glyphicon glyphicon-th-list"></i> </button>
+                <!--<button type="button" class="btn btn-default" ng-class="{btn_active:sight_status['sight_block']}" ng-click="showSightBlock('sight_block')"><i class="glyphicon glyphicon-th"></i> </button>-->
+            </div>
+        </div>
+    </div>
+    <div id="sight_map" class="sight-map" ng-show="sight_status.sight_map">
+        <img src="static/image/svg/u821.svg" style="width:100%;min-height: 150px;">
+        <ul id="sights" class="sights">
+            <!--<li ng-repeat="x in cameras" style="{{x.location | locationStyle}}">-->
+                <!--<a id="{{x.sn}}" href="#/sightvideo/{{x.sn}}" data-toggle="tooltip" data-placement="top" title="{{x.name}}" class="icon-video" ng-if="x.type=='ipCamera'"><span class="glyphicon glyphicon-facetime-video" ></span></a>-->
+                <!--<a id="{{x.sn}}" href="#/sightvideo/{{x.sn}}" data-toggle="tooltip" data-placement="top" title="{{x.name}}" class="face-identify" ng-if="x.type=='faceCamera'">-->
+                    <!--<span class="icon-smiley"></span>-->
+                    <!--<span class="border-left-top-1"></span>-->
+                    <!--<span class="border-left-top-2"></span>-->
+                    <!--<span class="border-left-bot-1"></span>-->
+                    <!--<span class="border-left-bot-2"></span>-->
+                    <!--<span class="border-right-top-1"></span>-->
+                    <!--<span class="border-right-top-2"></span>-->
+                    <!--<span class="border-right-bot-1"></span>-->
+                    <!--<span class="border-right-bot-2"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+    <div id="sight_list" class="" ng-show="sight_status.sight_list">
+        <div class="panel panel-default" ng-repeat="x in cameras">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-1 col-xs-12 hidden-xs">
+                        <a href="#/sightvideo/{{x.sn}}" class="sight-list-img">
+                            <span class="glyphicon glyphicon-facetime-video" ></span>
+                        </a>
+                    </div>
+                    <div class="col-sm-9 col-xs-12">
+                        <p>名稱：{{x.name}}</p>
+                        <p>型號：{{x.type}}</p>
+                    </div>
+                    <div class="col-sm-2 col-xs-12 text-right">
+                        <a >詳細參數</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

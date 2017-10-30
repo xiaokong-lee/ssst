@@ -1,0 +1,18 @@
+<div id="page_content" class="page-content" ng-class="">
+     <ol class="breadcrumb">
+        <li>Home</li>
+        <li>協同工作管理</li>
+        <li >流程配置</li>
+        <li class="current">簽核角色</li>
+    </ol>
+    <div class="">
+        <div class="title">
+            <!--<span><i class="fa fa-cogs"></i> 配置表单</span>-->
+            <a class="btn btn-default btn-info btn-radius pull-right" ng-click="createWFRole($event)" style="margin-bottom:15px;"><i class="fa fa-plus"></i> 創建</a>
+        </div>
+    </div>
+    <div ng-if="_data" class="table-container" my-Table
+        headers="序號,角色名稱,角色描述,創建時間,操作"
+    filter="false" search="true"></div>
+    <div class="modal-container" my-Modal></div>
+</div>

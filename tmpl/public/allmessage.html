@@ -1,0 +1,40 @@
+<div id="page_content" class="page-content" ng-class="">
+     <!--<ol class="breadcrumb">-->
+        <!--<li>Home</li>-->
+        <!--<li>協同工作管理</li>-->
+        <!--<li class="current">电子表单</li>-->
+    <!--</ol>-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group search-group">
+                <h2 style="display: inline-block">站內信</h2>(未讀<label>3</label>封,<a>查看全部消息</a>)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-3 col-xs-12 pull-right">
+            <div class="form-group search-group" style="position: absolute;right:15px;">
+                <input type="text" class="form-control" placeholder="請輸入搜索關鍵字" ng-keypress="enterPress($event)" ng-model="keyWord">
+                <button class="btn btn-default search-btn" ng-click="tmplSearch($event)"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <ul class="message_status" style="margin-bottom: 15px">
+        <li style="display: inline-block"><button type="button" class="btn btn-default">全選</button></li>
+        <li style="display: inline-block"><button type="button" class="btn btn-default">刪除</button></li>
+        <li style="display: inline-block"><button type="button" class="btn btn-default">標記為已讀</button></li>
+        <li style="display: inline-block"><button type="button" class="btn btn-default">已讀所有消息</button></li>
+        <li style="display: inline-block">
+            <ul style="margin-left: 30px" class="classification">
+                <li style="display: inline-block"><button type="button" class="btn btn-default active">全部</button></li>
+                <li style="display: inline-block"><button type="button" class="btn btn-default">我的代理</button></li>
+                <li style="display: inline-block"><button type="button" class="btn btn-default">表單簽核</button></li>
+                <li style="display: inline-block"><button type="button" class="btn btn-default">工作任務</button></li>
+            </ul>
+        </li>
+    </ul>
+
+    <div ng-if="_data" class="table-container" my-Table
+         headers=" ,消息內容,發生時間,消息類型,消息狀態,提交人"
+    filter="false" search="false" action="true"></div>
+</div>

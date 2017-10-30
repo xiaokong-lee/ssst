@@ -1,0 +1,180 @@
+
+<script type="text/javascript" src="static/plugin/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-datetimepicker.min.js"></script>
+<div id="page_content" class="page-content" ng-class="">
+    <a class="back-btn" style="" ><i class="fa fa-arrow-circle-left"></i> </a>
+    <ol class="breadcrumb">
+        <li>協同工作管理</li>
+        <li class="current">流程報表統計<a class="fresh-btn" href="javascript:frameRefresh(this);"><i class="fa fa-refresh"></i></a></li>
+    </ol>
+    <ul class="nav nav-tabs" style="margin-bottom:15px;">
+        <li ng-class="{active:activeReform.reformed}"><a ng-click="reformToggle('reformed')">按表單類型</a></li>
+        <li ng-class="{active:activeReform.beReformed}"><a ng-click="reformToggle('beReformed')">按審核人員</a></li>
+    </ul>
+    <div ng-switch="myReform">
+        <div id="reformed" ng-switch-when="reformed" ng-controller="reportformCtrl">
+            <div class="page-title" style="position:absolute;right: 5px;">
+                <div class="title">
+                    <div class="btn-group pull-right" style="margin-bottom:15px;">
+                        <button type="button" class="btn btn-default" ng-class="{active:reportGroup.list}" ng-click="reportToggle('list')"><i class="glyphicon glyphicon-th-large"></i> </button>
+                        <button type="button" class="btn btn-default" ng-class="{active:reportGroup.chart}" ng-click="reportToggle('chart')"><i class="glyphicon glyphicon-th-list"></i> </button>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch="myReport" >
+                <div class="table-container" >
+                    <div ng-if="datas" ng-controller="tableCtrl">
+                        <div class="table-header">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                                    <div class="form-group search-group">
+                                        <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                                        <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">
+                            <thead>
+                            <tr >
+                                <th class="text-center">序號</th>
+                                <th class="text-center">表单类型</th>
+                                <th class="text-center">开始时间</th>
+                                <th class="text-center">完成时间</th>
+                                <th class="text-center">平均历时(h)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="x in data">
+                                <td>{{$index+1}}</td>
+                                <td ><a href="#/reportforms/{{x.types}}">{{x.name}}</a></td>
+                                <td >{{x.starttime}}</td>
+                                <td >{{x.endtime}}</td>
+                                <td >{{x.time}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                            <h3 class="text-center">對不起！沒有您想要的結果！
+                            </h3>
+                        </div>
+                        <div class="table-footer" style="margin-top:15px;">
+                            <div class="row">
+                                <div class="col-sm-3 col-xs-12"></div>
+                                <div class="col-sm-6 col-xs-12 text-center">
+                                    <ul class="pagination" ng-if="pageArr.length">
+                                        <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                                        <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                                        <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>1">......</a></li>-->
+                                        <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                                        <!--<li><a ng-show="activePage<2 && pageArr.length>1">......</a></li>-->
+                                        <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                                        <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-3 col-xs-12">
+                                    <div class="form-group text-right">
+                                        <label class="control-label">共 {{dataCount}} 條記錄</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-switch-when="chart" >
+                    <div class="row" style="padding-top: 30px">
+                        <div class="col-sm-12 col-xs-12">
+                            <div e-chart e-data="chart1" class="chart"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div e-chart e-data="chart2" class="chart"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div e-chart e-data="chart3" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="beReformed" ng-switch-when="beReformed" ng-controller="beReportformCtrl">
+            <div ng-switch="myReport">
+                <div class="table-container" >
+                    <div ng-if="datas" ng-controller="tableCtrl">
+                        <div class="table-header">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-3 col-xs-12 pull-left">
+                                    <div class="form-group search-group">
+                                        <input type="text" id="keyword" class="form-control" placeholder="請輸入搜索關鍵字" ng-keyup="keyUpSearch($event)">
+                                        <button class="btn btn-default search-btn search-btn_click" ng-click="dataSearch()" ><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-responsive table-striped table-hover table-bordered text-center" style="table-layout: fixed;">
+                            <thead>
+                            <tr >
+                                <th class="text-center">序號</th>
+                                <th class="text-center">簽核人工號</th>
+                                <th class="text-center">簽核人姓名</th>
+                                <th class="text-center">表单类型</th>
+                                <th class="text-center">开始时间</th>
+                                <th class="text-center">完成时间</th>
+                                <th class="text-center">平均历时(h)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="x in data">
+                                <td>{{$index+1}}</td>
+                                <td >{{x.approver_record}}</td>
+                                <td ><a href="#/reportmenbers/{{x.approver_record}}?{{x.typeid}}">{{x.name}}</a></td>
+                                <td >{{x.typename}}</td>
+                                <td >{{x.starttime}}</td>
+                                <td >{{x.endtime}}</td>
+                                <td >{{x.time}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div style="width:100%;padding:55px;background-color: #fff;" ng-if="!data.length">
+                            <h3 class="text-center">對不起！沒有您想要的結果！
+                            </h3>
+                        </div>
+                        <div class="table-footer" style="margin-top:15px;">
+                            <div class="row">
+                                <div class="col-sm-3 col-xs-12"></div>
+                                <div class="col-sm-6 col-xs-12 text-center">
+                                    <ul class="pagination" ng-if="pageArr.length">
+                                        <li ng-hide="activePage==0"><a ng-click="changePage('first')">首頁</a></li>
+                                        <li ng-hide="activePage==0"><a ng-click="changePage('prev')">上頁</a></li>
+                                        <!--<li ><a ng-show="activePage>pageArr.length-3 && pageArr.length>5">......</a></li>-->
+                                        <li ng-repeat="p in pageArr" ng-show="$index<=activePage+2 && $index>=activePage-2" ng-class="{true: 'active', false: ''}[$index==activePage]"><a ng-click="changePage($index)">{{p+1}}</a></li>
+                                        <!--<li><a ng-show="activePage<2 && pageArr.length>5">......</a></li>-->
+                                        <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('next')">下頁</a></li>
+                                        <li ng-hide="activePage==pageArr.length-1"><a ng-click="changePage('last')">尾頁</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-3 col-xs-12">
+                                    <div class="form-group text-right">
+                                        <label class="control-label">共 {{dataCount}} 條記錄</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  ng-switch-when="chart">
+                    <div class="row"  style="padding-top: 30px">
+                        <div class="col-sm-6 col-xs-12">
+                            <div e-chart e-data="chart1" class="chart"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div e-chart e-data="chart2" class="chart"></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div e-chart e-data="chart3" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
